@@ -1,0 +1,67 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## Run this script on SCF
+> 
+> # Set WD
+> setwd("~/Documents/stat215b-final-project")
+> 
+> # Load R workspace
+> load("analysis.RData")
+> 
+> # Source superlearner scripts to ensure libraries attached
+> source("SuperLearner.R")
+> 
+> # Get risk estimates with 10-fold CV
+> set.seed(42)
+> complier.mod.cv <- CV.SuperLearner(Y=insurance.ohie[treatment.ohie==1], 
++                              X=X.ohie[treatment.ohie == 1,], 
++                              SL.library=SL.library.class,
++                              family="binomial",
++                              V=10,
++                              cvControl =list(V=10L)) 
+> 
+> summary(complier.mod.cv)
+
+Call:  
+CV.SuperLearner(Y = insurance.ohie[treatment.ohie == 1], X = X.ohie[treatment.ohie ==  
+    1, ], V = 10, family = "binomial", SL.library = SL.library.class, cvControl = list(V = 10L)) 
+
+
+Risk is based on: Mean Squared Error
+
+All risk estimates are based on V =  10 
+
+             Algorithm     Ave        se     Min     Max
+         Super Learner 0.22608 0.0013357 0.22283 0.23166
+           Discrete SL 0.22607 0.0012946 0.22278 0.23141
+            SL.gbm_All 0.22607 0.0012946 0.22278 0.23141
+         SL.glmnet_All 0.22724 0.0012752 0.22426 0.23311
+       SL.glmnet.0_All 0.22725 0.0012666 0.22416 0.23283
+    SL.glmnet.0.25_All 0.22722 0.0012650 0.22432 0.23297
+     SL.glmnet.0.5_All 0.22721 0.0012710 0.22424 0.23303
+    SL.glmnet.0.75_All 0.22721 0.0012760 0.22419 0.23304
+           SL.nnet_All 0.22776 0.0013551 0.22422 0.23280
+   SL.randomForest_All 0.30790 0.0036557 0.29386 0.32614
+ SL.randomForest.1_All 0.27333 0.0027834 0.26800 0.28165
+ SL.randomForest.2_All 0.30728 0.0037034 0.29449 0.32621
+ SL.randomForest.3_All 0.31049 0.0036351 0.29490 0.32955
+> 
+> # Output latex table
+> print(toLatex(summary(complier.mod.cv)))

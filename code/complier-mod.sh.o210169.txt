@@ -1,0 +1,61 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## Run this script on SCF
+> 
+> # Set WD
+> setwd("~/Documents/stat215b-final-project")
+> 
+> # Load R workspace
+> load("analysis.RData")
+> 
+> # Source superlearner scripts to ensure libraries attached
+> source("SuperLearner.R")
+> 
+> # Predict who is a complier in the control group
+> set.seed(42)
+> complier.mod <- SuperLearner(Y=insurance.ohie[treatment.ohie==1], 
++                              X=X.ohie[treatment.ohie == 1,], 
++                              SL.library=SL.library.class,
++                              family="binomial")
+> summary(complier.mod)
+                  Length Class  Mode     
+call                   5 -none- call     
+libraryNames          11 -none- character
+SL.library             2 -none- list     
+SL.predict         11639 -none- numeric  
+coef                  11 -none- numeric  
+library.predict   128029 -none- numeric  
+Z                 128029 -none- numeric  
+cvRisk                11 -none- numeric  
+family                12 family list     
+fitLibrary            11 -none- list     
+varNames              21 -none- character
+validRows             10 -none- list     
+method                 3 -none- list     
+whichScreen           21 -none- logical  
+control                2 -none- list     
+cvControl              4 -none- list     
+errorsInCVLibrary     11 -none- logical  
+errorsInLibrary       11 -none- logical  
+> 
+> # Store predictions
+> C.pscore <- predict(complier.mod, X.ohie)
+> 
+> # Output predictions as .txt file
+> write.table(C.pscore, "C.pscore.txt",  row.names=FALSE, col.names=FALSE)
+> 
