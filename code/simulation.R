@@ -22,7 +22,7 @@ library(dplyr)
 ncores <- 12
 registerDoParallel(ncores)
 
-sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1){
+sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
   # e1 controls number in the population who are eligible for treatment
   # e2 controls number eligible to be in RCT
   # e3 controls compliance
@@ -130,7 +130,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1){
 
 e <- seq(-2, 2, by = 0.5)
 e <- expand.grid(e,e,e)
-B <- 10
+B <- 100
 res <- foreach(i = 1:nrow(e)) %dopar% {
   cat(i)
   return(sim_estimates(B,e[i,1],e[i,2],e[i,3]))
