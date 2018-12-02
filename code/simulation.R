@@ -13,7 +13,7 @@
 rm(list=ls())
 library(Matching)
 library(MASS)
-library(randomForest)
+library(gbm)
 library(rpart)
 library(foreach)
 library(doParallel)
@@ -22,7 +22,7 @@ library(dplyr)
 ncores <- 12
 registerDoParallel(ncores)
 
-sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
+sim_estimates <- function(sims = 5, e1= -1, e2 = 0.5, e3 = 1){
   # e1 controls number in the population who are eligible for treatment
   # e2 controls number eligible to be in RCT
   # e3 controls compliance
@@ -84,9 +84,8 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
     nrt <- nrt[,-2]; colnames(nrt)[2] <- "Tt"
     
     # Predict who is a complier in the control group (T=0) using W1, W2, W3
-    #  suppressWarnings(complier_mod <- randomForest(C~W1+W2+W3, data = rct)) # estimate propensity of compliance
-    complier_mod <- glm(C~W1+W2+W3, data = rct, family = "binomial")
-    rct$C_pscore <- predict(complier_mod, rct, type = "response")
+    complier_mod <- gbm(C~W1+W2+W3, data = rct, distribution = "bernoulli", n.trees = 100) # gbm
+    rct$C_pscore <- predict(complier_mod, rct, type = "response", n.trees = 100)
     rct$Chat <- rep(0, nrow(rct))
     rct$Chat[rct$Tt == 0] <- as.numeric(rct$C_pscore[rct$Tt == 0] >= 0.5)
     rct_compliers <- rct[rct$Chat == 1 | rct$D == 1, ]
@@ -94,14 +93,11 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
     nrt_compliers <- nrt[nrt$Tt == 1,]
     
     # Fit a regression to the compliers in the RCT, use it to predict response in population "compliers"
-    response_mod <- randomForest(Y~Tt + W1 + W2 + W3, data = rct_compliers)
-    #response_mod <- lm(Y~Tt+W1+W2+W3, data = rct_compliers)
+    response_mod <- gbm(Y~Tt + W1 + W2 + W3, data = rct_compliers, distribution = "gaussian") # gbm
     nrt_tr_counterfactual <- cbind(nrt_compliers[,c("W1", "W2", "W3")], "Tt" = rep(1, nrow(nrt_compliers)))
     nrt_ctrl_counterfactual <- cbind(nrt_compliers[,c("W1", "W2", "W3")], "Tt" = rep(0, nrow(nrt_compliers)))
-    nrt_compliers$Yhat_1 <- predict(response_mod, nrt_tr_counterfactual)
-    nrt_compliers$Yhat_0 <- predict(response_mod, nrt_ctrl_counterfactual)
-    
-    
+    nrt_compliers$Yhat_1 <- predict(response_mod, nrt_tr_counterfactual, n.trees = 100)
+    nrt_compliers$Yhat_0 <- predict(response_mod, nrt_ctrl_counterfactual, n.trees = 100)
     
     # Compute the estimator
     term1 <- mean(nrt_compliers$Yhat_1[nrt_compliers$Tt==1])
@@ -112,17 +108,17 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
     true_patt[i] <- mean(b[Tt == 1 & S == 0])
     # SATE
     rct_sate[i] <- (mean(rct$Y[rct$Tt == 1]) - mean(rct$Y[rct$Tt==0]))/mean(rct$C[rct$Tt==1])
-    # SATT
-    term1 <- predict(response_mod, rct_compliers[rct_compliers$D==1,])
+    # SATT-C
+    term1 <- predict(response_mod, rct_compliers[rct_compliers$D==1,], n.trees = 100)
     satt_ctrl_counterfactual <- rct_compliers[rct_compliers$D==1,] %>% mutate("Tt" = 0)
-    term2 <- predict(response_mod, satt_ctrl_counterfactual)
+    term2 <- predict(response_mod, satt_ctrl_counterfactual, n.trees = 100)
     rct_satt[i] <- mean(term1) - mean(term2) 
-    # Hartman et al estimator - doesn't account for noncompliance
-    response_mod2 <- randomForest(Y~Tt + W1 + W2 + W3, data = rct)
+    # PATT (unadjusted)
+    response_mod2 <- gbm(Y~Tt + W1 + W2 + W3, data = rct, distribution = "gaussian") # gbm
     nrt_tr_counterfactual <- cbind(nrt[,c("W1", "W2", "W3")], "Tt" = rep(1, nrow(nrt)))
     nrt_ctrl_counterfactual <- cbind(nrt[,c("W1", "W2", "W3")], "Tt" = rep(0, nrow(nrt)))
-    nrt$Yhat_1 <- predict(response_mod2, nrt_tr_counterfactual)
-    nrt$Yhat_0 <- predict(response_mod2, nrt_ctrl_counterfactual)
+    nrt$Yhat_1 <- predict(response_mod2, nrt_tr_counterfactual, n.trees = 100)
+    nrt$Yhat_0 <- predict(response_mod2, nrt_ctrl_counterfactual, n.trees = 100)
     term1 <- mean(nrt$Yhat_1[nrt$Tt==1])
     term2 <- mean(nrt$Yhat_0[nrt$Tt==1])
     tpatt_unadj[i] <- term1 - term2
@@ -132,11 +128,9 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
   return(res)
 }
 
-
-
 e <- seq(-2, 2, by = 0.5)
 e <- expand.grid(e,e,e)
-B <- 10
+B <- 5
 res <- foreach(i = 1:nrow(e)) %dopar% {
   cat(i)
   return(sim_estimates(B,e[i,1],e[i,2],e[i,3]))
