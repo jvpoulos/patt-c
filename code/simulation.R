@@ -32,7 +32,7 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1
 
   # set up storage
   tpatt <- true_patt <- rct_sate <- rct_satt <- tpatt_unadj <- rep(0, sims)
-  rateC <- rateT <- rateS <- rep(0, sims)
+  rateC <- rateT <- rateS <- RateConS <- RateConT <- RateConC <- rep(0, sims)
   
   for(i in 1:sims){
     # Pick target sample size
@@ -53,9 +53,9 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1
     Sigma[6,6] <- 1
     Sigma[7,7] <- 3
     Sigma[8,8] <- 4
-    Sigma[5,6] <- Sigma[6,5] <- Sigma[8,6] <- Sigma[6,8] <- 1 
-    Sigma[5,7] <- Sigma[7,5] <- Sigma[7,6] <- Sigma[6,7] <- 0.5
-    mu <- c(0, 0, 0, 0, 0.5, 1, -1, -0.5)
+    Sigma[5,6] <- Sigma[6,5] <- Sigma[8,5] <- Sigma[5,8] <- Sigma[8,6] <- Sigma[6,8] <- Sigma[8,7] <- Sigma[7,8] <- 1 
+    Sigma[5,7] <- Sigma[7,5] <- Sigma[7,6] <- Sigma[6,7]  <- 0.5
+    mu <- c(0, 0, 0, 0, 0.5, 1, -1, -1)
     # Data for the whole population
     var <- mvrnorm(popsize, mu=mu, Sigma=Sigma, empirical = F)
     U <- var[,1]
@@ -74,10 +74,13 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1
     D <- ifelse(C == 1, Tt, 0) # Treatment received
     
     Y <- a + b*D + c1*W1 + c2*W2 + d*U
-    dat <- data.frame(Y, Tt, D, S, C, W1, W2, W3) # W4 is latent
+    dat <- data.frame(Y, Tt, D, S, C, W1, W2, W3) 
     rateC[i] <- mean(C)
     rateS[i] <- mean(S)
     rateT[i] <- mean(Tt)
+    RateConS[i] <- (mean(S) - mean(as.numeric(e2 + g1*W1 + g2*W2 + g3*W3 + R > 0)))**2
+    RateConT[i] <- (mean(Tt)-mean(as.numeric((e1 + f1*W1 + f2*W2 + V) > 0 )))**2
+    RateConC[i] <- (mean(C)-mean(as.numeric(e3 + h2*W2 + h3*W3 + Q > 0)))**2
     
     # Set up the RCT
     rct <- dat[rctsample,]
@@ -129,7 +132,7 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1
     tpatt_unadj[i] <- term1 - term2
     
   }
-  res <- cbind(true_patt, tpatt, tpatt_unadj, rct_sate, rct_satt, rateC, rateS, rateT)
+  res <- cbind(true_patt, tpatt, tpatt_unadj, rct_sate, rct_satt, rateC, rateS, rateT, RateConS, RateConT, RateConC)
   return(res)
 }
 
