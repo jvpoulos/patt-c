@@ -22,10 +22,13 @@ library(dplyr)
 ncores <- 12
 registerDoParallel(ncores)
 
-sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
+sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1){
   # e1 controls number in the population who are eligible for treatment
   # e2 controls number eligible to be in RCT
   # e3 controls compliance
+  # e4 controls confounding with sample selection
+  # e5 controls confounding with the treatment assignment
+  # e6 controls confounding with compliance
 
   # set up storage
   tpatt <- true_patt <- rct_sate <- rct_satt <- tpatt_unadj <- rep(0, sims)
@@ -39,19 +42,20 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
     observsample <- (1:popsize)[!(1:popsize %in% rctsample)]
     nrtsample <- sample(observsample, samplesize)
     
-    # (U, V, R, Q, W1, W2, W3) are multivariate normal. Set parameters
+    # (U, V, R, Q, W1, W2, W3, W4) are multivariate normal. Set parameters
     a <- c1 <- d <- 1
     c2 <- 2
     f1 <- g2 <- 0.25
     f2 <- g3 <- 0.75
     g1 <- h2 <- h3 <- 0.5
-    Sigma <- diag(rep(1,7))
+    Sigma <- diag(rep(1,8))
     Sigma[5,5] <- 2
     Sigma[6,6] <- 1
     Sigma[7,7] <- 3
-    Sigma[5,6] <- Sigma[6,5] <- 1
+    Sigma[8,8] <- 4
+    Sigma[5,6] <- Sigma[6,5] <- Sigma[8,6] <- Sigma[6,8] <- 1 
     Sigma[5,7] <- Sigma[7,5] <- Sigma[7,6] <- Sigma[6,7] <- 0.5
-    mu <- c(0, 0, 0, 0, 0.5, 1, -1)
+    mu <- c(0, 0, 0, 0, 0.5, 1, -1, -0.5)
     # Data for the whole population
     var <- mvrnorm(popsize, mu=mu, Sigma=Sigma, empirical = F)
     U <- var[,1]
@@ -61,15 +65,16 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
     W1 <- var[,5]
     W2 <- var[,6]
     W3 <- var[,7]
+    W4 <- var[,8]
     b <- ifelse(W1 > 0.75, 4, 1)
-    Tt = as.numeric((e1 + f1*W1 + f2*W2 + V) > 0 ) # Treatment assigned in NRT
-    S = as.numeric(e2 + g1*W1 + g2*W2 + g3*W3 + R > 0) 
+    Tt = as.numeric((e1 + f1*W1 + f2*W2 + e5*W4 + V) > 0 ) # Treatment assigned in NRT
+    S = as.numeric(e2 + g1*W1 + g2*W2 + g3*W3+ e4*W4 + R > 0) 
     Tt[S == 1] <- sample(c(0,1), sum(S==1), replace = TRUE) # Treatment assigned in RCT
-    C <- as.numeric(e3 + h2*W2 + h3*W3 + Q > 0)
+    C <- as.numeric(e3 + h2*W2 + h3*W3 + e6*W4 + Q > 0)
     D <- ifelse(C == 1, Tt, 0) # Treatment received
     
     Y <- a + b*D + c1*W1 + c2*W2 + d*U
-    dat <- data.frame(Y, Tt, D, S, C, W1, W2, W3)
+    dat <- data.frame(Y, Tt, D, S, C, W1, W2, W3) # W4 is latent
     rateC[i] <- mean(C)
     rateS[i] <- mean(S)
     rateT[i] <- mean(Tt)
@@ -129,11 +134,11 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1){
 }
 
 e <- seq(-2, 2, by = 0.5)
-e <- expand.grid(e,e,e)
+e <- expand.grid(e,e,e,e,e,e)
 B <- 100
 res <- foreach(i = 1:nrow(e)) %dopar% {
   cat(i)
-  return(sim_estimates(B,e[i,1],e[i,2],e[i,3]))
+  return(sim_estimates(B,e[i,1],e[i,2],e[i,3],e[i,4],e[i,5],e[i,6]))
 }
 res <- do.call(rbind, res)
 res <- cbind(rep(1:nrow(e), each = B), res)
