@@ -54,7 +54,7 @@
 # use forward slashes instead of back slashes
 
 # uncomment this line by removing the `#` at the front..
-setwd("~/Dropbox/github/stat215b-final-project/data/NHIS")
+setwd(paste0(repo.directory, "data/NHIS"))
 # ..in order to set your current working directory
 
 
@@ -297,7 +297,7 @@ for ( i in 1:5 ){
 }
 
 # Take means of family income
-if(year %in% c(2009:2013)){
+if(year %in% c(2009:2017)){
 faminci2 <- cbind(x1$faminci2,x2$faminci2,x3$faminci2,x4$faminci2,x5$faminci2)
 x.sa$faminci2 <- rowMeans(faminci2)
 }
@@ -307,7 +307,7 @@ if(year %in% c(2008)){
 }
 
 # Take means of poverty ratio
-if(year %in% c(2010:2013)){
+if(year %in% c(2010:2017)){
   povrati3 <- cbind(x1$povrati3,x2$povrati3,x3$povrati3,x4$povrati3,x5$povrati3)
   x.sa$povrati3 <- rowMeans(povrati3)
 } 

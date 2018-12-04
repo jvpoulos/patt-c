@@ -5,13 +5,14 @@
 # # # # # # # # # # # # # # # # #
 # # block of code to run this # #
 # # # # # # # # # # # # # # # # #
-# options( encoding = "windows-1252" )  	# # only macintosh and *nix users need this line
+options( encoding = "windows-1252" )  	# # only macintosh and *nix users need this line
 library(downloader)
 library(SAScii)
 library(RCurl)
-setwd("~/Dropbox/github/stat215b-final-project/data/NHIS")
-nhis.years.to.download <- 2013:2008
-source_url( "https://raw.github.com/ajdamico/usgsd/master/National%20Health%20Interview%20Survey/download%20all%20microdata.R" , prompt = FALSE , echo = TRUE )
+setwd(paste0(repo.directory, "data/NHIS"))
+nhis.years.to.download <- 2017:2008
+source_url( "https://raw.githubusercontent.com/ajdamico/asdfree/archive/National%20Health%20Interview%20Survey/download%20all%20microdata.R" , prompt = FALSE , echo = TRUE )
+source_url(paste0(repo.directory, "data/NHIS/download_all_microdata.R.R"))
 # # # # # # # # # # # # # # #
 # # end of auto-run block # #
 # # # # # # # # # # # # # # #
@@ -58,7 +59,7 @@ if ( .Platform$OS.type != 'windows' ) print( 'non-windows users: read this block
 # scripts in a non-standard format
 # if so, before running this whole download program,
 # you might need to run this line..
-# options( encoding="windows-1252" )
+options( encoding="windows-1252" )
 # ..to turn on windows-style encoding.
 # # # end of non-windows system edits.
 
@@ -119,11 +120,7 @@ main.nhis.ftp <- "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NHIS/"
 
 # load the download.cache and related functions
 # to prevent re-downloading of files once they've been downloaded.
-source_url( 
-  "https://raw.github.com/ajdamico/usgsd/master/Download%20Cache/download%20cache.R" , 
-  prompt = FALSE , 
-  echo = FALSE 
-)
+source(paste0(repo.directory, "data/NHIS/download_cached.R"))
 
 
 
@@ -451,7 +448,7 @@ for ( year in nhis.years.to.download ){
   
   # if the year is after 1996, then download the imputed income files
   # if ( year > 1996 ){
-  if ( year %in% 1997:2013 ){
+  if ( year %in% 1997:2017 ){
     
     # imputed income files must be downloaded using a different method #
     
