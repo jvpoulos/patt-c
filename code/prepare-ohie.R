@@ -21,3 +21,4 @@ ohie <- Reduce(function(...) merge(..., by="person_id", all=T), ohie.list)
 
 # Clean up workspace
 rm(ohie.data.directory,f,ohie.list)
+saveRDS(ohie, paste0(repo.directory,"data/prepare-ohie.RData"))

@@ -1,15 +1,12 @@
 ## Imports NHIS and OHIE datasets and creates outcome vectors and common covariates for the analysis 
 
 # Libraries
-library(weights)
+library(weights) # install cluster -> HMisc -> weights
 library(plyr)
 
-# Define code directory
-code.directory <- paste0(repo.directory,"code")
-
-# Source data prep scripts
-suppressWarnings(source(file.path(code.directory,"prepare-ohie.R")))
-source(file.path(code.directory,"prepare-nhis.R")) # script merges person, sample adult, and imputed income files
+# Import RCT and population data
+ohie <- readRDS(paste0(repo.directory,"data/prepare-ohie.RData"))
+nhis <- readRDS(paste0(repo.directory,"data/prepare-NHIS.RData")) 
 
 ## NHIS: sample selection
 
