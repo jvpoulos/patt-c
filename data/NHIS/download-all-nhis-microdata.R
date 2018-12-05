@@ -9,10 +9,15 @@ options( encoding = "windows-1252" )  	# # only macintosh and *nix users need th
 library(downloader)
 library(SAScii)
 library(RCurl)
-setwd(paste0(repo.directory, "data/NHIS"))
+setwd("~/patt-noncompliance/data/NHIS")
 nhis.years.to.download <- 2017:2008
-source_url( "https://raw.githubusercontent.com/ajdamico/asdfree/archive/National%20Health%20Interview%20Survey/download%20all%20microdata.R" , prompt = FALSE , echo = TRUE )
-source_url(paste0(repo.directory, "data/NHIS/download_all_microdata.R.R"))
+
+# load the downloadCache and related functions
+# to prevent re-downloading of files once they've been downloaded.
+source("download_cached.R")
+
+#source_url( "https://raw.githubusercontent.com/ajdamico/asdfree/archive/National%20Health%20Interview%20Survey/download%20all%20microdata.R" , prompt = FALSE , echo = TRUE )
+#source_url(paste0(repo.directory, "data/NHIS/download_all_microdata.R.R"))
 # # # # # # # # # # # # # # #
 # # end of auto-run block # #
 # # # # # # # # # # # # # # #
@@ -40,7 +45,7 @@ source_url(paste0(repo.directory, "data/NHIS/download_all_microdata.R.R"))
 
 # first, decide whether you would like to download the documentation as well?
 # change this TRUE to FALSE if you prefer to skip that component
-download.documentation <- TRUE
+download.documentation <- FALSE
 
 
 # set your working directory.
@@ -59,7 +64,7 @@ if ( .Platform$OS.type != 'windows' ) print( 'non-windows users: read this block
 # scripts in a non-standard format
 # if so, before running this whole download program,
 # you might need to run this line..
-options( encoding="windows-1252" )
+#options( encoding="windows-1252" )
 # ..to turn on windows-style encoding.
 # # # end of non-windows system edits.
 
@@ -99,10 +104,6 @@ csv <- FALSE
 
 # no need to edit anything below this line #
 
-
-if ( 2014 %in% nhis.years.to.download ) message( "2014 imputed income not yet available" )
-
-
 # # # # # # # # #
 # program start #
 # # # # # # # # #
@@ -117,12 +118,6 @@ tf <- tempfile() ; td <- tempdir()
 
 # main NHIS ftp site
 main.nhis.ftp <- "ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NHIS/"
-
-# load the download.cache and related functions
-# to prevent re-downloading of files once they've been downloaded.
-source(paste0(repo.directory, "data/NHIS/download_cached.R"))
-
-
 
 # begin looping through every year specified
 for ( year in nhis.years.to.download ){
@@ -162,7 +157,7 @@ for ( year in nhis.years.to.download ){
       
       # attempt #1:
       # simply download the file into the local directory
-      attempt1 <- try( download.cache( paste0( doc.nhis.ftp , fn ) , destfile = paste0( docs.output.directory , fn ) , mode = 'wb' ) , silent = TRUE )
+      attempt1 <- try( downloadCache( paste0( doc.nhis.ftp , fn ) , destfile = paste0( docs.output.directory , fn ) , mode = 'wb' ) , silent = TRUE )
       
       # if the attempt to download the file resulted in an error..
       if ( class( attempt1 ) == 'try-error' ){
@@ -175,7 +170,7 @@ for ( year in nhis.years.to.download ){
         # and try again!
         
         # simply download the file into the local directory
-        download.cache( paste0( doc.nhis.ftp , fn ) , destfile = paste0( docs.output.directory , fn ) , mode = 'wb' )
+        downloadCache( paste0( doc.nhis.ftp , fn ) , destfile = paste0( docs.output.directory , fn ) , mode = 'wb' )
         
       }
       
@@ -240,7 +235,23 @@ for ( year in nhis.years.to.download ){
     "./sampleadult/samadult.exe",
     "./samplechild/samchild.exe" )
   
+  if (year %in% c(2008:2009)){
+    ftp.files <- c("familyxx.exe","househld.exe","injpoiep.exe",
+                   "paradata.exe","personsx.exe","samadult.exe",
+                   "samchild.exe")
+  }
   
+  if (year %in% c(2010:2012,2015:2017)){
+    ftp.files <- c("familyxx.zip","househld.zip","injpoiep.zip",
+                   "paradata.zip","personsx.zip","samadult.zip",
+                   "samchild.zip")
+  }
+  
+  if (year %in% c(2013,2014)){
+    ftp.files <- c("familyxx.zip","househld.zip","INJPOIEP.zip",
+                   "paradata.zip","personsx.zip","samadult.zip",
+                   "samchild.zip")
+  }
   #################################
   # data files to skip completely #
   #################################
@@ -335,7 +346,7 @@ for ( year in nhis.years.to.download ){
       
       # attempt #1:
       # simply download the file into the local directory
-      try.error <- try( download.cache( efl , destfile = paste0( output.directory , fn ) , mode = 'wb' ) , silent = TRUE )
+      try.error <- try( downloadCache( efl , destfile = paste0( output.directory , fn ) , mode = 'wb' ) , silent = TRUE )
       
       # if the attempt to download the file resulted in an error..
       if ( class( try.error ) == 'try-error' ){
@@ -348,7 +359,7 @@ for ( year in nhis.years.to.download ){
         # and try again!
         
         # simply download the file into the local directory
-        download.cache( efl , destfile = paste0( output.directory , fn ) , mode = 'wb' )
+        downloadCache( efl , destfile = paste0( output.directory , fn ) , mode = 'wb' )
         
       }
       
@@ -469,7 +480,7 @@ for ( year in nhis.years.to.download ){
       efl <- paste0( year.nhis.ftp , i )
       
       # ..and simply download the file into the local directory
-      download.cache( efl , destfile = paste0( output.directory , i ) , mode = 'wb' )
+      downloadCache( efl , destfile = paste0( output.directory , i ) , mode = 'wb' )
       
     }
     
@@ -506,8 +517,8 @@ for ( year in nhis.years.to.download ){
     
     # download the compressed file from the nhis ftp site
     # and save it to a temporary file on your local disk
-    # ..but just save this download.cache into an error-handling expression
-    dfeh <- expression( download.cache( efl , tf , mode = "wb" ) )
+    # ..but just save this downloadCache into an error-handling expression
+    dfeh <- expression( downloadCache( efl , tf , mode = "wb" ) )
     
     
     # start of error-handling

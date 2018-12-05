@@ -4,10 +4,10 @@
 library(foreign)
 
 # Define data directory
-data.directory <- "~/Dropbox/github/stat215b-final-project/data/OHIE_Public_Use_Files/OHIE_Data"
+ohie.data.directory <- paste0(repo.directory,"data/OHIE_Public_Use_Files/OHIE_Data")
 
 # Import data
-f <- file.path(data.directory, c("oregonhie_descriptive_vars.dta",
+f <- file.path(ohie.data.directory, c("oregonhie_descriptive_vars.dta",
                                  "oregonhie_ed_vars.dta",
                                  "oregonhie_inperson_vars.dta",
                                  "oregonhie_stateprograms_vars.dta",
@@ -20,4 +20,4 @@ names(ohie.list) <- gsub(".*/oregonhie_(.*)\\..*", "\\1", f) # name elements
 ohie <- Reduce(function(...) merge(..., by="person_id", all=T), ohie.list)
 
 # Clean up workspace
-rm(data.directory,f,ohie.list)
+rm(ohie.data.directory,f,ohie.list)

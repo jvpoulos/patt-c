@@ -2,8 +2,8 @@
 # # # if you think you've got a corrupted download,
 # # # then try setting these two options in your console before re-running
 
-# options( "download_cached.usecache" = FALSE )
-# options( "download_cached.savecache" = TRUE )
+# options( "downloadCache.usecache" = FALSE )
+# options( "downloadCache.savecache" = TRUE )
 
 # you must have the `digest` package loaded
 # install.packages( "digest" )
@@ -11,7 +11,7 @@ stopifnot(require(digest))
 
 
 
-download_cached <- 
+downloadCache <- 
   function (
     url ,
     
@@ -27,26 +27,26 @@ download_cached <-
     # if usedest is TRUE, then 
     # the program checks whether the destination file is present and contains at least one byte
     # and if so, doesn't do anything.
-    usedest = getOption( "download_cached.usedest" ) , 
+    usedest = getOption( "downloadCache.usedest" ) , 
     
     # if usecache is TRUE, then
     # it checks the temporary directory for a file that has already been downloaded,
     # and if so, copies the cached file to the destination file *instead* of downloading.
-    usecache = getOption( "download_cached.usecache" ) ,
+    usecache = getOption( "downloadCache.usecache" ) ,
     
     # if savecache is TRUE, then
     # overwrite the cache file.
     # (this is useful when a cached file did not download completely)
-    savecache = getOption( "download_cached.savecache" ) ,
+    savecache = getOption( "downloadCache.savecache" ) ,
     
     # if hashwarn is TRUE, then warn about missing hash checks
-    hashwarn = getOption( "download_cached.hashwarn" ) ,
+    hashwarn = getOption( "downloadCache.hashwarn" ) ,
     
     # how many attempts should be made with FUN?
     attempts = 3 ,
     # just in case of a server timeout or smthn equally annoying
     
-    # how long should download_cached wait between attempts?
+    # how long should downloadCache wait between attempts?
     sleepsec = 60
     
   ) {
@@ -190,7 +190,7 @@ download_cached <-
       if (is.na(hashes[urlhash])) {
         
         # if it doesn't exist and hash warnings are ON, alert the user to a missing hash
-        if( hashwarn ) message("download_cached(): hash missing for ", url, " (", urlhash, ")")
+        if( hashwarn ) message("downloadCache(): hash missing for ", url, " (", urlhash, ")")
         
       } else {
         
@@ -203,7 +203,7 @@ download_cached <-
         
         if (filehash != hashes[urlhash]) {
           
-          message("download_cached(): hash mismatch for ", url, " (", urlhash, ")")
+          message("downloadCache(): hash mismatch for ", url, " (", urlhash, ")")
           
           class(failed.attempt) <- 'try-error'
           

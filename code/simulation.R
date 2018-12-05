@@ -19,10 +19,10 @@ library(foreach)
 library(doParallel)
 library(dplyr)
 ## Setup
-ncores <- 12
+ncores <- 28 # stampede2
 registerDoParallel(ncores)
 
-sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1){
+sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1){
   # e1 controls number in the population who are eligible for treatment
   # e2 controls number eligible to be in RCT
   # e3 controls compliance
@@ -78,9 +78,9 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1
     rateC[i] <- mean(C)
     rateS[i] <- mean(S)
     rateT[i] <- mean(Tt)
-    RateConS[i] <- (mean(S) - mean(as.numeric(e2 + g1*W1 + g2*W2 + g3*W3 + R > 0)))**2
-    RateConT[i] <- (mean(Tt)-mean(as.numeric((e1 + f1*W1 + f2*W2 + V) > 0 )))**2
-    RateConC[i] <- (mean(C)-mean(as.numeric(e3 + h2*W2 + h3*W3 + Q > 0)))**2
+    RateConS[i] <- abs(mean(S) - mean(as.numeric(e2 + g1*W1 + g2*W2 + g3*W3 + R > 0)))
+    RateConT[i] <- abs(mean(Tt)-mean(as.numeric((e1 + f1*W1 + f2*W2 + V) > 0 )))
+    RateConC[i] <- abs(mean(C)-mean(as.numeric(e3 + h2*W2 + h3*W3 + Q > 0)))
     
     # Set up the RCT
     rct <- dat[rctsample,]
@@ -138,7 +138,7 @@ sim_estimates <- function(sims = 100, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1
 
 e <- seq(-2, 2, by = 0.5)
 e <- expand.grid(e,e,e,e,e,e)
-B <- 100
+B <- 10
 res <- foreach(i = 1:nrow(e)) %dopar% {
   cat(i)
   return(sim_estimates(B,e[i,1],e[i,2],e[i,3],e[i,4],e[i,5],e[i,6]))

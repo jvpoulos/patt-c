@@ -4,12 +4,12 @@
 library(weights)
 library(plyr)
 
-# Define directory for analysis 
-directory <- "~/Dropbox/github/stat215b-final-project/analysis"
+# Define code directory
+code.directory <- paste0(repo.directory,"code")
 
 # Source data prep scripts
-suppressWarnings(source(file.path(directory,"prepare-ohie.R")))
-source(file.path(directory,"prepare-nhis.R")) # script merges person, sample adult, and imputed income files
+suppressWarnings(source(file.path(code.directory,"prepare-ohie.R")))
+source(file.path(code.directory,"prepare-nhis.R")) # script merges person, sample adult, and imputed income files
 
 ## NHIS: sample selection
 
@@ -215,4 +215,3 @@ income.nhis <- foreach(i=years, .combine=c) %do% { # NHIS
 income.nhis <- factor(income.nhis)
 levels(income.nhis) <- colnames(income)
 income.nhis <- dummify(income.nhis, keep.na=TRUE)
-

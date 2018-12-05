@@ -3,7 +3,7 @@
 ## These estimates will be used to estimate the PATT.
 
 # Define directory for analysis 
-directory <- "~/Dropbox/github/stat215b-final-project/analysis"
+directory <- "~/Dropbox/github/patt-noncompliance/code"
 
 # Source scripts
 run.source <- FALSE
