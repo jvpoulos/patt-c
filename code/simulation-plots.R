@@ -6,15 +6,6 @@ library(ggplot2)
 library(gridExtra)
 color_extremes <- c("yellow", "red")
 
-Normalized<-function(y) {
-  x<-y[!is.na(y)]
-  x<-(x - min(x)) / (max(x) - min(x))
-  y[!is.na(y)]<-x
-  
-  return(y)
-}
-
-
 ### compare compliance rate and treatment rate
 p1 <- ggplot(res, aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) + 
   geom_tile(aes(fill = sqrt(mse_tpatt)),     colour = "yellow")+ scale_fill_gradientn(colours = color_extremes, limits = c(0, 2)) + labs(x = "Compliance rate", y = "% Eligible for Treatment", title = "PATT-C")+ 
@@ -65,7 +56,7 @@ colnames(res5) <- c("RateConC", "mse", "Estimator")
 levels(res5$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "SATT-C" = 3)
 
 ### Look at just compliance rate
-p1 <- ggplot(res2, aes(x = as.factor(round(Normalized(rateC),1)), y = sqrt(mse))) + 
+p1 <- ggplot(res2, aes(x = as.factor(round(rateC,1)), y = sqrt(mse))) + 
   geom_boxplot(aes(color = Estimator)) +labs(x = "Compliance rate", y = "RMSE", title = "RMSE of estimators when varying compliance rate") + 
   scale_color_brewer(palette="Set1") +
   theme(plot.title = element_text(hjust = 0.5))
@@ -73,7 +64,7 @@ ggsave(paste0(repo.directory , "plots/rmse_boxplots_rateC.png"), p1,
        width=11, height=8.5)
 
 ## rate of confounding with sample selection 
-p1 <- ggplot(res3, aes(x = as.factor(round(Normalized(RateConS),1)), y = sqrt(mse))) + 
+p1 <- ggplot(res3, aes(x = as.factor(round(RateConS,1)), y = sqrt(mse))) + 
   geom_boxplot(aes(color = Estimator)) +
   labs(x = "Confounding in sample selection", y = "RMSE", title = "RMSE of estimators when varying degree of confounding in sample selection") + 
   scale_color_brewer(palette="Set1")+
@@ -82,7 +73,7 @@ ggsave(paste0(repo.directory , "plots/rmse_boxplots_RateConS.png"), p1,
        width=11, height=8.5)
 
 ## rate of confounding with the treatment assignment 
-p1 <- ggplot(res4, aes(x = as.factor(round(Normalized(RateConT),1)), y = sqrt(mse))) + 
+p1 <- ggplot(res4, aes(x = as.factor(round(RateConT,1)), y = sqrt(mse))) + 
   geom_boxplot(aes(color = Estimator)) +
   labs(x = "Confounding in treatment assignment", y = "RMSE", title = "RMSE of estimators when varying degree of confounding in treatment assignment") + 
   scale_color_brewer(palette="Set1")+
@@ -91,7 +82,7 @@ ggsave(paste0(repo.directory , "plots/rmse_boxplots_RateConT.png"), p1,
        width=11, height=8.5)
 
 ## rate of confounding with compliance 
-p1 <- ggplot(res5, aes(x = as.factor(round(Normalized(RateConC),1)), y = sqrt(mse))) + 
+p1 <- ggplot(res5, aes(x = as.factor(round(RateConC,1)), y = sqrt(mse))) + 
   geom_boxplot(aes(color = Estimator)) +labs(x = "Confounding in compliance", y = "RMSE", title = "RMSE of estimators when varying degree of confounding in compliance") + 
   scale_color_brewer(palette="Set1")+
   theme(plot.title = element_text(hjust = 0.5))

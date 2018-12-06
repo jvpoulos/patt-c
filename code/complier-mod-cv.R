@@ -24,9 +24,5 @@ complier.mod.cv <- CV.SuperLearner(Y=insurance.ohie[treatment.ohie==1],
 
 summary(complier.mod.cv)
 
-# Output latex table
-print(toLatex(summary(complier.mod.cv)))
-
-# Output plot
-plot(complier.mod.cv)
-ggsave(file="complier-mod-cv.pdf", width = 210, height = 297, units = "mm")
+# Save models
+save(complier.mod.cv, file = "results/complier-mod-cv.rda")
