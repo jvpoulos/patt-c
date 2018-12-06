@@ -54,7 +54,7 @@ Y.nhis <- na.omit(data.frame("any.visit"=nhis.any.visit, # need to omit rows con
 run.model <- FALSE
 
 if(run.model){
-  save.image(paste0(repo.directory,"data/analysis.Rdata"))
+  save.image(paste0(repo.directory,"data/analysis.RData"))
   source(paste0(repo.directory, "code/complier-mod.R"))
 }
 

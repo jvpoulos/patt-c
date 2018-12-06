@@ -5,7 +5,6 @@ library(glmnet)
 library(gam)
 library(e1071)
 library(gbm)
-library(bartMachine)
 library(xgboost)
 
 # Creates additional randomForest wrappers changing both mtry and nodesize
@@ -68,7 +67,6 @@ predict.SL.mean <- function (object, newdata, family, X = NULL, Y = NULL, ...)
 SL.library.class<- c("SL.gbm",
 		    "SL.glmnet", # lasso
 		    "SL.glmnet.0", # ridge
-		                "SL.bartMachine",
 		                "SL.xgboost",
                     "SL.randomForest.1")# nodesize=1 for regression
 

@@ -1,5 +1,6 @@
-## Run this script on SCF
+## Run this script on server
 
+setwd("patt-noncompliance")
 # Load R workspace
 load("data/analysis.RData")
 
@@ -12,7 +13,8 @@ complier.mod <- SuperLearner(Y=insurance.ohie[treatment.ohie==1],
                              X=X.ohie[treatment.ohie == 1,], 
                              SL.library=SL.library.class,
                              family="binomial")
-complier.mod
+
+summary(complier.mod)
 
 # Store predictions
 C.pscore <- predict(complier.mod, X.ohie, onlySL=TRUE)
@@ -20,5 +22,5 @@ C.pscore <- predict(complier.mod, X.ohie, onlySL=TRUE)
 # Output predictions as .txt file
 write.table(C.pscore, "results/C.pscore.txt",  row.names=FALSE)
 
-# Output latex table
-print(toLatex(summary(complier.mod)))
+# Save model
+saveRDS(complier.mod, "results/complier-mod.rda")
