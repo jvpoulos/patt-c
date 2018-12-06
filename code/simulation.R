@@ -92,7 +92,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     nrt <- nrt[,-2]; colnames(nrt)[2] <- "Tt"
     
     # Predict who is a complier in the control group (T=0) using W1, W2, W3
-    complier_mod <- gbm(C~W1+W2+W3, data = rct, distribution = "bernoulli", n.trees = 100) # gbm
+    complier_mod <- gbm(C~W1+W2+W3, data = rct, distribution = "bernoulli", n.trees = 100, n.minobsinnode = 3, bag.fraction =0.75) # gbm
     rct$C_pscore <- predict(complier_mod, rct, type = "response", n.trees = 100)
     rct$Chat <- rep(0, nrow(rct))
     rct$Chat[rct$Tt == 0] <- as.numeric(rct$C_pscore[rct$Tt == 0] > 0.5)
@@ -101,7 +101,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     nrt_compliers <- nrt[nrt$Tt == 1,]
     
     # Fit a regression to the compliers in the RCT, use it to predict response in population "compliers"
-    response_mod <- gbm(Y~Tt + W1 + W2 + W3, data = rct_compliers, distribution = "gaussian") # gbm
+    response_mod <- gbm(Y~Tt + W1 + W2 + W3, data = rct_compliers, distribution = "gaussian", n.minobsinnode = 3, bag.fraction =0.75) # gbm
     nrt_tr_counterfactual <- cbind(nrt_compliers[,c("W1", "W2", "W3")], "Tt" = rep(1, nrow(nrt_compliers)))
     nrt_ctrl_counterfactual <- cbind(nrt_compliers[,c("W1", "W2", "W3")], "Tt" = rep(0, nrow(nrt_compliers)))
     nrt_compliers$Yhat_1 <- predict(response_mod, nrt_tr_counterfactual, n.trees = 100)
@@ -138,7 +138,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
 
 e <- seq(-2, 2, by = 1)
 e <- expand.grid(e,e,e,e,e,e)
-B <- 10
+B <- 5
 res <- foreach(i = 1:nrow(e)) %dopar% {
   cat(i)
   return(sim_estimates(B,e[i,1],e[i,2],e[i,3],e[i,4],e[i,5],e[i,6]))
