@@ -136,7 +136,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
   return(res)
 }
 
-e <- seq(-1, 1, by = 0.5)
+e <- seq(-2, 2, by = 1)
 e <- expand.grid(e,e,e,e,e,e)
 B <- 10
 res <- foreach(i = 1:nrow(e)) %dopar% {
