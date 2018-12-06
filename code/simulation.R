@@ -95,7 +95,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     complier_mod <- gbm(C~W1+W2+W3, data = rct, distribution = "bernoulli", n.trees = 100) # gbm
     rct$C_pscore <- predict(complier_mod, rct, type = "response", n.trees = 100)
     rct$Chat <- rep(0, nrow(rct))
-    rct$Chat[rct$Tt == 0] <- as.numeric(rct$C_pscore[rct$Tt == 0] >= 0.5)
+    rct$Chat[rct$Tt == 0] <- as.numeric(rct$C_pscore[rct$Tt == 0] > 0.5)
     rct_compliers <- rct[rct$Chat == 1 | rct$D == 1, ]
     
     nrt_compliers <- nrt[nrt$Tt == 1,]
@@ -136,7 +136,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
   return(res)
 }
 
-e <- seq(-2, 2, by = 0.5)
+e <- seq(-1, 1, by = 0.5)
 e <- expand.grid(e,e,e,e,e,e)
 B <- 10
 res <- foreach(i = 1:nrow(e)) %dopar% {
@@ -155,4 +155,4 @@ colnames(mse_dup) <- c("mse_tpatt", "mse_tpatt_unadj", "mse_rct_sate", "mse_rct_
 for(i in 1:4){mse_dup[,i] <- rep(mse[,i], each = B)}
 res <- cbind(res, mse_dup)
 res <- as.data.frame(res)
-save(res, file = "simulation_res.Rdata")
+save(res, file = "results/simulation_res.Rdata")
