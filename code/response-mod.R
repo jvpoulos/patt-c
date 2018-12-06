@@ -1,6 +1,5 @@
 ## Run this script on server
 
-setwd("patt-noncompliance")
 # Load R workspace
 load("data/analysis.RData")
 

@@ -8,7 +8,6 @@ options(mc.cores = 28)
 set.seed(1, "L'Ecuyer-CMRG")
 
 # Load R workspace
-setwd("patt-noncompliance")
 load("data/analysis.RData")
 
 # Source superlearner scripts to ensure libraries attached
