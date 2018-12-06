@@ -10,4 +10,4 @@
 #SBATCH --mail-user=poulos@berkeley.edu
 #SBATCH --mail-type=all    		# Send email at begin and end of job
 
-R --no-save < complier-mod.R
+R --no-save < code/complier-mod.R
