@@ -1,0 +1,145 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## Run this script on SCF
+> 
+> # Set WD
+> setwd("~/Documents/stat215b-final-project")
+> 
+> # Load R workspace
+> load("analysis.RData")
+> 
+> # Source superlearner scripts to ensure libraries attached
+> source("SuperLearner.R")
+> 
+> # Fit a regression to the compliers in the RCT
+> y.col <- 1:ncol(Y.ohie) # number of responses
+> Y.ohie.response <- Y.ohie[which(rct.compliers$complier==1),]
+> X.ohie.response <- data.frame("treatment"=treatment.ohie[which(rct.compliers$complier==1)],
++                               X.ohie[which(rct.compliers$complier==1),])
+> # Run response model
+> set.seed(42)
+> response.mod <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response[,i], 
++                                                         X=X.ohie.response, 
++                                                         SL.library=SL.library.class,
++                                                         family="binomial"))
+> 
+> names(response.mod) <- colnames(Y.ohie.response) # name each element of list
+> 
+> response.mod # summarize
+$any.visit
+
+Call:  
+SuperLearner(Y = Y.ohie.response[, i], X = X.ohie.response, family = "binomial",  
+    SL.library = SL.library.class) 
+
+
+                           Risk Coef
+SL.gbm_All            0.1888121    0
+SL.glmnet_All         0.1888206    0
+SL.glmnet.0_All       0.1887819    1
+SL.glmnet.0.25_All    0.1888094    0
+SL.glmnet.0.5_All     0.1888163    0
+SL.glmnet.0.75_All    0.1888093    0
+SL.nnet_All           0.2340803    0
+SL.randomForest_All   0.2401481    0
+SL.randomForest.1_All 0.2518065    0
+SL.randomForest.2_All 0.2409717    0
+SL.randomForest.3_All 0.2415727    0
+
+$any.out
+
+Call:  
+SuperLearner(Y = Y.ohie.response[, i], X = X.ohie.response, family = "binomial",  
+    SL.library = SL.library.class) 
+
+
+                           Risk        Coef
+SL.gbm_All            0.2404895 0.000000000
+SL.glmnet_All         0.2404839 0.000000000
+SL.glmnet.0_All       0.2404547 0.000000000
+SL.glmnet.0.25_All    0.2404817 0.000000000
+SL.glmnet.0.5_All     0.2404403 0.760546557
+SL.glmnet.0.75_All    0.2404403 0.000000000
+SL.nnet_All           0.2424181 0.000000000
+SL.randomForest_All   0.3311030 0.000000000
+SL.randomForest.1_All 0.3921710 0.230499216
+SL.randomForest.2_All 0.3339065 0.000000000
+SL.randomForest.3_All 0.3330367 0.008954227
+
+> 
+> # Compute unadjusted PATT
+> Y.ohie.response.unadj <- Y.ohie[which(rct.compliers$complier==1 | rct.compliers$complier==0),]
+> X.ohie.response.unadj <- data.frame("treatment"=treatment.ohie,
++                                     X.ohie)
+> set.seed(42)
+> response.mod2 <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response.unadj[,i], 
++                                                          X=X.ohie.response.unadj, 
++                                                          SL.library=SL.library.class,
++                                                          family="binomial"))
+> 
+> names(response.mod2) <- colnames(Y.ohie) # name each element of list
+> 
+> response.mod2 # summarize
+$any.visit
+
+Call:  
+SuperLearner(Y = Y.ohie.response.unadj[, i], X = X.ohie.response.unadj, family = "binomial",  
+    SL.library = SL.library.class) 
+
+
+                           Risk      Coef
+SL.gbm_All            0.1889793 0.0000000
+SL.glmnet_All         0.1889747 0.5400703
+SL.glmnet.0_All       0.1889748 0.4599297
+SL.glmnet.0.25_All    0.1889788 0.0000000
+SL.glmnet.0.5_All     0.1889784 0.0000000
+SL.glmnet.0.75_All    0.1889775 0.0000000
+SL.nnet_All           0.2289738 0.0000000
+SL.randomForest_All   0.2408039 0.0000000
+SL.randomForest.1_All 0.2525246 0.0000000
+SL.randomForest.2_All 0.2416605 0.0000000
+SL.randomForest.3_All 0.2418982 0.0000000
+
+$any.out
+
+Call:  
+SuperLearner(Y = Y.ohie.response.unadj[, i], X = X.ohie.response.unadj, family = "binomial",  
+    SL.library = SL.library.class) 
+
+
+                           Risk        Coef
+SL.gbm_All            0.2392882 0.000000000
+SL.glmnet_All         0.2392937 0.000000000
+SL.glmnet.0_All       0.2392878 0.730212145
+SL.glmnet.0.25_All    0.2392878 0.000000000
+SL.glmnet.0.5_All     0.2392878 0.000000000
+SL.glmnet.0.75_All    0.2392878 0.000000000
+SL.nnet_All           0.2404214 0.000000000
+SL.randomForest_All   0.3273160 0.000000000
+SL.randomForest.1_All 0.3911290 0.261753759
+SL.randomForest.2_All 0.3312791 0.000000000
+SL.randomForest.3_All 0.3291465 0.008034096
+
+> 
+> # Save models
+> save(response.mod, file = "response.mod.rda")
+> save(response.mod2, file = "response.mod2.rda")
+> 
+> 

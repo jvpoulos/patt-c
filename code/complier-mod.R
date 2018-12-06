@@ -1,13 +1,10 @@
 ## Run this script on SCF
 
-# Set WD
-setwd("~/Documents/stat215b-final-project")
-
 # Load R workspace
-load("analysis.RData")
+load("data/analysis.RData")
 
 # Source superlearner scripts to ensure libraries attached
-source("SuperLearner.R")
+source("code/SuperLearner.R")
 
 # Predict who is a complier in the control group
 set.seed(42)
@@ -21,4 +18,7 @@ complier.mod
 C.pscore <- predict(complier.mod, X.ohie, onlySL=TRUE)
 
 # Output predictions as .txt file
-write.table(C.pscore, "C.pscore.txt",  row.names=FALSE)
+write.table(C.pscore, "results/C.pscore.txt",  row.names=FALSE)
+
+# Output latex table
+print(toLatex(summary(complier.mod)))

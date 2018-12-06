@@ -1,3 +1,4 @@
-packages <- c("ggplot2","gridExtra","reshape2","dplyr","Matching","MASS","gbm","rpart","foreach","doParallel","dplyr","downloader","SAScii","RCurl","foreign","weights","plyr","downloader","digest")
+packages <- c("ggplot2","gridExtra","reshape2","dplyr","Matching","MASS","gbm","rpart","foreach","doParallel","dplyr","downloader","SAScii","RCurl",
+              "foreign","weights","plyr","downloader","digest","weights","SuperLearner","class", "randomForest","glmnet","gam","e1071","gbm","bartMachine","xgboost")
 
 install.packages(packages)

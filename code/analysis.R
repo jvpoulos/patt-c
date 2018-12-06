@@ -2,16 +2,11 @@
 ## Then, use response model to estimate population members' outcomes given their covariates.
 ## These estimates will be used to estimate the PATT.
 
-# Define directory for analysis 
-directory <- "~/Dropbox/github/patt-noncompliance/code"
 
-# Source scripts
-run.source <- FALSE
-if(run.source){
-source(file.path(directory,"prepare-analysis.R"))
-save.image(file.path(directory,"prepare-analysis.Rdata"))
-}
-load(file.path(directory,"prepare-analysis.Rdata")) # result of prepare-analysis.R
+# Source SuperLearner
+source(paste0(repo.directory,"code/SuperLearner.R"))
+
+load(paste0(repo.directory,"data/prepare-analysis.RData")) # result of prepare-analysis.R
 
 # Create dfs containing common features for RCT and observational study
 X.ohie <- na.omit(data.frame(n.hh,  # need to omit rows containing any NA
@@ -57,24 +52,14 @@ Y.nhis <- na.omit(data.frame("any.visit"=nhis.any.visit, # need to omit rows con
 
 ## Train compliance model on RCT treated. Use model to predict P(insurance == 1|covariates) on controls. 
 run.model <- FALSE
-if(run.model){ # Run compliance model on SCF
-# Predict who is a complier in the control group
-set.seed(42)
-complier.mod <- SuperLearner(Y=insurance.ohie[treatment.ohie==1], 
-                             X=X.ohie[treatment.ohie == 1,], 
-                             SL.library=SL.library.class,
-                             family="binomial")
-complier.mod
 
-# Store predictions
-C.pscore <- predict(complier.mod, X.ohie, onlySL=TRUE)
-
-# Output predictions as .txt file
-write.table(C.pscore, "C.pscore.txt",  row.names=FALSE)
+if(run.model){
+  save.image(paste0(repo.directory,"data/analysis.Rdata"))
+  source(paste0(repo.directory, "code/complier-mod.R"))
 }
 
 # Load Super Learner predictions for compliance model (complier-mod.R)
-C.pscore <- read.table(paste0(directory,"/C.pscore.txt"), quote="\"") 
+C.pscore <- read.table(paste0(code.directory,"/C.pscore.txt"), quote="\"") 
 
 rct.compliers <- data.frame("treatment"=treatment.ohie,
                             "insurance"=insurance.ohie,
@@ -105,7 +90,7 @@ response.mod # summarize
 save(response.mod, file = "response.mod.rda") # save model
 }
 
-load(file.path(directory,"response.mod.rda")) # result of response-mod.R
+load(file.path(code.directory,"response.mod.rda")) # result of response-mod.R
 
 # Use response model to estimate potential outcomes for population "compliers" on medicaid
 nrt.tr.counterfactual <- cbind("treatment" = rep(1, length(which(insurance.nhis==1))),
@@ -138,7 +123,7 @@ response.mod2 # summarize
 save(response2.mod, file = "response.mod2.rda") # save model
 }
 
-load(file.path(directory,"response.mod2.rda")) # result of response-mod.R
+load(file.path(code.directory,"response.mod2.rda")) # result of response-mod.R
 
 nrt.tr.counterfactual.unadj <- cbind("treatment" = rep(1, length(which(insurance.nhis==1 | insurance.nhis==0))),
                                      X.nhis[which(insurance.nhis==1| insurance.nhis==0),])
@@ -167,6 +152,4 @@ rct.sate <- lapply(y.col, function (i) (mean(Y.ohie[[i]][which(treatment.ohie==1
                    /mean(rct.compliers$complier[which(treatment.ohie==1)])) # Denom. is true RCT compliance rate
 
 # Save workspace
-save.image(file.path(directory,"analysis.Rdata"))
-
-
+save.image(file.path(code.directory,"analysis.Rdata"))

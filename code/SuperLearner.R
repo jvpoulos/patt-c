@@ -5,7 +5,8 @@ library(glmnet)
 library(gam)
 library(e1071)
 library(gbm)
-library(nnet)
+library(bartMachine)
+library(xgboost)
 
 # Creates additional randomForest wrappers changing both mtry and nodesize
 tuneGrid <- expand.grid(mtry=c(1,5,10), nodesize=c(1,5))
@@ -67,15 +68,9 @@ predict.SL.mean <- function (object, newdata, family, X = NULL, Y = NULL, ...)
 SL.library.class<- c("SL.gbm",
 		    "SL.glmnet", # lasso
 		    "SL.glmnet.0", # ridge
-                    "SL.glmnet.0.25",
-                    "SL.glmnet.0.5",
-                    "SL.glmnet.0.75",
-                    "SL.nnet",
-                    "SL.randomForest",
-                    "SL.randomForest.1", # nodesize=1 for regression
-                    "SL.randomForest.2",
-                    "SL.randomForest.3")
-               #     "SL.svm")
+		                "SL.bartMachine",
+		                "SL.xgboost",
+                    "SL.randomForest.1")# nodesize=1 for regression
 
 SL.library.reg <- c("SL.gam", # degree=2
                      "SL.gam.3",

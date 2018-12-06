@@ -3,6 +3,9 @@
 # Libraries
 library(weights) # install cluster -> HMisc -> weights
 library(plyr)
+library(foreach)
+
+years <- c(2008:2017)
 
 # Import RCT and population data
 ohie <- readRDS(paste0(repo.directory,"data/prepare-ohie.RData"))
@@ -13,10 +16,16 @@ nhis <- readRDS(paste0(repo.directory,"data/prepare-NHIS.RData"))
 # Keep participants below 138% FPL
 nhis[["2008"]] <- subset(nhis[["2008"]], nhis[["2008"]]$rat_cati <= 4) # < 124%
 nhis[["2009"]] <- subset(nhis[["2009"]], nhis[["2009"]]$povrati2 <= 138) # diff'nt var
-nhis[["2010"]] <- subset(nhis[["2010"]], nhis[["2010"]]$povrati3 <= 1380) 
-nhis[["2011"]] <- subset(nhis[["2011"]], nhis[["2011"]]$povrati3 <= 1380)
-nhis[["2012"]] <- subset(nhis[["2012"]], nhis[["2012"]]$povrati3 <= 1.380) # diffn't decimals
-nhis[["2013"]] <- subset(nhis[["2013"]], nhis[["2013"]]$povrati3 <= 1.380)
+
+foreach(i=c(2010,2011)) %do% {
+nhis[[as.character(i)]] <- subset(nhis[[as.character(i)]], nhis[[as.character(i)]]$povrati3 <= 1380) 
+nhis[[as.character(i)]] <- subset(nhis[[as.character(i)]], nhis[[as.character(i)]]$povrati3 <= 1380)
+}
+
+foreach(i=c(2012:2017)) %do% {
+nhis[[as.character(i)]] <- subset(nhis[[as.character(i)]], nhis[[as.character(i)]]$povrati3 <= 1.380) # diffn't decimals
+nhis[[as.character(i)]] <- subset(nhis[[as.character(i)]], nhis[[as.character(i)]]$povrati3 <= 1.380)
+}
 
 # Age 19-64
 foreach(i=years) %do% {
@@ -25,11 +34,13 @@ foreach(i=years) %do% {
 }
 
 # With medicaid or uninsured
+# Medicaid—Includes persons who do not have private coverage, but who have Medicaid or other statesponsored health plans including CHIP.
 foreach(i=years) %do% {
   nhis[[as.character(i)]] <- subset(nhis[[as.character(i)]], 
                                     nhis[[as.character(i)]]$medicaid==1 | nhis[[as.character(i)]]$medicaid==2  | # with medicaid
                                       nhis[[as.character(i)]]$notcov==1) # not covered
 }
+
 
 ## OHIE: create vectors for treatment, # of HH members, and compliance status
 
@@ -198,7 +209,7 @@ income3 <- cut(as.numeric(ohie$hhinc_cat_0m),  #OHIE
 income <- dummify(income3,keep.na=TRUE)
 
 income.nhis <- foreach(i=years, .combine=c) %do% { # NHIS
-  if(i %in% c(2009:2013)){
+  if(i %in% c(2009:2017)){
   cut(nhis[[as.character(i)]]$faminci2, 
       breaks=c(-Inf,10000,25000,Inf),
       labels=c("$0-$10000","$10001-$25000",">$25000")) 
@@ -212,3 +223,6 @@ income.nhis <- foreach(i=years, .combine=c) %do% { # NHIS
 income.nhis <- factor(income.nhis)
 levels(income.nhis) <- colnames(income)
 income.nhis <- dummify(income.nhis, keep.na=TRUE)
+
+# save data
+save.image(paste0(repo.directory,"data/prepare-analysis.RData"))
