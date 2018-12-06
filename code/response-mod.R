@@ -1,19 +1,12 @@
-## Run this script on SCF
+## Run this script on server
 
-# Set WD
-setwd("~/Documents/stat215b-final-project")
-
+setwd("patt-noncompliance")
 # Load R workspace
-load("analysis.RData")
+load("data/analysis.RData")
 
 # Source superlearner scripts to ensure libraries attached
-source("SuperLearner.R")
+source("code/SuperLearner.R")
 
-# Fit a regression to the compliers in the RCT
-y.col <- 1:ncol(Y.ohie) # number of responses
-Y.ohie.response <- Y.ohie[which(rct.compliers$complier==1),]
-X.ohie.response <- data.frame("treatment"=treatment.ohie[which(rct.compliers$complier==1)],
-                              X.ohie[which(rct.compliers$complier==1),])
 # Run response model
 set.seed(42)
 response.mod <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response[,i], 
@@ -40,6 +33,6 @@ names(response.mod2) <- colnames(Y.ohie) # name each element of list
 response.mod2 # summarize
 
 # Save models
-save(response.mod, file = "response.mod.rda")
-save(response.mod2, file = "response.mod2.rda")
+save(response.mod, file = "results/response-mod.rda")
+save(response.mod2, file = "results/response-mod2.rda")
 

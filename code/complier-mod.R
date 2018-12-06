@@ -23,4 +23,4 @@ C.pscore <- predict(complier.mod, X.ohie, onlySL=TRUE)
 write.table(C.pscore, "results/C.pscore.txt",  row.names=FALSE)
 
 # Save model
-saveRDS(complier.mod, "results/complier-mod.rda")
+save(complier.mod, file="results/complier-mod.rda")

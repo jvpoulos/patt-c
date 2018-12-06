@@ -59,12 +59,12 @@ if(run.model){
 }
 
 # Load Super Learner predictions for compliance model (complier-mod.R)
-C.pscore <- read.table(paste0(code.directory,"/C.pscore.txt"), quote="\"") 
+C.pscore <- read.table(paste0(repo.directory,"results/C.pscore.txt"), quote="\"", header=TRUE)$pred
 
 rct.compliers <- data.frame("treatment"=treatment.ohie,
                             "insurance"=insurance.ohie,
                             "C.pscore"=as.numeric(C.pscore[[1]]), # SL predictions in first column
-                            "C.hat"=ifelse(as.numeric(C.pscore[[1]])>=0.5,1,0),
+                            "C.hat"=ifelse(as.numeric(C.pscore[[1]])>0.5,1,0),
                             "complier"=0)
 rct.compliers$complier[rct.compliers$treatment==1 & rct.compliers$insurance==1] <- 1 # true compliers in the treatment group
 rct.compliers$complier[rct.compliers$treatment==0 & rct.compliers$C.hat==1] <- 1 # predicted compliers from the control group
@@ -76,21 +76,12 @@ X.ohie.response <- data.frame("treatment"=treatment.ohie[which(rct.compliers$com
                          X.ohie[which(rct.compliers$complier==1),])
 
 if(run.model){ 
-# Run response model
-set.seed(42)
-response.mod <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response[,i], 
-                                                        X=X.ohie.response, 
-                                                        SL.library=SL.library.class,
-                                                        family="binomial"))
-
-names(response.mod) <- colnames(Y.ohie.response) # name each element of list
-
-response.mod # summarize
-
-save(response.mod, file = "response.mod.rda") # save model
+  save.image(paste0(repo.directory,"data/analysis.RData"))
+  source(paste0(repo.directory, "code/response-mod.R"))
 }
 
-load(file.path(code.directory,"response.mod.rda")) # result of response-mod.R
+load(paste0(repo.directory,"results/response-mod.rda")) # result of response-mod.R
+load(paste0(repo.directory,"results/response-mod2.rda")) # result of response-mod.R
 
 # Use response model to estimate potential outcomes for population "compliers" on medicaid
 nrt.tr.counterfactual <- cbind("treatment" = rep(1, length(which(insurance.nhis==1))),
@@ -108,22 +99,6 @@ t.patt <- lapply(y.col, function (i) mean(Y.hat.1[[i]]) - mean(Y.hat.0[[i]]))
 Y.ohie.response.unadj <- Y.ohie[which(rct.compliers$complier==1 | rct.compliers$complier==0),]
 X.ohie.response.unadj <- data.frame("treatment"=treatment.ohie,
                                     X.ohie)
-
-if(run.model){ 
-set.seed(42)
-response.mod2 <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response.unadj[,i], 
-                                                         X=X.ohie.response.unadj, 
-                                                         SL.library=SL.library.class,
-                                                         family="binomial"))
-
-names(response.mod2) <- colnames(Y.ohie) # name each element of list
-
-response.mod2 # summarize
-
-save(response2.mod, file = "response.mod2.rda") # save model
-}
-
-load(file.path(code.directory,"response.mod2.rda")) # result of response-mod.R
 
 nrt.tr.counterfactual.unadj <- cbind("treatment" = rep(1, length(which(insurance.nhis==1 | insurance.nhis==0))),
                                      X.nhis[which(insurance.nhis==1| insurance.nhis==0),])
