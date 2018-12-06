@@ -1,0 +1,218 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global}
+    \entry{Hartman}{article}{}
+      \name{author}{4}{}{%
+        {{uniquename=0,uniquepart=base,hash=a17a3cf43f990c88df7fc3b5db193a04}{%
+           family={Hartman},
+           familyi={H\bibinitperiod},
+           given={Erin},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=4f57a39b95ec37d7103109f71b9c6cbd}{%
+           family={Grieve},
+           familyi={G\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=713003525404d9bc275b8b6d90493ee4}{%
+           family={Ramsahai},
+           familyi={R\bibinitperiod},
+           given={Roland},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=acabc7c3c59328ec122d9976afe74abf}{%
+           family={Sekhon},
+           familyi={S\bibinitperiod},
+           given={Jasjeet\bibnamedelima S},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Citeseer}%
+      }
+      \strng{namehash}{cbcc5c658ecb00a8ae636e88bcd83315}
+      \strng{fullhash}{aed9ba294341331c320d5b44973faeb2}
+      \strng{bibnamehash}{aed9ba294341331c320d5b44973faeb2}
+      \strng{authorbibnamehash}{aed9ba294341331c320d5b44973faeb2}
+      \strng{authornamehash}{cbcc5c658ecb00a8ae636e88bcd83315}
+      \strng{authorfullhash}{aed9ba294341331c320d5b44973faeb2}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the Royal Statistical Society: Series A (Statistics in Society)}
+      \field{title}{From SATE to PATT: Combining experimental with observational studies to estimate population treatment effects}
+      \field{volume}{10}
+      \field{year}{2015}
+      \field{pages}{1111}
+      \range{pages}{1}
+    \endentry
+    \entry{NBERw22363}{report}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=27cd51a213b9f8414d056a7e7b7c690b}{%
+           family={Kowalski},
+           familyi={K\bibinitperiod},
+           given={Amanda\bibnamedelima E},
+           giveni={A\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {National Bureau of Economic Research}%
+      }
+      \strng{namehash}{27cd51a213b9f8414d056a7e7b7c690b}
+      \strng{fullhash}{27cd51a213b9f8414d056a7e7b7c690b}
+      \strng{bibnamehash}{27cd51a213b9f8414d056a7e7b7c690b}
+      \strng{authorbibnamehash}{27cd51a213b9f8414d056a7e7b7c690b}
+      \strng{authornamehash}{27cd51a213b9f8414d056a7e7b7c690b}
+      \strng{authorfullhash}{27cd51a213b9f8414d056a7e7b7c690b}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{number}{22363}
+      \field{series}{Working Paper Series}
+      \field{title}{Doing More When You're Running {LATE}: Applying Marginal Treatment Effect Methods to Examine Treatment Effect Heterogeneity in Experiments}
+      \field{type}{Working Paper}
+      \field{year}{2016}
+      \verb{doi}
+      \verb 10.3386/w22363
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nber.org/papers/w22363
+      \endverb
+      \verb{url}
+      \verb http://www.nber.org/papers/w22363
+      \endverb
+    \endentry
+    \entry{stuart2011use}{article}{}
+      \name{author}{4}{}{%
+        {{uniquename=0,uniquepart=base,hash=90c7d8eb677332bbcccb1952b07719c4}{%
+           family={Stuart},
+           familyi={S\bibinitperiod},
+           given={Elizabeth\bibnamedelima A},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=387a4aa90a2ba1e8f97669180d54dfa1}{%
+           family={Cole},
+           familyi={C\bibinitperiod},
+           given={Stephen\bibnamedelima R},
+           giveni={S\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0ba4e73c39396ce1bd044fc359bda6d3}{%
+           family={Bradshaw},
+           familyi={B\bibinitperiod},
+           given={Catherine\bibnamedelima P},
+           giveni={C\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=d8b4072f3a6962c09e6ab694647a2454}{%
+           family={Leaf},
+           familyi={L\bibinitperiod},
+           given={Philip\bibnamedelima J},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley Online Library}%
+      }
+      \strng{namehash}{d15b89750a5e042b4404e2bf6ba2e229}
+      \strng{fullhash}{198bbf228c349ffb48947545c0ac9b00}
+      \strng{bibnamehash}{198bbf228c349ffb48947545c0ac9b00}
+      \strng{authorbibnamehash}{198bbf228c349ffb48947545c0ac9b00}
+      \strng{authornamehash}{d15b89750a5e042b4404e2bf6ba2e229}
+      \strng{authorfullhash}{198bbf228c349ffb48947545c0ac9b00}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the Royal Statistical Society: Series A (Statistics in Society)}
+      \field{number}{2}
+      \field{title}{The use of propensity scores to assess the generalizability of results from randomized trials}
+      \field{volume}{174}
+      \field{year}{2011}
+      \field{pages}{369\bibrangedash 386}
+      \range{pages}{18}
+    \endentry
+    \entry{Taubman}{article}{}
+      \name{author}{5}{}{%
+        {{uniquename=0,uniquepart=base,hash=4f066f0f05fb1a77e69e07d2b88297a5}{%
+           family={Taubman},
+           familyi={T\bibinitperiod},
+           given={Sarah},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=051c00f254814d44715d4460f27551f2}{%
+           family={Allen},
+           familyi={A\bibinitperiod},
+           given={Heidi},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=7dde85e5d325662da203e9befd0c5e66}{%
+           family={Wright},
+           familyi={W\bibinitperiod},
+           given={Bill},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=e9ef78e63d89425adcb55ed444a84ae6}{%
+           family={Baicker},
+           familyi={B\bibinitperiod},
+           given={Katherine},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8302593e3b893aa848cec33d5fabb13f}{%
+           family={Finkelstein},
+           familyi={F\bibinitperiod},
+           given={Amy},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5be530420450477a264d3940fccc0486}
+      \strng{fullhash}{ec56173a25a67ceb7480ce815d2ed616}
+      \strng{bibnamehash}{ec56173a25a67ceb7480ce815d2ed616}
+      \strng{authorbibnamehash}{ec56173a25a67ceb7480ce815d2ed616}
+      \strng{authornamehash}{5be530420450477a264d3940fccc0486}
+      \strng{authorfullhash}{ec56173a25a67ceb7480ce815d2ed616}
+      \field{sortinit}{T}
+      \field{sortinithash}{6f7aff9db9dcfeb7f95fd5bbd2f78df9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{month}{1}
+      \field{number}{6168}
+      \field{title}{Medicaid Increases Emergency Department Use: Evidence from Oregon's Health Insurance Experiment}
+      \field{volume}{343}
+      \field{year}{2014}
+      \field{pages}{263\bibrangedash 268}
+      \range{pages}{6}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

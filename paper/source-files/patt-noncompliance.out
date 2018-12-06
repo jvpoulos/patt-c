@@ -1,0 +1,18 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Estimator}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Assumptions}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{PATT and PATT-C}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Estimation procedure}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Modeling assumptions}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Ensemble method}{section.3}% 7
+\BOOKMARK [1][-]{section.4}{Simulations}{}% 8
+\BOOKMARK [2][-]{subsection.4.1}{Simulation design}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.2}{Simulation results}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{Application: Medicaid and health care use}{}% 11
+\BOOKMARK [2][-]{subsection.5.1}{RCT sample}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.2}{Observational data}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.3}{Verifying assumptions}{section.5}% 14
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Sensitivity to no defiers assumption}{subsection.5.3}% 15
+\BOOKMARK [2][-]{subsection.5.4}{Empirical results}{section.5}% 16
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Comparison with previous results}{subsection.5.4}% 17
+\BOOKMARK [1][-]{section.6}{Discussion}{}% 18

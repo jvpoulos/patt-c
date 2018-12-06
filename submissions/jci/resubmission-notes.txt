@@ -1,0 +1,52 @@
+* highlight the changes to your manuscript within the document by using underlined or colored text*
+
+*Please pay attention to the order of your uploaded files; the first one is the reply to the reviewer(s)' comments, followed by the revised manuscript, and, if applicable, Tables and Figures, and Supplementary Material. If you decide to keep the original files, these must be the last ones in the order of your uploaded files. *
+
+** Analyses **
+
+weights for compliance ensemble
+
+*adjusted SATT in empirical application
+	Should be positive, like A28 of Finkelstein
+
+report 95% CIs
+
+covariates: pre-treatment ER utilization; # lottery entrants (K 27)
+
+Figure on who is more likely to be compliers (using model predictions)
+
+heterogeneous treatment effects with ensemble
+
+# of ER visits (for comparison)
+
+Placebo tests - comparing the average outcomes predicted by the model with the average of the observed outcomes for the treated group. Again given sufficient power, a failure to find equivalence between the predicted and observed outcomes indicates a failure of at least one assumption underlying Theorem 1 and bias in the estimated population treatment effects.
+	Figure I.5 in Appendix I,
+
+** Writing **
+
+More on variable selection properties of candidate learners 
+	BART description from Hartman
+
+*Comparision with previous results*
+
+Who's a complier?
+	The individuals who take up treatment are more likely to be female, on SNAP or TANF, and they have higher ER utilization in the pre-period. (K 30) (Table 3)
+
+	Relative to our study population, compliers are somewhat older, more likely white, in worse health, and in 		lower socioeconomic status. (F 1078) (A26)
+
+** Questions for Kellie **
+
+relationship to reweighting methods
+	The result enables us to estimate $\tau_{\text{PATT}}$ by reweighting the RCT responses according to the distribution of covariates in the population. (2.2)
+
+	This shows that a reweighting approach is needed to extrapolate RCT results to a wider population. (4.2)
+
+
+---
+
+module load intel/17.0.4
+module load impi/17.0.3
+module load RstatsPackages/3.4.0
+module load Rstats/3.4.0
+
+

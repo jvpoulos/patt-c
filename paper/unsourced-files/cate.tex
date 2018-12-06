@@ -1,0 +1,21 @@
+{\color{red}
+\section{Conditional average treatment effects}  \label{cate}
+}
+
+Let $\boldsymbol{X}$ be a $N \times p$ vector of pretreatment covariates, $\boldsymbol{Z}$ a length-$N$ vector representing treatment assignment, and $\boldsymbol{\Psi}$ a $N \times q$ vector representing number of draws in the lottery. In the current application, $\boldsymbol{X}, \boldsymbol{Z}, \mathrm{\, and\,} \boldsymbol{\Psi}$ are binary vectors. 
+
+We estimate the conditional average treatment effect (CATE), which measures how treatment effects vary across each covariate:
+
+\begin{equation} \label{cate}
+	\phi (\boldsymbol{Z}, \boldsymbol{\Psi}, \boldsymbol{x}) = \E[Y(\boldsymbol{Z}) - Y(0) | \boldsymbol{\Psi}, \boldsymbol{X} = \boldsymbol{x}].
+\end{equation} Estimating Eq. (\ref{cate}) on the observed data may lead to estimates that are reflective of random variation in the sample, rather than systematic variation in the response to treatment, especially when the covariate group is small. Instead, we employ a weighted ensemble method, where each $m = \left\{1, 2, ..., M\right\}$ ensemble candidates estimate the response surface:
+
+\begin{equation} \label{r-surface}
+	g_m (\boldsymbol{Z}, \boldsymbol{\Psi}, \boldsymbol{x}) = \E[Y | \boldsymbol{Z}, \boldsymbol{\Psi}, \boldsymbol{x}].
+\end{equation} Heterogeneous treatment effects are estimated by taking differences across response surfaces:
+
+\begin{equation} \label{cate-hat}
+	\hat{\phi} (\boldsymbol{Z}, \boldsymbol{\Psi}, \boldsymbol{x}) = 
+	\sum^{M}_{m=1} w_m g_m (1, \boldsymbol{\Psi}, \boldsymbol{x}) - 
+	\sum^{M}_{m=1} w_m g_m (0, \boldsymbol{\Psi}, \boldsymbol{x}), 
+\end{equation} where weights $\boldsymbol{w} = \left\{w_1, w_2, ..., w_M\right\}$ are attached to each candidate learner. Weights are selected based on the out-of-sample predictive performance of each candidate learner during 10-fold cross-validation using the \texttt{super learner} ensemble method \citep{van2007}. 
