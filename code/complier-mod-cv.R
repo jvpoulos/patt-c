@@ -19,7 +19,6 @@ complier.mod.cv <- CV.SuperLearner(Y=insurance.ohie[treatment.ohie==1],
                              X=X.ohie[treatment.ohie == 1,], 
                              SL.library=SL.library.class,
                              family="binomial",
-                             V=10,
                              parallel = "multicore",
                              cvControl =list(V=10L)) 
 
