@@ -2,10 +2,6 @@
 ## Then, use response model to estimate population members' outcomes given their covariates.
 ## These estimates will be used to estimate the PATT.
 
-
-# Source SuperLearner
-source(paste0(repo.directory,"code/SuperLearner.R"))
-
 load(paste0(repo.directory,"data/prepare-analysis.RData")) # result of prepare-analysis.R
 
 # Create dfs containing common features for RCT and observational study
@@ -53,16 +49,18 @@ Y.nhis <- na.omit(data.frame("any.visit"=nhis.any.visit, # need to omit rows con
 ## Train compliance model on RCT treated. Use model to predict P(insurance == 1|covariates) on controls. 
 run.model <- FALSE
 if(run.model){
+  # Source SuperLearner
+  source(paste0(repo.directory,"code/SuperLearner.R"))
   save.image(paste0(repo.directory,"data/analysis.RData"))
   source(paste0(repo.directory, "code/complier-mod.R"))
 }
 
 # Load Super Learner predictions for compliance model (complier-mod.R)
-C.pscore <- read.table(paste0(repo.directory,"results/C.pscore.txt"), quote="\"", header=TRUE)$pred
+C.pscore <- read.table(paste0(repo.directory,"results/C.pscore.txt"), quote="\"", header=TRUE)
 
 rct.compliers <- data.frame("treatment"=treatment.ohie,
                             "insurance"=insurance.ohie,
-                            "C.pscore"=as.numeric(C.pscore[[1]]), # SL predictions in first column
+                            "C.pscore"=as.numeric(C.pscore$pred), # SL predictions in first column
                             "C.hat"=ifelse(as.numeric(C.pscore[[1]])>0.5,1,0),
                             "complier"=0)
 rct.compliers$complier[rct.compliers$treatment==1 & rct.compliers$insurance==1] <- 1 # true compliers in the treatment group
@@ -88,8 +86,8 @@ nrt.tr.counterfactual <- cbind("treatment" = rep(1, length(which(insurance.nhis=
 nrt.ctrl.counterfactual <- cbind("treatment" = rep(0, length(which(insurance.nhis==1))),
                                  X.nhis[which(insurance.nhis==1),])
 
-Y.hat.1 <- lapply(y.col, function (i) predict(response.mod[[i]], nrt.tr.counterfactual)$library.predict[,8]) # extract RF predictions
-Y.hat.0 <- lapply(y.col, function (i) predict(response.mod[[i]], nrt.ctrl.counterfactual)$library.predict[,8])
+Y.hat.1 <- lapply(y.col, function (i) predict(response.mod[[i]], nrt.tr.counterfactual, onlySL = T)$pred) # extract SL predictions
+Y.hat.0 <- lapply(y.col, function (i) predict(response.mod[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred) 
 
 # Compute PATT estimator
 t.patt <- lapply(y.col, function (i) mean(Y.hat.1[[i]]) - mean(Y.hat.0[[i]]))
@@ -104,8 +102,8 @@ nrt.tr.counterfactual.unadj <- cbind("treatment" = rep(1, length(which(insurance
 nrt.ctrl.counterfactual.unadj <- cbind("treatment" = rep(0, length(which(insurance.nhis==1 | insurance.nhis==0))),
                                        X.nhis[which(insurance.nhis==1 | insurance.nhis==0),])
 
-Y.hat.1.unadj <- lapply(y.col, function (i) predict(response.mod2[[i]], nrt.tr.counterfactual.unadj)$library.predict[,8]) # extract RF predictions
-Y.hat.0.unadj <- lapply(y.col, function (i) predict(response.mod2[[i]], nrt.ctrl.counterfactual.unadj)$library.predict[,8])
+Y.hat.1.unadj <- lapply(y.col, function (i) predict(response.mod2[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred) 
+Y.hat.0.unadj <- lapply(y.col, function (i) predict(response.mod2[[i]], nrt.ctrl.counterfactual.unadj, onlySL = T)$pred)
 
 t.patt.unadj <- lapply(y.col, function (i) mean(Y.hat.1.unadj[[i]]) - mean(Y.hat.0.unadj[[i]]))
 
@@ -115,10 +113,22 @@ rct.tr.counterfactual.unadj <- cbind("treatment" = rep(1, length(which(insurance
 rct.ctrl.counterfactual.unadj <- cbind("treatment" = rep(0, length(which(insurance.ohie==1 | insurance.ohie==0))),
                                        X.ohie[which(insurance.ohie==1 | insurance.ohie==0),])
 
-Y.hat.1.unadj.rct <- lapply(y.col, function (i) predict(response.mod2[[i]], rct.tr.counterfactual.unadj)$library.predict[,8]) # extract RF predictions
-Y.hat.0.unadj.rct <- lapply(y.col, function (i) predict(response.mod2[[i]], rct.ctrl.counterfactual.unadj)$library.predict[,8])
+Y.hat.1.unadj.rct <- lapply(y.col, function (i) predict(response.mod2[[i]], rct.tr.counterfactual.unadj)$pred) 
+Y.hat.0.unadj.rct <- lapply(y.col, function (i) predict(response.mod2[[i]], rct.ctrl.counterfactual.unadj)$pred)
 
 t.satt.unadj <- lapply(y.col, function (i) mean(Y.hat.1.unadj.rct[[i]]) - mean(Y.hat.0.unadj.rct[[i]]))
+
+# Compute adjusted SATT using predicted values from response model
+
+rct.tr.counterfactual.adj <- cbind("treatment" = rep(1, length(which(insurance.ohie==1))),
+                                     X.ohie[which(insurance.ohie==1),])
+rct.ctrl.counterfactual.adj <- cbind("treatment" = rep(0, length(which(insurance.ohie==1))),
+                                       X.ohie[which(insurance.ohie==1),])
+
+Y.hat.1.adj.rct <- lapply(y.col, function (i) predict(response.mod[[i]], rct.tr.counterfactual.adj, onlySL = T)$pred) 
+Y.hat.0.adj.rct <- lapply(y.col, function (i) predict(response.mod[[i]], rct.ctrl.counterfactual.adj, onlySL = T)$pred)
+
+t.satt.adj <- lapply(y.col, function (i) mean(Y.hat.1.adj.rct[[i]]) - mean(Y.hat.0.adj.rct[[i]]))
 
 # Compute SATE
 rct.sate <- lapply(y.col, function (i) (mean(Y.ohie[[i]][which(treatment.ohie==1)]) - # Num. is ITT effect
