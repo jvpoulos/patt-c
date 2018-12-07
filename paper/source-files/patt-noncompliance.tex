@@ -3,7 +3,7 @@
 %
 %% To run: pdflatexmk + latex %
 
-\title{Estimating population average treatment effects from experiments with noncompliance\thanks{The authors thank Jon McAuliffe and Jas Sekhon and his research group at UC Berkeley for valuable comments. Poulos acknowledges support from the National Science Foundation Graduate Research Fellowship [grant number DGE 1106400]. This work used the Extreme Science and Engineering Discovery Environment (XSEDE)-allocated systems Stampede2 at the Texas Advanced Computing Center (TACC) through allocation SES180010.}
+\title{Estimating population average treatment effects from experiments with noncompliance\thanks{The authors thank Jon McAuliffe and Jas Sekhon and his research group at UC Berkeley for valuable comments. Poulos acknowledges support from the National Science Foundation Graduate Research Fellowship [grant number DGE 1106400]. {\color{red}This work used the Extreme Science and Engineering Discovery Environment (XSEDE) supercomputer Stampede2 at the Texas Advanced Computing Center (TACC) through allocation SES180010.}}
 }
 \author{Kellie Ottoboni\thanks{Department of Statistics, University of California, Berkeley. email: \href{mailto:kellieotto@berkeley.edu}{\nolinkurl{kellieotto@berkeley.edu}}.} \hspace{10mm}
 Jason Poulos\thanks{\emph{Corresponding author:} Department of Political Science, University of California, Berkeley. email: \href{mailto:poulos@berkeley.edu}{\nolinkurl{poulos@berkeley.edu}}.} 
@@ -327,7 +327,7 @@ In addition to the identification assumptions, we require additional modeling as
 
 In the empirical application, we use the weighted ensemble method described in \citet{van2007} for \ref{compliance-model} and \ref{response-model} of the estimation procedure. This ensemble method combines algorithms with a convex combination of weights based on minimizing cross-validated error. It is shown to control for overfitting and outperforms single algorithms selected by cross-validation \citep{polley2010super}. 
 
-We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes. We select four types of candidate algorithms: gradient boosting machine; regularized linear model (e.g., Lasso or ridge regression) \citep{tibshirani2012strong}; neural network with a single hidden layer; and random forests \citep{breiman2001}. Lasso regression is an attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
+We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes. We select four types of candidate algorithms: boosting algorithms, including gradient boosting \citep{friedman2001greedy, friedman2002stochastic} and XGBoost; regularized linear model (i.e., Lasso or ridge regression) \citep{tibshirani2012strong}; and random forests \citep{breiman2001}. Lasso regression is an attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
 
 \section{Simulations} \label{sim}
 \color{red}We conduct a simulation study to compare the performance of the PATT and PATT-C estimators. For comparison, we also estimate the Sample Average Treatment Effect on the Treated Compliers (SATT-C) by fitting the response curve for compliers in the RCT --- which we do in \ref{response-model} for estimating $\tau_{\text{PATT-C}}$ --- and then taking the mean difference in potential outcomes for treated compliers in the sample:
@@ -370,11 +370,11 @@ We generate a population of 30,000 individuals and randomly sample 5,000. Those 
 We set each individual's treatment received $D_i$ according to their treatment assignment and complier status and observe their responses $Y_{ist}$. In this design, the way that we've set $S_i$, $T_i$, $D_i$, $C_i$, and $Y_{ist}$ ensures that Assumptions \ref{consistency} -- \ref{ER} hold.
 
 {\color{red}
-In the assigned-treatment RCT group $(S_i = 1, T_i = 1)$, we train a Gradient Boosting Machine (GBM) \citep{friedman2001greedy, friedman2002stochastic} on the covariates to predict who in the control group $(S_i = 1, T_i = 0)$ has $C_i=1$, which is unobservable.} These individuals \textit{would have} complied had they been assigned to the treatment group. For this group of observed compliers to treatment and predicted compliers from the control group of the RCT, we estimate the response surface {\color{red}using a GBM} with features $(W^{1}_i, W^{2}_i, W^{3}_i)$ and $D_i$. The PATT-C is estimated according to the estimation procedure outlined above.
+In the assigned-treatment RCT group $(S_i = 1, T_i = 1)$, we train a gradient boosting algorithm on the covariates to predict who in the control group $(S_i = 1, T_i = 0)$ has $C_i=1$, which is unobservable.} These individuals \textit{would have} complied had they been assigned to the treatment group. For this group of observed compliers to treatment and predicted compliers from the control group of the RCT, we estimate the response surface {\color{red}using gradient boosting} with features $(W^{1}_i, W^{2}_i, W^{3}_i)$ and $D_i$. The PATT-C is estimated according to the estimation procedure outlined above.
 
 \subsection{Simulation results}\label{sim-results}
 
-{\color{red}We vary each of the parameters $e_1, e_2,$, $e_3$, $e_4$, $e_5$, and $e_6$ along a grid by $-2$ to $2$ in increments of $0.5$ in order to generate different combinations of rates of compliance, treatment eligibility, RCT eligibility in the population, and confounding in sample selection, treatment assignment, and compliance. For each possible combination of the six parameters, we run the simulation 10 times and compute the average root mean squared error (RMSE) of PATT-C, PATT, and the SATT-C.} All other parameters are held constant. The PATT and PATT-C estimates are obtained by estimating the response surface on all individuals in the RCT and applying \ref{response-predict} of our estimation procedure to the nonrandomized trial individuals. {\color{red}SATT-C is estimated using the predicted values from the response model trained in \ref{response-model}.}
+{\color{red}We vary each of the parameters $e_1, e_2,$, $e_3$, $e_4$, $e_5$, and $e_6$ along a grid of $\{-2, -1, 0, 1, 2\}$ in order to generate different combinations of rates of compliance, treatment eligibility, RCT eligibility in the population, and confounding. For each possible combination of the six parameters, we run the simulation ten times and compute the average root mean squared error (RMSE) of PATT-C, PATT, and the SATT-C.} All other parameters are held constant. The PATT and PATT-C estimates are obtained by estimating the response surface on all individuals in the RCT and applying \ref{response-predict} of our estimation procedure to the nonrandomized trial individuals. {\color{red}SATT-C is estimated using the predicted values from the response model trained in \ref{response-model}.}
 
 Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of compliers in the whole population, the percentage of people in the whole population eligible to participate in the RCT, and the RMSE of the PATT and PATT-C estimators. The pattern of performance is qualitatively similar: both perform best when compliance is high and perform badly when compliance is low. {\color{red}Figure~\ref{fig:rmse_ratec_ratet}} shows that for a fixed rate of compliance, the RMSE of both estimators increases with the fraction of the total population eligible to participate in the RCT. When less than 70\% of the RCT is compliers, PATT-C tends to have lower RMSE than PATT.
 %
@@ -399,7 +399,7 @@ Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of 
 	\end{center}
 \end{figure}
 
-Figure~\ref{fig:sim_compliance} compares the RMSE of PATT and PATT-C with the SATT-C  at varying levels of compliance in the total population. When compliance is low, both PATT and PATT-C estimators have a large RMSE. The adjusted estimator has a large variance because the subset of the RCT who are considered compliers is relatively small, whereas the unadjusted estimator has bias from the large amount of crossover. For low levels of compliance, the SATT-C actually tends to estimate the average causal effects for the target population more closely than either PATT or PATT-C. On the other hand, when the compliance rate is high, both PATT and PATT-C estimators have low RMSE, with {\color{red} the} adjusted estimator performing slightly better. Meanwhile, the median RMSE for the SATT-C stays relatively constant regardless of compliance rate {\color{red}, and} the estimator is unbiased for the SATT-C rather than the PATT-C. The SATT-C estimate accounts for noncompliance, but is unable to account for differences in pretreatment covariates between the RCT sample and target population. This shows that {\color{red}reweighting or response surface methods} are needed to extrapolate RCT results to a wider population.
+Figure~\ref{fig:rmse_boxplots_rateC} compares the RMSE of PATT and PATT-C with the SATT-C  at varying levels of compliance in the total population. When compliance is low, both PATT and PATT-C estimators have a large RMSE. The adjusted estimator has a large variance because the subset of the RCT who are considered compliers is relatively small, whereas the unadjusted estimator has bias from the large amount of crossover. For low levels of compliance, the SATT-C actually tends to estimate the average causal effects for the target population more closely than either PATT or PATT-C. On the other hand, when the compliance rate is high, both PATT and PATT-C estimators have low RMSE, with {\color{red} the} adjusted estimator performing slightly better. Meanwhile, the median RMSE for the SATT-C stays relatively constant regardless of compliance rate {\color{red}, and} the estimator is unbiased for the SATT-C rather than the PATT-C. The SATT-C estimate accounts for noncompliance, but is unable to account for differences in pretreatment covariates between the RCT sample and target population. This shows that {\color{red}reweighting or response surface methods} are needed to extrapolate RCT results to a wider population.
 
 %
 %\vspace{10mm}
@@ -409,9 +409,9 @@ Figure~\ref{fig:sim_compliance} compares the RMSE of PATT and PATT-C with the SA
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width = 1\textwidth]{rmse_boxplots}
-\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to compliance rates in the total population.\label{fig:sim_compliance}}
-%\caption{\label{fig:sim_compliance}}
+\includegraphics[width = 1\textwidth]{rmse_boxplots_rateC}
+\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to compliance rates in the total population.\label{fig:rmse_boxplots_rateC}}
+%\caption{\label{fig:rmse_boxplots_rateC}}
 \end{center}
 \end{figure}
 
@@ -506,7 +506,7 @@ Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with
 
 {\color{red}Strong ignorability assumptions may also be violated due to the fact that the OHIE applied a more stringent exclusion criteria compared to the NHIS sample. While the RCT and population sample both screened for individuals below the FPL, only the RCT required those enrolled to recertify their eligibility status every six months.}
 
-A violation of the assumption of no-interference (Assumption \ref{sutva}) biases the estimate of $\tau_{\text{PATT-C}}$ if, for instance, treated participants' Medicaid coverage makes control participants more likely to visit the ER. Interference is less likely in this experimental set--up because treatment occurs at the household level. Assumption \ref{compl} is violated if assignment to treatment influences the compliance status of individuals with the same covariates. Our compliance model can accurately classify compliance status for 77\% of treated RCT participants with only the covariates --- and not treatment assignment --- as features.\footnote{The 10--fold cross--validated risk estimate on the training set is 22.6\%. Information on the ensemble's candidate algorithms and corresponding risk estimates are provided in Table \ref{compliance-ensemble}.}  This gives evidence in favor of the conditional independence assumption.
+A violation of the assumption of no-interference (Assumption \ref{sutva}) biases the estimate of $\tau_{\text{PATT-C}}$ if, for instance, treated participants' Medicaid coverage makes control participants more likely to visit the ER. Interference is less likely in this experimental set--up because treatment occurs at the household level. Assumption \ref{compl} is violated if assignment to treatment influences the compliance status of individuals with the same covariates. Our compliance ensemble can accurately classify compliance status for 77\% of treated RCT participants with only the covariates --- and not treatment assignment --- as model inputs.\footnote{{\color{red}The compliance ensemble is evaluated in terms of 10--fold cross--validated MSE. The distribution of MSE for the ensemble and its candidate algorithms are provided in Table \ref{compliance-ensemble}.}}  This gives evidence in favor of the conditional independence assumption.
 
 The exclusion restriction (Assumption \ref{ER}) ensures treatment assignment affects the response only through enrollment in Medicaid. It is reasonable that a person's enrollment in Medicaid, not just their eligibility to enroll, would affect their hospital use. For private health insurance one might argue that eligibility may be be negatively correlated with hospital use, as people with pre-existing conditions are less often eligible yet go to the hospital more frequently. This should not be the case with a federally funded program such as Medicaid. 
 
@@ -566,13 +566,13 @@ While our study is the first to our knowledge to estimate heterogeniety in treat
 
 The simulations presented in Section \ref{sim} shed light on the conditions under which the proposed estimator should work well. When the rate of crossover from treatment to control is low, the proposed estimator performs better than the estimator which doesn't adjust for noncompliance. Here, the unadjusted estimator gives the ITT effect, which tends to underestimate the average treatment effect on compliers. Of course, the simulation results depend on the particular way we parameterized the compliance, selection, treatment assignment, and response schedules. In particular, the strength of correlation between the covariates and compliance governs how well the estimator will perform, since \ref{compliance-model} of the estimation procedure is to predict who \textit{would be} a complier in the RCT control group, had they been assigned to treatment. If it is difficult to predict compliance using the observed covariates, then the estimator will perform badly because of noise introduced by incorrectly treating noncompliers as compliers. Further research should be done into ways to test how well the model of compliance works in the population. 
 
-The proposed estimator, adjusting for noncompliance, performs better in simulations than the unadjusted estimator when compliance is low and can be predicted by observed covariates (Figure~\ref{fig:sim_compliance}). In the OHIE trial, only about $30\%$ of those selected to receive Medicaid benefits actually enrolled. Our ensemble method for predicting compliance based on observed covariates has $77\%$ accuracy on the training set of participants in the OHIE assigned to treatment. While we don't know how well the compliance model predicts for the control group, the control group should be similar to the treatment group on pretreatment covariates because of the randomization done. The model's performance on the training set suggests that compliance is not purely random and depends on observed covariates. This gives evidence in favor of using the proposed estimator. 
+The proposed estimator, adjusting for noncompliance, performs better in simulations than the unadjusted estimator when compliance is low and can be predicted by observed covariates (Figure~\ref{fig:rmse_boxplots_rateC}). In the OHIE trial, only about $30\%$ of those selected to receive Medicaid benefits actually enrolled. Our ensemble method for predicting compliance based on observed covariates has $77\%$ accuracy on the training set of participants in the OHIE assigned to treatment. While we don't know how well the compliance ensemble predicts for the control group, the control group should be similar to the treatment group on pretreatment covariates because of the randomization done. The model's performance on the training set suggests that compliance is not purely random and depends on observed covariates. This gives evidence in favor of using the proposed estimator. 
 
 The treatment effect of Medicaid applies to uninsured adults with income below the FPL who express interest in health insurance coverage. The sample population differs in several dimensions from the target population of individuals who will be covered by other Medicaid expansions, such as the ACA expansion to cover all adults up to 138\% of the FPL. For instance, the RCT participants are disproportionately white urban--dwellers \citep{Taubman}. The RCT participants volunteered for the study and therefore may be in poorer health compared to the target population. These differences in baseline covariates make {\color{red}reweighting or response surface methods} necessary to extend the RCT results to the population.
 
 Explicitly modeling compliance allows us to decompose SATT-C and PATT-C estimates by subgroup according to pretreatment covariates common to both RCT and observational datasets{\color{red}; e.g, demographic variables, pre--existing conditions, and insurance coverage}. We find substantial differences between sample and population estimates in terms of race, education, and health status subgroups. This pattern is expected because RCT participants volunteered for the study and are predominately white and educated.
 
-Further research might explore models to more accurately predict compliance in RCTs. Our compliance model accurately classified compliance status for 77\% of treated RCT participants using only the pretreatment covariates as features. Accurately predicting compliance is not only essential for yielding unbiased estimates of the average causal effects for target populations, it is also useful for researchers and policymakers to know which groups of individuals are unlikely to comply with treatment. 
+Further research might explore models to more accurately predict compliance in RCTs. Our compliance ensemble accurately classified compliance status for 77\% of treated RCT participants using only the pretreatment covariates as features. Accurately predicting compliance is not only essential for yielding unbiased estimates of the average causal effects for target populations, it is also useful for researchers and policymakers to know which groups of individuals are unlikely to comply with treatment. 
 
 \pagebreak
 
@@ -594,10 +594,31 @@ Further research might explore models to more accurately predict compliance in R
 \renewcommand{\theequation}{\hbAppendixPrefix\arabic{equation}} 
 \setcounter{equation}{0}
 
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConC}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to degree of confounding in compliance.\label{fig:rmse_boxplots_RateConC}}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConT}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to degree of confounding in treatment assignment.\label{fig:rmse_boxplots_RateConT}}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConS}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to degree of confounding in sample selection.\label{fig:rmse_boxplots_RateConS}}
+	\end{center}
+\end{figure}
+
 \begin{table}[h]
 	\begin{center}
 	\caption{Distribution of OHIE participants by status of treatment assignment ($T_i$) and treatment received ($D_i$).\label{ohie-status}} 
-	\begin{tabular}{@{}llll@{}}
+	\begin{tabular}{@{}lccc@{}}
 		\toprule
 		& $D_i = 0$ & $D_i = 1$ & n      \\ \midrule
 		$T_i = 0$ & 10,010    & 1,556     & 11,566 \\
@@ -610,29 +631,21 @@ Further research might explore models to more accurately predict compliance in R
 % complier-mod
 \begin{table}[h]
 \begin{center}
-\caption{Error and weights for ensemble for compliance model.\label{compliance-ensemble}} 
-\begin{tabular}{llcc}
+\caption{Distribution of MSE for compliance ensemble.\label{compliance-ensemble}} 
+\begin{tabular}{lcccc}
   \hline
- Algorithm & Parameters & MSE & Weight \\ 
+ Algorithm & Mean & SE & Min. & Max. \\ 
   \hline
-%        \rowcolor{Gray}
-Super learner (\texttt{SuperLearner}) & default & 0.22 &   \\
-%Discrete SL & default & 0.226 0.001 0.222 0.231 \\
-GBM (\texttt{gbm}) & default & 0.22 &  \\ 
-Lasso regression (\texttt{glmnet})  & $\alpha=1$ & 0.22 &   \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.22 &   \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.22 &  \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.75$ & 0.22 &  \\ 
-Neural network (\texttt{nnet}) &  default & 0.227 &  \\ 
-Random forests (\texttt{randomForest}) & default & 0.307 &    \\  
-Random forests (\texttt{randomForest})  &  $\# \, \text{preds.} =1$ & 0.27 &  \\ 
-Random forests (\texttt{randomForest})  &  $\# \, \text{preds.} =5$  & 0.30 &  \\  
-Random forests (\texttt{randomForest})  &  $\# \, \text{preds.} =10$ & 0.31 &   \\ 
-Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.227 &  \\ 
+        \rowcolor{Gray}
+Super learner (\texttt{SuperLearner}) & 0.22  & 0.001 & 0.21 & 0.23 \\
+%Discrete SL & 0.22  & 0.001 & 0.21 & 0.23 \\
+Lasso regression (\texttt{glmnet})  & 0.22  & 0.001 & 0.21 & 0.23 \\
+Random forests (\texttt{randomForest}) & 0.27  & 0.002 & 0.25 & 0.29 \\
+Ridge regression (\texttt{glmnet}) & 0.22  & 0.001 & 0.21 & 0.23 \\
    \hline
 \end{tabular} 
 \end{center}
-\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner prediction ensemble for record classification model. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. $\alpha$ is the elasticnet regularization parameter, where $\alpha = 0$ is the ridge penalty and $\alpha = 1$ is the lasso penalty. $\# \, \text{preds.}$ is the number of predictors sampled for splitting at each node.}}
+\footnotesize{{\color{red}Notes: MSE is 10-fold cross-validated error for super learner ensemble and candidate algorithms.}}
 \end{table}
 
 \pagebreak
@@ -648,7 +661,7 @@ Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.227 &  \\
     \midrule
  Algorithm & Parameters & MSE & Weight \\ 
   \hline
-GBM (\texttt{gbm}) & default & 0.18 & 0  \\ 
+Gradient boosting  (\texttt{gbm}) & default & 0.18 & 0  \\ 
 Lasso regression (\texttt{glmnet})  & $\alpha=1$& 0.18 & 1 \\ 
 Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.18 & 0 \\ 
 Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.18 & 0 \\ 
@@ -667,7 +680,7 @@ Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.188 & 0 \\
     \midrule
 Algorithm & Parameters & MSE & Weight \\ 
 \hline
-GBM (\texttt{gbm}) & default & 0.24 & 0  \\ 
+Gradient boosting (\texttt{gbm}) & default & 0.24 & 0  \\ 
 Lasso regression (\texttt{glmnet})  & $\alpha=1$& 0.24 & 0 \\ 
 Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.24 & 0 \\ 
 Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.24 & 0.76 \\ 
@@ -682,7 +695,7 @@ Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.24 & 0 \\
    \hline
     \bottomrule
   \end{tabularx}
-\footnotesize{See notes to Fig.\ref{compliance-ensemble}.}
+\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner prediction ensemble for record classification model. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. $\alpha$ is the elasticnet regularization parameter, where $\alpha = 0$ is the ridge penalty and $\alpha = 1$ is the lasso penalty. $\# \, \text{preds.}$ is the number of predictors sampled for splitting at each node.}}
 \end{table}
 
 \pagebreak
@@ -696,7 +709,7 @@ Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.24 & 0 \\
     \midrule
  Algorithm & Parameters & MSE & Weight \\ 
   \hline
-GBM (\texttt{gbm}) & default & 0.18 & 0  \\ 
+Gradient boosting  (\texttt{gbm}) & default & 0.18 & 0  \\ 
 Lasso regression (\texttt{glmnet})  & $\alpha=1$& 0.18 & 0.54 \\ 
 Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.18 & 0 \\ 
 Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.18 & 0 \\ 
@@ -715,7 +728,7 @@ Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.18 & 0.45 \\
     \midrule
 Algorithm & Parameters & MSE & Weight \\ 
 \hline
-GBM (\texttt{gbm}) & default & 0.23 & 0  \\ 
+Gradient boosting  (\texttt{gbm}) & default & 0.23 & 0  \\ 
 Lasso regression (\texttt{glmnet})  & $\alpha=1$& 0.23 & 0 \\ 
 Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.23 & 0 \\ 
 Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.23 & 0 \\ 
@@ -729,7 +742,7 @@ Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.23 & 0.73 \\
    \hline
     \bottomrule
   \end{tabularx}
-\footnotesize{See notes to Fig.\ref{compliance-ensemble}.}
+\footnotesize{See notes to Fig.\ref{reponse-ensemble}.}
 \end{table}
 
 \end{appendices}
