@@ -1,5 +1,8 @@
 # Create plots for each outcome variable comparing SATT vs. PATT overall and by covariate 
 
+# Load R workspace
+load(paste0(repo.directory,"data/analysis.RData"))
+
 # Libraries
 library(ggplot2)
 
@@ -20,12 +23,20 @@ t.patt.unadj.boot <- replicate(B, {
 })
 t.patt.unadj.ci <- lapply(y.col, function(i) quantile(unlist(t.patt.unadj.boot[i,]),probs = c(0.025, 0.975)))
 
-# SATT-C
+
+# SATT
 t.satt.adj.boot <- replicate(B, {
   samp <- sample(1:length(Y.hat.1.adj.rct[[1]]), length(Y.hat.1.adj.rct[[1]]), replace=T)  
   lapply(y.col, function (i) mean(Y.hat.1.adj.rct[[i]][samp]) - mean(Y.hat.0.adj.rct[[i]][samp]))
 })
 t.satt.adj.ci <- lapply(y.col, function(i) quantile(unlist(t.satt.adj.boot[i,]),probs = c(0.025, 0.975)))
+
+# SATT-C
+t.satt.unadj.boot <- replicate(B, {
+  samp <- sample(1:length(Y.hat.1.adj.rct[[1]]), length(Y.hat.1.adj.rct[[1]]), replace=T)  
+  lapply(y.col, function (i) mean(Y.hat.1.adj.rct[[i]][samp]) - mean(Y.hat.0.adj.rct[[i]][samp]))
+})
+t.satt.unadj.ci <- lapply(y.col, function(i) quantile(unlist(t.satt.unadj.boot[i,]),probs = c(0.025, 0.975)))
 
 # SATE
 t.sate.boot <- replicate(B,{
@@ -42,6 +53,15 @@ t.patt.ci
 
 t.patt.unadj
 t.patt.unadj.ci
+
+t.satt.adj
+t.satt.adj.ci 
+
+t.satt.unadj
+t.satt.unadj.ci 
+
+rct.sate
+t.sate.ci
 
 ### Function to get heterogeneous treatment effect estimates, using true data and bootstrapped data (set boot = TRUE)
 
@@ -116,7 +136,7 @@ patt.unadj.het <- true_effect[[2]]
 sate.het <- true_effect[[3]]
 satt.het <- true_effect[[4]]
 
-B <- 50
+B <- 1000
 boot_effect <- replicate(B, het.effects(covs,boot=TRUE))
 
 ### Compute the 95% confidence intervals based on the quantiles of the bootstrap distribution
@@ -214,11 +234,12 @@ ThemeBw1 <- function(base_size = 11, base_family = "") {
 het.plot.all <- lapply(y.col, function (i) 
   ggplot(het.plot[[i]], aes(x=x, y=y, ymin = ci.lower, ymax = ci.upper, colour=Estimator)) +
     geom_pointrange(size=1, alpha=0.8) +
-    scale_colour_manual(values=c("red","blue","green")) + # change colors for estimators
+    scale_colour_manual(values=c("red","blue","green"), breaks=levels(het.plot[[i]]$Estimator)) + # change colors for estimators
     coord_flip() +
     geom_line() +
    geom_hline(aes(x=0,yintercept=0), lty=2) +
     ThemeBw1() +
+    theme(plot.title = element_text(hjust = 0.5)) +
     ylab("Treatment effect") +
     xlab("")) #switch because of the coord_flip() above 
 

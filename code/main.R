@@ -4,6 +4,7 @@ repo.directory <- "~/Dropbox/github/patt-noncompliance/"
 
 #source(paste0(repo.directory,"code/simulation.R")) # --> simulation_res.Rdata
 source(paste0(repo.directory,"code/simulation-plots.R")) 
+
 # Empirical application
 
 source(paste0(repo.directory,"code/prepare-ohie.R")) # --> data/prepare-ohie.Rdata

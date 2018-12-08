@@ -16,7 +16,7 @@ Jason Poulos\thanks{\emph{Corresponding author:} Department of Political Science
 \documentclass[hidelinks,12pt]{article}
 
 % Define packages
-\usepackage{graphicx,amsfonts,psfrag,layout,subcaption,array,longtable,lscape,booktabs,dcolumn,amsmath,amssymb,amssymb,amsthm,setspace,epigraph,chronology,color,xcolor,colortbl,wasysym}
+\usepackage{graphicx,amsfonts,psfrag,layout,subcaption,array,longtable,lscape,booktabs,dcolumn,amsmath,amssymb,amssymb,amsthm,setspace,epigraph,chronology,color,xcolor,colortbl,wasysym,diagbox}
 \usepackage[]{graphicx}\usepackage[]{color}
 \usepackage{enumitem}
 \usepackage[page]{appendix}
@@ -628,6 +628,18 @@ Further research might explore models to more accurately predict compliance in R
 	\end{center}
 \end{table}
 
+\begin{table}[h]
+	\caption{Comparison of compliance-adjusted estimates on OHIE and NHIS data.\label{compliance-compare}} 
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		\backslashbox{Estimator}{Outcome} & Any ER visit                   & Any outpatient visit        \\ \midrule
+		PATT-C                                               & -0.0002 {[}-0.0002, -0.0002{]} & 0.0006 {[}0.0004, 0.0008{]} \\
+		SATT-C                                               & -0.0002 {[}-0.0002, -0.0002{]} & 0.002 {[}0.002, 0.002{]}    \\
+		SATE                                                 & 0.12 {[}-0.01, 0.04{]}          & -0.02 {[}-0.05, 0.008{]}    \\ \bottomrule
+	\end{tabular}\\
+\footnotesize{Notes: Sample Average Treatment Effect (SATE) is the ITT effect adjusted by the sample compliance rate in the RCT. Estimates in brackets represent 95\% bootstrap confidence intervals.}
+\end{table}
+
 % complier-mod
 \begin{table}[h]
 \begin{center}
@@ -658,11 +670,15 @@ Ridge regression (\texttt{glmnet}) & 0.22  & 0.001 & 0.21 & 0.23 \\
     \midrule
  Algorithm &  MSE & Weight \\ 
   \hline
+Adaboost (\texttt{gbm})  & 0.18 & 0 \\ 
 Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
-Gradient boosting  (\texttt{gbm}) & 0.18 & 0  \\ 
-Lasso regression (\texttt{glmnet})  & 0.18 & 0.12 \\ 
-Random forests (\texttt{randomForest}) & 0.25 & 0 \\ 
-Ridge regression (\texttt{glmnet})  & 0.18 & 0.88 \\ 
+Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.18 & 0.55  \\ 
+Lasso regression (\texttt{glmnet})  & 0.18 & 0 \\ 
+Logistic regression (\texttt{LogicReg})  & 0.18 & 0 \\ 
+Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
+Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.25 & 0 \\ 
+Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0.45 \\ 
+Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\ 
    \hline
   \end{tabularx}
   \begin{tabularx}{\linewidth}{l*{3}{Y}}
@@ -671,14 +687,19 @@ Ridge regression (\texttt{glmnet})  & 0.18 & 0.88 \\
     \midrule
 Algorithm  & MSE & Weight \\ 
 \hline
-Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0.05 \\ 
-Gradient boosting  (\texttt{gbm}) & 0.24 & 0.59  \\ 
+Adaboost (\texttt{gbm})  & 0.24 & 0.52 \\ 
+Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0.06 \\ 
+Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.24 & 0  \\ 
 Lasso regression (\texttt{glmnet})  & 0.24 & 0 \\ 
-Random forests (\texttt{randomForest}) & 0.39 & 0.36 \\ 
+Logistic regression (\texttt{LogicReg})  & 0.24 & 0 \\ 
+Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.39 & 0.42 \\ 
+Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.33 & 0 \\ 
+Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.24 & 0 \\ 
+Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.24 & 0 \\ 
    \hline
     \bottomrule
   \end{tabularx}
-\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner ensemble. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. Weights are rounded so that they sum to 1. \textsf{R} package used for implementing each algorithm in parentheses.}}
+\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner ensemble. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. Weights are rounded so that they sum to 1. \textsf{R} package used for implementing each algorithm in parentheses. $\# preds.$ is the number of predictors randomly sampled as candidates in each decision tree in random forests algorithm. $\alpha$ is a regularization parameter.}}
 \end{table}
 
 \pagebreak
@@ -691,11 +712,16 @@ Random forests (\texttt{randomForest}) & 0.39 & 0.36 \\
 	\midrule
 	Algorithm &  MSE & Weight \\ 
 	\hline
-	Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
-	Gradient boosting  (\texttt{gbm}) & 0.18 & 0  \\ 
-	Lasso regression (\texttt{glmnet})  & 0.18 & 0.84 \\ 
-	Random forests (\texttt{randomForest}) & 0.25 & 0 \\ 
-	Ridge regression (\texttt{glmnet})  & 0.18 & 0.16 \\ 
+Adaboost (\texttt{gbm})  & 0.18 & 0 \\ 
+Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
+Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.18 & 0  \\ 
+Lasso regression (\texttt{glmnet})  & 0.18 & 0.18 \\ 
+Logistic regression (\texttt{LogicReg})  & 0.18 & 0.68 \\ 
+Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
+Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.24 & 0 \\ 
+Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0.14 \\ 
+Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\  
+Ridge regression  (\texttt{glmnet})  & 0.25 & 0 \\  
 	\hline
 \end{tabularx}
 \begin{tabularx}{\linewidth}{l*{3}{Y}}
@@ -704,10 +730,15 @@ Random forests (\texttt{randomForest}) & 0.39 & 0.36 \\
 	\midrule
 	Algorithm  & MSE & Weight \\ 
 	\hline
-	Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0.01 \\ 
-	Gradient boosting  (\texttt{gbm}) & 0.23 & 0  \\ 
-	Lasso regression (\texttt{glmnet})  & 0.23 & 0.72 \\ 
-	Random forests (\texttt{randomForest}) & 0.39 & 0.27 \\ 
+Adaboost (\texttt{gbm})  & 0.23 & 0 \\ 
+Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0 \\ 
+Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.23 & 0  \\ 
+Lasso regression (\texttt{glmnet})  & 0.23 & 0.74 \\ 
+Logistic regression (\texttt{LogicReg})  & 0.23 & 0 \\ 
+Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.39 & 0.25 \\ 
+Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.32 & 0.01 \\ 
+Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.23 & 0 \\ 
+Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.23 & 0 \\  
 	\hline
 	\bottomrule
 \end{tabularx}
