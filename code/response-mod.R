@@ -6,6 +6,12 @@ load("data/analysis.RData")
 # Source superlearner scripts to ensure libraries attached
 source("code/SuperLearner.R")
 
+# Fit a regression to the compliers in the RCT
+y.col <- 1:ncol(Y.ohie) # number of responses
+Y.ohie.response <- Y.ohie[which(rct.compliers$complier==1),]
+X.ohie.response <- data.frame("treatment"=treatment.ohie[which(rct.compliers$complier==1)],
+                              X.ohie[which(rct.compliers$complier==1),])
+
 # Run response model
 set.seed(42)
 response.mod <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response[,i], 

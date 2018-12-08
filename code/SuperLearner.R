@@ -6,6 +6,7 @@ library(gam)
 library(e1071)
 library(gbm)
 library(xgboost)
+library(bartMachine)
 
 # Creates additional randomForest wrappers changing both mtry and nodesize
 tuneGrid <- expand.grid(mtry=c(1,5,10), nodesize=c(1,5))
@@ -44,8 +45,17 @@ create.SL.gam <- function(deg.gam = c(3, 4)) {
   }
   invisible(TRUE)
 }
-
 create.SL.gam()
+
+# creates gbm wrappers in the global environment with different distributions (1=bernoulli (logistic reg.), 2=AdaBoost exponential loss)
+create.SL.gbm <- function(distribution = c("bernoulli","adaboost")) {
+  for(mm in seq(length(distribution))){
+    eval(parse(text = paste('SL.gbm.', distribution[mm], '<- function(..., distribution = ', distribution[mm], ') SL.gbm(..., distribution = distribution)', sep = '')), envir = .GlobalEnv)
+  }
+  invisible(TRUE)
+}
+create.SL.gbm()
+
 
 SL.mean <- function (Y, X, newX, family, obsWeights, id, ...) 
 {
@@ -66,9 +76,14 @@ predict.SL.mean <- function (object, newdata, family, X = NULL, Y = NULL, ...)
 # Define library
 SL.library.class<- c("SL.gbm",
 		    "SL.glmnet", # lasso
+		    "SL.glmnet.0.25",
+		    "SL.glmnet.0.50",
 		    "SL.glmnet.0", # ridge
 		                "SL.xgboost",
-                    "SL.randomForest.1")# nodesize=1 for regression
+		                "SL.logreg",
+		                 "SL.bartMachine",
+                    "SL.randomForest.1",
+		                 "SL.randomForest.3")# nodesize=1 for regression
 
 SL.library.reg <- c("SL.gam", # degree=2
                      "SL.gam.3",

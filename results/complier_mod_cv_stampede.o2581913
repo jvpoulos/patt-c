@@ -1,0 +1,65 @@
+
+R version 3.4.0 (2017-04-21) -- "You Stupid Darkness"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## Run this script on server
+> 
+> options(mc.cores = 28)
+> 
+> # We need to set a different type of seed that works across cores.
+> # Otherwise the other cores will go rogue and we won't get repeatable results.
+> # This version is for the "multicore" parallel system in R.
+> set.seed(1, "L'Ecuyer-CMRG")
+> 
+> # Load R workspace
+> load("data/analysis.RData")
+> 
+> # Source superlearner scripts to ensure libraries attached
+> source("code/SuperLearner.R")
+> 
+> # Get risk estimates with 10-fold CV
+> set.seed(42)
+> complier.mod.cv <- CV.SuperLearner(Y=insurance.ohie[treatment.ohie==1], 
++                              X=X.ohie[treatment.ohie == 1,], 
++                              SL.library=SL.library.class,
++                              family="binomial",
++                              parallel = "multicore",
++                              cvControl =list(V=10L)) 
+> 
+> summary(complier.mod.cv)
+
+Call:  
+CV.SuperLearner(Y = insurance.ohie[treatment.ohie == 1], X = X.ohie[treatment.ohie ==  
+    1, ], family = "binomial", SL.library = SL.library.class, cvControl = list(V = 10L),  
+    parallel = "multicore") 
+
+Risk is based on: Mean Squared Error
+
+All risk estimates are based on V =  10 
+
+             Algorithm     Ave        se     Min     Max
+         Super Learner 0.22709 0.0013179 0.21809 0.23466
+           Discrete SL 0.22732 0.0012727 0.21974 0.23423
+            SL.gbm_All      NA        NA      NA      NA
+         SL.glmnet_All 0.22730 0.0012739 0.21974 0.23423
+       SL.glmnet.0_All 0.22730 0.0012636 0.21977 0.23390
+        SL.xgboost_All      NA        NA      NA      NA
+ SL.randomForest.1_All 0.27331 0.0027888 0.25620 0.29413
+> 
+> # Output latex table
+> print(toLatex(summary(complier.mod.cv)))

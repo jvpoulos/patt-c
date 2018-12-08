@@ -5,22 +5,29 @@ library(ggplot2)
 
 ### Confidence intervals for the estimates
 B <- 1000
+
+# PATT-C
 t.patt.boot <- replicate(B, {
   samp <- sample(1:length(Y.hat.1[[1]]), length(Y.hat.1[[1]]), replace=T)  
   lapply(y.col, function (i) mean(Y.hat.1[[i]][samp]) - mean(Y.hat.0[[i]][samp]))
 })
 t.patt.ci <- lapply(y.col, function(i) quantile(unlist(t.patt.boot[i,]),probs = c(0.025, 0.975)))
+
+# PATT
 t.patt.unadj.boot <- replicate(B, {
   samp <- sample(1:length(Y.hat.1.unadj[[1]]), length(Y.hat.1.unadj[[1]]), replace=T)  
   lapply(y.col, function (i) mean(Y.hat.1.unadj[[i]][samp]) - mean(Y.hat.0.unadj[[i]][samp]))
 })
 t.patt.unadj.ci <- lapply(y.col, function(i) quantile(unlist(t.patt.unadj.boot[i,]),probs = c(0.025, 0.975)))
-t.satt.unadj.boot <- replicate(B, {
-  samp <- sample(1:length(Y.hat.1.unadj.rct[[1]]), length(Y.hat.1.unadj.rct[[1]]), replace=T)  
-  lapply(y.col, function (i) mean(Y.hat.1.unadj.rct[[i]][samp]) - mean(Y.hat.0.unadj.rct[[i]][samp]))
-})
-t.satt.unadj.ci <- lapply(y.col, function(i) quantile(unlist(t.satt.unadj.boot[i,]),probs = c(0.025, 0.975)))
 
+# SATT-C
+t.satt.adj.boot <- replicate(B, {
+  samp <- sample(1:length(Y.hat.1.adj.rct[[1]]), length(Y.hat.1.adj.rct[[1]]), replace=T)  
+  lapply(y.col, function (i) mean(Y.hat.1.adj.rct[[i]][samp]) - mean(Y.hat.0.adj.rct[[i]][samp]))
+})
+t.satt.adj.ci <- lapply(y.col, function(i) quantile(unlist(t.satt.adj.boot[i,]),probs = c(0.025, 0.975)))
+
+# SATE
 t.sate.boot <- replicate(B,{
   samp <- sample(1:length(treatment.ohie), length(treatment.ohie), replace=T)  
   lapply(y.col, function (i) (mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==1)]) - # Num. is ITT effect
@@ -29,6 +36,12 @@ t.sate.boot <- replicate(B,{
 })
 t.sate.ci <- lapply(y.col, function(i) quantile(unlist(t.sate.boot[i,]),probs = c(0.025, 0.975)))
 
+# print results for table 
+t.patt
+t.patt.ci
+
+t.patt.unadj
+t.patt.unadj.ci
 
 ### Function to get heterogeneous treatment effect estimates, using true data and bootstrapped data (set boot = TRUE)
 
@@ -87,10 +100,10 @@ het.effects <- function(covs, boot = FALSE){
   rct.pred.unadj <- lapply(y.col, function (i) data.frame("tau"=Y.hat.1.unadj.rct[[i]]-Y.hat.0.unadj.rct[[i]],
                                                           X.ohie[which(insurance.ohie==1 | insurance.ohie==0),]))
   
-  satt.unadj.het <- lapply(y.col, function (i) lapply(covs, function(x) mean(rct.pred.unadj[[i]]$tau[rct.pred.unadj[[i]][x]==1]) - 
+  satt.het <- lapply(y.col, function (i) lapply(covs, function(x) mean(rct.pred.unadj[[i]]$tau[rct.pred.unadj[[i]][x]==1]) - 
                                                         mean(rct.pred.unadj[[i]]$tau[rct.pred.unadj[[i]][x]==0])))  
   
-  return(list(patt.het, patt.unadj.het, sate.het, satt.unadj.het))
+  return(list(patt.het, patt.unadj.het, sate.het, satt.het))
 }
 
 
@@ -115,10 +128,10 @@ satt.het.boot.ci <- lapply(1:length(true_effect[[1]][[1]]), function(k) lapply(y
 conf.int <- lapply(y.col, function(i){
   ci.lower <- c(t.patt.ci[[i]][1], sapply(patt.het.boot.ci, "[[", i)[1,],  #### Put in 0 in place of "overall" confidence bounds for now
                 t.patt.unadj.ci[[i]][1], sapply(patt.unadj.het.boot.ci, "[[", i)[1,],
-                t.satt.unadj.ci[[i]][1], sapply(satt.het.boot.ci, "[[", i)[1,])
+                t.satt.adj.ci[[i]][1], sapply(satt.het.boot.ci, "[[", i)[1,])
   ci.upper <- c(t.patt.ci[[i]][2], sapply(patt.het.boot.ci, "[[", i)[2,],
                 t.patt.unadj.ci[[i]][2], sapply(patt.unadj.het.boot.ci, "[[", i)[2,],
-                t.satt.unadj.ci[[i]][2], sapply(satt.het.boot.ci, "[[", i)[2,])
+                t.satt.adj.ci[[i]][2], sapply(satt.het.boot.ci, "[[", i)[2,])
   cbind(ci.lower, ci.upper)
 })
 
@@ -138,15 +151,18 @@ cov.names <- c(Overall,Sex,Age,Race.ethn,Health.stat,Education,Income)
 het.plot <- lapply(y.col, function (i) data.frame(x=factor(c(rep(cov.names,3)), levels=rev(cov.names)), 
                                                   y = c(t.patt[[i]],unlist(patt.het[[i]]),
                                                         t.patt.unadj[[i]],unlist(patt.unadj.het[[i]]),
-                                                        t.satt.unadj[[i]],unlist(satt.het[i])), 
+                                                        t.satt.adj[[i]],unlist(satt.het[i])), 
                                                   Group = factor(rep(c(cov.groups[1],rep(cov.groups[2],length(Sex)),rep(cov.groups[3],length(Age)),
                                                                        rep(cov.groups[4],length(Race.ethn)),rep(cov.groups[5],length(Health.stat)),
                                                                        rep(cov.groups[6],length(Education)),rep(cov.groups[7],length(Income))),3), levels=cov.groups),
-                                                  Estimator= factor(c(rep("PATT (adjusted)",length(covs)+1),
-                                                                      rep("PATT (unadjusted)",length(covs)+1),
-                                                                      rep("SATT (unadjusted)",length(covs)+1))), 
+                                                  Estimator= factor(c(rep("PATT-C",length(covs)+1),
+                                                                      rep("PATT",length(covs)+1),
+                                                                      rep("SATT-C",length(covs)+1))), 
                                                   ci.lower = conf.int[[i]][,1],
                                                   ci.upper = conf.int[[i]][,2]))
+
+het.plot[[1]]$Estimator <- factor(het.plot[[1]]$Estimator, levels = c("PATT-C","PATT","SATT-C"))
+het.plot[[2]]$Estimator <- factor(het.plot[[2]]$Estimator, levels = c("PATT-C","PATT","SATT-C"))
 
 for(i in y.col){
   offset <- c("   ") 
@@ -197,18 +213,17 @@ ThemeBw1 <- function(base_size = 11, base_family = "") {
 
 het.plot.all <- lapply(y.col, function (i) 
   ggplot(het.plot[[i]], aes(x=x, y=y, ymin = ci.lower, ymax = ci.upper, colour=Estimator)) +
-    geom_pointrange(size=1, alpha=0.6) +
+    geom_pointrange(size=1, alpha=0.8) +
     scale_colour_manual(values=c("red","blue","green")) + # change colors for estimators
     coord_flip() +
     geom_line() +
-    geom_hline(aes(x=0), lty=2) +
+   geom_hline(aes(x=0,yintercept=0), lty=2) +
     ThemeBw1() +
     ylab("Treatment effect") +
     xlab("")) #switch because of the coord_flip() above 
 
-
-het.plot.all[[1]] + ggtitle("Any ER visit") # any.visit
-het.plot.all[[2]] + ggtitle("Any outpatient visit") # any.out
-
-
-
+any.visit.plot <- het.plot.all[[1]] + ggtitle("Any ER visit")
+any.out.plot <- het.plot.all[[2]] + ggtitle("Any outpatient visit")
+                                              
+ggsave(paste0(repo.directory, "plots/any-visit-plot.png"), any.visit.plot) # any.visit
+ggsave(paste0(repo.directory, "plots/any-out-plot.png"), any.out.plot) # any.out

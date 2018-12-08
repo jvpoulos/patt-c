@@ -16,5 +16,3 @@ tableNominal(vars = rct.nrt.tab,
              vertical=FALSE,
              prec = 3,cumsum=FALSE,lab = "rct-nrt-compare",
              cap="Pretreatment covariates and responses for the OHIE and for NHIS respondents who received Medicaid.") # RCT vs. NRT compliers
-
-

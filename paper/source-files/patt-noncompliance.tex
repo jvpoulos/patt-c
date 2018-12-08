@@ -140,7 +140,7 @@ This paper {\color{red} improves on the transportability of clinical trial resul
 \vspace{20mm}
 
 \section{Introduction}\label{intro}
-Randomized control trials (RCTs) are the gold standard for estimating the causal effect of a treatment. An RCT may give an unbiased estimate of the sample average treatment effect (SATE), but external validity is an issue when the individuals in the RCT are unrepresentative of the actual population of interest. For example, the participants in an RCT in which individuals volunteer to sign up for health insurance may be in poorer health at baseline than the overall population. External validity is particularly relevant to policymakers who want to know how the SATE would generalize to the broader population. 
+Randomized control trials (RCTs) are the gold standard for estimating the causal effect of a treatment. An RCT may give an unbiased estimate of the sample average treatment effect, but external validity is an issue when the individuals in the RCT are unrepresentative of the actual population of interest. For example, the participants in an RCT in which individuals volunteer to sign up for health insurance may be in poorer health at baseline than the overall population. External validity is particularly relevant to policymakers who want to know how the treatment effect would generalize to the broader population. 
 
 {\color{red}This paper extends the literature on extrapolating clinical trial results to populations to deal with noncompliance. Previous approaches to the problem of extrapolating RCT results to a population \citep{ImaKinStu08, stuart2011use, Hartman} are designed for settings where there is full compliance with treatment. This paper contributes to the literature by defining the assumptions required to identify complier--average causal effects for the target population and proposing a procedure to recover this estimand.} 
 
@@ -327,7 +327,7 @@ In addition to the identification assumptions, we require additional modeling as
 
 In the empirical application, we use the weighted ensemble method described in \citet{van2007} for \ref{compliance-model} and \ref{response-model} of the estimation procedure. This ensemble method combines algorithms with a convex combination of weights based on minimizing cross-validated error. It is shown to control for overfitting and outperforms single algorithms selected by cross-validation \citep{polley2010super}. 
 
-We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes. We select four types of candidate algorithms: boosting algorithms, including gradient boosting \citep{friedman2001greedy, friedman2002stochastic} and XGBoost; regularized linear model (i.e., Lasso or ridge regression) \citep{tibshirani2012strong}; and random forests \citep{breiman2001}. Lasso regression is an attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
+We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes. We select four types of candidate algorithms: gradient boosting algorithms \citep{friedman2000additive,friedman2001greedy, friedman2002stochastic}; regularized linear models (i.e., Lasso or ridge regression) \citep{tibshirani2012strong}; and random forests \citep{breiman2001}. Lasso regression is an attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
 
 \section{Simulations} \label{sim}
 \color{red}We conduct a simulation study to compare the performance of the PATT and PATT-C estimators. For comparison, we also estimate the Sample Average Treatment Effect on the Treated Compliers (SATT-C) by fitting the response curve for compliers in the RCT --- which we do in \ref{response-model} for estimating $\tau_{\text{PATT-C}}$ --- and then taking the mean difference in potential outcomes for treated compliers in the sample:
@@ -423,7 +423,7 @@ We apply the proposed estimator to measure the effect of Medicaid coverage on he
 
 We draw RCT data from the Oregon Health Insurance Experiment (OHIE) \citep{finkelstein2012,baicker2013,baicker2014,Taubman}. In 2008, approximately 90,000 uninsured low-income adults participated in the OHIE to receive Medicaid benefits.\footnote{Eligible participants include Oregon residents (US citizens or legal immigrants) aged 19 to 64 not otherwise eligible for public insurance, who have been without insurance for six months, and have income below the FPL and assets below \$2,000.} Treatment occurred at the household level: participants selected by the lottery won the opportunity for themselves and any household member to apply for Medicaid. Within a sample of 74,922 individuals representing 66,385 households, 29,834 participants were selected by the lottery; the remaining 45,008 participants served as controls in the experiment. Participants in selected households received benefits if they returned an enrollment application within 45 days of receipt. Among participants in selected households, about 60\% mailed back applications and only 30\% successfully enrolled.\footnote{{\color{red}About half of the returned applications were deemed ineligible, primarily due to failure to demonstrate income below the FPL. Enrolled participants were required to recertify their eligibility status every six months.}}
 
-The response data originate from a mail survey that was administered to participants over July and August 2009 ($n = 23,741$ survey respondents). We use the same definition of insurance coverage as \citet{finkelstein2012} to form our measure of compliance, which is a binary variable indicating whether the participant was enrolled in any Medicaid program between the notification date and 30 September 2009. The OHIE data include pretreatment covariates for gender, age, race, ethnicity, health status, education, and household income.
+The response data originate from a mail survey that was administered to participants over July and August 2009 ($n = 23,741$ survey respondents). We use the same definition of insurance coverage as \citet{finkelstein2012} to form our measure of compliance, which is a binary variable indicating whether the participant was enrolled in any Medicaid program between the notification date and 30 September 2009. The OHIE data include pretreatment covariates for gender, age, race, ethnicity, health status, education, and household income.  {\color{red}Table~\ref{rct-nrt-compare} presents summary statistics on the $n=10,619$ RCT participants in our sample who were on Medicaid during the study period.}
 
 Our outcomes of interest are binary variables for any emergency room (ER) and outpatient visits in the past 12 months. {\color{red}ER use is an important outcome because it is the main delivery system through which the the uninsured receive health care. The uninsured could potentially receive higher quality and less affordable healthcare through outpatient visits. An important question for policymakers is whether Medicaid expansions will decrease ER utilization by the previously uninsured.   	
 
@@ -448,56 +448,56 @@ Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with
 \caption{Pretreatment covariates and responses for OHIE and NHIS respondents on Medicaid.\label{rct-nrt-compare}} \\
   & OHIE &  & OHIE &  & NHIS &  \\ 
     & control &  & treated &  &treated &   \\ 
-  & $n=5,476$ &  & $n=5,193$ &  & $n=3,382$ &  \\  
+  & $n=5,426$ &  & $n=5,193$ &  & $n=6,261$ &  \\  
   \hline   
     \hline   
  \textbf{Covariate} &  $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ \\ 
 \hline
 \textit{Sex:} &  & & &  &  & \\ 
 
-\hspace{3mm} Female & 3,148 & 57.5 & 2,920 & 56.2 & 2,380 & 70.4 \\ 
+\hspace{3mm} Female & 3,124 & 57.6 & 2,920 & 56.2 & 4,288 & 68.5 \\ 
  &  & & &  &  & \\ 
 \textit{Age:} &  & & &  &  & \\ 
-\hspace{3mm}19-49 & 1,636 & 29.9 & 1,367 & 26.3 & 2,429 & 71.8  \\ 
+\hspace{3mm}19-49 & 1,546 & 28.5 & 1,367 & 26.3 & 4,324 & 69.1  \\ 
 
-\hspace{3mm}50-64 & 3,840 & 70.1 & 3,826 & 73.7 & 953 & 28.2 \\ 
+\hspace{3mm}50-64 & 3,880 & 71.5 & 3,826 & 73.7 & 1,937 & 30.9 \\ 
  &  & & &  &  & \\ 
 \textit{Race:} &  & & &  &  & \\ 
-\hspace{3mm}White & 4,829 & 88.2 & 4,393 & 84.6 & 1,991 & 58.9  \\ 
+\hspace{3mm}White & 4,746 & 87.5 & 4,393 & 84.6 & 3,902 & 62.3  \\ 
 
-\hspace{3mm}Black & 243 & 4.4 & 197 & 3.8 & 1,050 & 31.1  \\ 
+\hspace{3mm}Black & 243 & 4.5 & 197 & 3.8 & 1723 & 27.5  \\ 
 
-\hspace{3mm}Hispanic & 301 & 5.5 & 476 & 9.2 & 910 & 26.9  \\ 
+\hspace{3mm}Hispanic & 326 & 6.0 & 476 & 9.2 & 1570 & 25.1  \\ 
  &  & & &  &  & \\ 
 \textit{Health status:} &  & & &  &  & \\ 
-\hspace{3mm}Diabetes & 581 & 10.6 & 539 & 10.4 & 452 & 13.4 \\ 
+\hspace{3mm}Diabetes & 557 & 10.3 & 539 & 10.4 & 866 & 13.8 \\ 
 
-\hspace{3mm}Asthma & 1,036 & 18.9 & 887 & 17.1 & 652 & 19.3  \\ 
+\hspace{3mm}Asthma & 1,030 & 19.0 & 887 & 17.1 & 1,272 & 20.3  \\ 
 
-\hspace{3mm}High blood pressure & 1,670 & 30.5 & 1,418 & 27.3 & 1,143 & 33.8  \\ 
+\hspace{3mm}High blood pressure & 1,649 & 30.4 & 1,418 & 27.3 & 2,166 & 34.6  \\ 
   
-\hspace{3mm}Heart condition & 170 & 3.1 & 141 & 2.7 & 285 & 8.4 \\ 
+\hspace{3mm}Heart condition & 168 & 3.1 & 141 & 2.7 & 529 & 8.4 \\ 
  &  & & &  &  & \\ 
 \textit{Education:} &  & & &  &  & \\  
-\hspace{3mm}Less than high school  & 1,056 & 19.3 & 950 & 18.3 & 1,183 & 35.0  \\ 
+\hspace{3mm}Less than high school  & 1,062 & 19.6 & 950 & 18.3 & 1,942 & 31.0  \\ 
   
-\hspace{3mm}High school diploma or GED & 3,081 & 56.3 & 2,775 & 53.4 & 1,076 & 31.8  \\ 
+\hspace{3mm}High school diploma or GED & 3,093 & 57.0 & 2,775 & 53.4 & 2,076 & 33.2  \\ 
 
-\hspace{3mm}Voc. training / 2-year degree & 969 & 17.7 & 1,031 & 19.9 & 934 & 27.6 \\ 
+\hspace{3mm}Voc. training / 2-year degree & 959 & 17.7 & 1,031 & 19.9 & 1,810 & 28.9 \\ 
 
-\hspace{3mm}4-year college degree or more & 370 & 6.8 & 437 & 8.4 & 189 & 5.6 \\ 
+\hspace{3mm}4-year college degree or more & 312 & 5.8 & 437 & 8.4 & 433 & 6.9 \\ 
  &  & & &  &  & \\ 
 \textit{Income:} &  & & &  &  & \\ 
-\hspace{3mm} $<\$10$k & 5,476 & 100.0 & 3,204 & 61.7 & 1,452 & 42.9 \\
+\hspace{3mm} $<\$10$k & 5,425 & 100 & 3,204 & 61.7 & 2,588 & 41.3 \\
 
-\hspace{3mm} \$10k-\$25k & 0 & 0.0 & 1,616 & 31.1 & 1,622 & 48.0 \\
+\hspace{3mm} \$10k-\$25k & 1 & 0 & 1,616 & 31.1 & 3,098 & 49.5 \\
 
-\hspace{3mm} $>\$25$k & 0 & 0.0 & 373 & 7.2 & 308 & 9.1 \\
+\hspace{3mm} $>\$25$k & 0 & 0 & 373 & 7.2 & 575 & 9.2  \\
    \hline
 \hline
  \textbf{Response} &   &  &  & &  &  \\ 
-\hspace{3mm}Any ER visit &  1,393 & 25.4 & 1,301 & 25.1 & 881 & 26.1 \\ 
-\hspace{3mm}Any outpatient visit & 3,299 & 60.2 & 3,081 & 59.3 & 2,116 & 62.6 \\ 
+\hspace{3mm}Any ER visit &  1,377 & 25.4 & 1,301 & 25.1 & 1,659 & 26.5  \\ 
+\hspace{3mm}Any outpatient visit & 3,265 & 60.2 & 3,081 & 59.3 & 4,093 & 65.4 \\ 
 \hline
 \hline
 \end{longtable}
@@ -521,7 +521,7 @@ Table \ref{ohie-status} reports the distribution of participants in the OHIE by 
  
 \subsection{Empirical results}\label{results}
 
-We compare PATT-C and SATT estimates for ER and outpatient use. We obtain estimates for the overall group of participants and subgroups according to sex, age, race, health status, education, and household income. Subgroup treatment effects are estimated by taking differences across response surfaces for a given covariate subgroup, and response surfaces are estimated with random forests.\footnote{The 10--fold cross-validated risk estimate of the random forests model (default settings) range from 0.24 to 0.331.} We use treatment assignment, number of household members, and the subgroup covariates as features in the response models. We generate 95\% confidence intervals for these estimates using 1,000 bootstrap samples.% The entire RCT sample size is $n=23,205$ and the population sample is $n=11,129$. There are $n=10,669$ RCT compliers and $n=3,382$ target population ``compliers'' on Medicaid. 
+We compare PATT-C and SATT estimates for ER and outpatient use. We obtain estimates for the overall group of participants and subgroups according to sex, age, race, health status, education, and household income. Subgroup treatment effects are estimated by taking differences across response surfaces for a given covariate subgroup, and response surfaces are estimated with {\color{red}the ensemble mean predictions}}. We use treatment assignment, number of household members, and the subgroup covariates as features in the response models. We generate 95\% confidence intervals for these estimates using 1,000 bootstrap samples.% The entire RCT sample size is $n=23,205$ and the population sample is $n=11,129$. There are $n=10,669$ RCT compliers and $n=3,382$ target population ``compliers'' on Medicaid. 
 
 Figure \ref{fig:any-visit-plot} compares treatment effect estimates on ER use. We estimate the effect of Medicaid coverage on the likelihood of visiting the ER is about 1.3\% for population compliers (PATT-C). In comparison, the effect on RCT compliers (SATT-C) is 1.2\% and RCT participants assigned to treatment (SATT) is about zero. There are substantial differences between sample and population estimates across covariate groups. For instance, the treatment effect on ER use for white sample participants is positive, but negative for white population participants. Treatment effects on ER use tend to be large and significant for RCT participants with health conditions, but negative for the corresponding population participants.
 %
@@ -645,103 +645,72 @@ Ridge regression (\texttt{glmnet}) & 0.22  & 0.001 & 0.21 & 0.23 \\
    \hline
 \end{tabular} 
 \end{center}
-\footnotesize{{\color{red}Notes: MSE is 10-fold cross-validated error for super learner ensemble and candidate algorithms.}}
+\footnotesize{{\color{red}Notes: MSE is 10-fold cross-validated error for super learner ensemble and candidate algorithms. \textsf{R} package used for implementing each algorithm in parentheses.}}
 \end{table}
 
 \pagebreak
-%\section{Ensemble method for response models} 
-
-%\subsection{Response model on RCT compliers}
 
 \begin{table}[h]
-\caption{Error and weights for ensemble method for response model on RCT compliers.\label{reponse-ensemble}}  
-  \begin{tabularx}{\linewidth}{l*{4}{Y}}
+\caption{Error and weights for candidate algorithms in response ensemble for RCT compliers.\label{reponse-ensemble}}  
+  \begin{tabularx}{\linewidth}{l*{3}{Y}}
     \toprule
-    \multicolumn{4}{l}{\textbf{Any ER visit}} \\
+    \multicolumn{3}{l}{\textbf{Any ER visit}} \\
     \midrule
- Algorithm & Parameters & MSE & Weight \\ 
+ Algorithm &  MSE & Weight \\ 
   \hline
-Gradient boosting  (\texttt{gbm}) & default & 0.18 & 0  \\ 
-Lasso regression (\texttt{glmnet})  & $\alpha=1$& 0.18 & 1 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.18 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.18 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.75$ & 0.18 & 0 \\ 
-Neural network (\texttt{nnet}) &  default & 0.234 & 0 \\ 
-Random forests (\texttt{randomForest}) & default & 0.24 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =1$ & 0.25 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =5$  & 0.24 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =10$ & 0.24 & 0 \\ 
-Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.188 & 0 \\ 
+Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
+Gradient boosting  (\texttt{gbm}) & 0.18 & 0  \\ 
+Lasso regression (\texttt{glmnet})  & 0.18 & 0.12 \\ 
+Random forests (\texttt{randomForest}) & 0.25 & 0 \\ 
+Ridge regression (\texttt{glmnet})  & 0.18 & 0.88 \\ 
    \hline
   \end{tabularx}
-  \begin{tabularx}{\linewidth}{l*{4}{Y}}
+  \begin{tabularx}{\linewidth}{l*{3}{Y}}
     \toprule
-    \multicolumn{4}{l}{\textbf{Any outpatient visit}} \\
+    \multicolumn{3}{l}{\textbf{Any outpatient visit}} \\
     \midrule
-Algorithm & Parameters & MSE & Weight \\ 
+Algorithm  & MSE & Weight \\ 
 \hline
-Gradient boosting (\texttt{gbm}) & default & 0.24 & 0  \\ 
-Lasso regression (\texttt{glmnet})  & $\alpha=1$& 0.24 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.24 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.24 & 0.76 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.75$ & 0.24 & 0 \\ 
-Neural network (\texttt{nnet}) &  default & 0.24 & 0 \\ 
-        \rowcolor{Gray}
-Random forests (\texttt{randomForest}) & default & 0.33 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =1$ & 0.39 & 0.23 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =5$  & 0.33 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =10$ & 0.33 & 0.01 \\ 
-Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.24 & 0 \\ 
+Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0.05 \\ 
+Gradient boosting  (\texttt{gbm}) & 0.24 & 0.59  \\ 
+Lasso regression (\texttt{glmnet})  & 0.24 & 0 \\ 
+Random forests (\texttt{randomForest}) & 0.39 & 0.36 \\ 
    \hline
     \bottomrule
   \end{tabularx}
-\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner prediction ensemble for record classification model. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. $\alpha$ is the elasticnet regularization parameter, where $\alpha = 0$ is the ridge penalty and $\alpha = 1$ is the lasso penalty. $\# \, \text{preds.}$ is the number of predictors sampled for splitting at each node.}}
+\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner ensemble. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. Weights are rounded so that they sum to 1. \textsf{R} package used for implementing each algorithm in parentheses.}}
 \end{table}
 
 \pagebreak
-%\subsection{Response model on all RCT participants}
 
 \begin{table}[ht]
-\caption{Error and weights for ensemble method for response model on all RCT participants.\label{reponse-ensemble-unadj}}  
-  \begin{tabularx}{\linewidth}{l*{4}{Y}}
-    \toprule
-    \multicolumn{4}{l}{\textbf{Any ER visit}} \\
-    \midrule
- Algorithm & Parameters & MSE & Weight \\ 
-  \hline
-Gradient boosting  (\texttt{gbm}) & default & 0.18 & 0  \\ 
-Lasso regression (\texttt{glmnet})  & $\alpha=1$& 0.18 & 0.54 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.18 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.18 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.75$ & 0.18 & 0 \\ 
-Neural network (\texttt{nnet}) &  default & 0.22 & 0 \\ 
-Random forests (\texttt{randomForest}) & default & 0.24 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =1$ & 0.25 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =5$  & 0.24 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =10$ & 0.24 & 0 \\ 
-Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.18 & 0.45 \\ 
-   \hline
-  \end{tabularx}
-  \begin{tabularx}{\linewidth}{l*{4}{Y}}
-    \toprule
-    \multicolumn{4}{l}{\textbf{Any outpatient visit}} \\
-    \midrule
-Algorithm & Parameters & MSE & Weight \\ 
-\hline
-Gradient boosting  (\texttt{gbm}) & default & 0.23 & 0  \\ 
-Lasso regression (\texttt{glmnet})  & $\alpha=1$& 0.23 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.25$ & 0.23 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.5$ & 0.23 & 0 \\ 
-Regularized linear model (\texttt{glmnet}) &  $\alpha=0.75$ & 0.23 & 0 \\ 
-Neural network (\texttt{nnet}) &  default & 0.24 & 0 \\ 
-Random forests (\texttt{randomForest}) & default & 0.32 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =1$ & 0.39 & 0.26 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =5$  & 0.33 & 0 \\ 
-Random forests (\texttt{randomForest})  & $\# \, \text{preds.} =10$ & 0.32 & 0.01 \\ 
-Ridge regression (\texttt{glmnet}) &  $\alpha=0$ & 0.23 & 0.73 \\ 
-   \hline
-    \bottomrule
-  \end{tabularx}
+\caption{Error and weights for candidate algorithms in response ensemble for all RCT participants.\label{reponse-ensemble-unadj}}  
+  \begin{tabularx}{\linewidth}{l*{3}{Y}}
+	\toprule
+	\multicolumn{3}{l}{\textbf{Any ER visit}} \\
+	\midrule
+	Algorithm &  MSE & Weight \\ 
+	\hline
+	Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
+	Gradient boosting  (\texttt{gbm}) & 0.18 & 0  \\ 
+	Lasso regression (\texttt{glmnet})  & 0.18 & 0.84 \\ 
+	Random forests (\texttt{randomForest}) & 0.25 & 0 \\ 
+	Ridge regression (\texttt{glmnet})  & 0.18 & 0.16 \\ 
+	\hline
+\end{tabularx}
+\begin{tabularx}{\linewidth}{l*{3}{Y}}
+	\toprule
+	\multicolumn{3}{l}{\textbf{Any outpatient visit}} \\
+	\midrule
+	Algorithm  & MSE & Weight \\ 
+	\hline
+	Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0.01 \\ 
+	Gradient boosting  (\texttt{gbm}) & 0.23 & 0  \\ 
+	Lasso regression (\texttt{glmnet})  & 0.23 & 0.72 \\ 
+	Random forests (\texttt{randomForest}) & 0.39 & 0.27 \\ 
+	\hline
+	\bottomrule
+\end{tabularx}
 \footnotesize{See notes to Fig.\ref{reponse-ensemble}.}
 \end{table}
 

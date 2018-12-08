@@ -78,7 +78,6 @@ if(run.model){
 }
 
 load(paste0(repo.directory,"results/response-mod.rda")) # result of response-mod.R
-load(paste0(repo.directory,"results/response-mod2.rda")) # result of response-mod.R
 
 # Use response model to estimate potential outcomes for population "compliers" on medicaid
 nrt.tr.counterfactual <- cbind("treatment" = rep(1, length(which(insurance.nhis==1))),
@@ -113,12 +112,14 @@ rct.tr.counterfactual.unadj <- cbind("treatment" = rep(1, length(which(insurance
 rct.ctrl.counterfactual.unadj <- cbind("treatment" = rep(0, length(which(insurance.ohie==1 | insurance.ohie==0))),
                                        X.ohie[which(insurance.ohie==1 | insurance.ohie==0),])
 
-Y.hat.1.unadj.rct <- lapply(y.col, function (i) predict(response.mod2[[i]], rct.tr.counterfactual.unadj)$pred) 
-Y.hat.0.unadj.rct <- lapply(y.col, function (i) predict(response.mod2[[i]], rct.ctrl.counterfactual.unadj)$pred)
+load(paste0(repo.directory,"results/response-mod2.rda")) # result of response-mod.R
+
+Y.hat.1.unadj.rct <- lapply(y.col, function (i) predict(response.mod2[[i]], rct.tr.counterfactual.unadj,onlySL = T)$pred) 
+Y.hat.0.unadj.rct <- lapply(y.col, function (i) predict(response.mod2[[i]], rct.ctrl.counterfactual.unadj,onlySL = T)$pred)
 
 t.satt.unadj <- lapply(y.col, function (i) mean(Y.hat.1.unadj.rct[[i]]) - mean(Y.hat.0.unadj.rct[[i]]))
 
-# Compute adjusted SATT using predicted values from response model
+# Compute adjusted SATT using predicted values from response model for RCT compliers
 
 rct.tr.counterfactual.adj <- cbind("treatment" = rep(1, length(which(insurance.ohie==1))),
                                      X.ohie[which(insurance.ohie==1),])
@@ -136,4 +137,4 @@ rct.sate <- lapply(y.col, function (i) (mean(Y.ohie[[i]][which(treatment.ohie==1
                    /mean(rct.compliers$complier[which(treatment.ohie==1)])) # Denom. is true RCT compliance rate
 
 # Save workspace
-save.image(file.path(code.directory,"analysis.Rdata"))
+save.image(file.path(repo.directory,"data/analysis.Rdata")) 
