@@ -6,6 +6,7 @@ library(gam)
 library(e1071)
 library(gbm)
 library(xgboost)
+library(LogicReg)
 
 # Creates additional randomForest wrappers changing both mtry and nodesize
 tuneGrid <- expand.grid(mtry=c(1,5,10), nodesize=c(1,5))
@@ -77,7 +78,7 @@ SL.library.class<- c("SL.gbm.adaboost",
                      "SL.gbm.bernoulli",
 		    "SL.glmnet", # lasso
 		    "SL.glmnet.0.25",
-		    "SL.glmnet.0.50",
+		    "SL.glmnet.0.5",
 		    "SL.glmnet.0", # ridge
 		                "SL.xgboost",
 		                "SL.logreg",
