@@ -327,7 +327,7 @@ In addition to the identification assumptions, we require additional modeling as
 
 In the empirical application, we use the weighted ensemble method described in \citet{van2007} for \ref{compliance-model} and \ref{response-model} of the estimation procedure. This ensemble method combines algorithms with a convex combination of weights based on minimizing cross-validated error. It is shown to control for overfitting and outperforms single algorithms selected by cross-validation \citep{polley2010super}. 
 
-We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes. We select four types of candidate algorithms: gradient boosting algorithms \citep{friedman2000additive,friedman2001greedy, friedman2002stochastic}; regularized linear models (i.e., Lasso or ridge regression) \citep{tibshirani2012strong}; and random forests \citep{breiman2001}. Lasso regression is an attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
+We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes. We select five types of candidate algorithms: decision tree boosting algorithms (e.g., AdaBoost, gradient boosting, and XGBoost) \citep{freund1996experiments,friedman2000additive,friedman2001greedy}; L1 or L2-regularized linear models (e.g., Lasso or ridge regression, respectively) \citep{tibshirani2012strong}; logic regression \citep{ruczinski2003logic}; and random forests \citep{breiman2001}. L1-regularized linear models are important for our application due to their variable selection properties --- Lasso is particularly attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
 
 \section{Simulations} \label{sim}
 \color{red}We conduct a simulation study to compare the performance of the PATT and PATT-C estimators. For comparison, we also estimate the Sample Average Treatment Effect on the Treated Compliers (SATT-C) by fitting the response curve for compliers in the RCT --- which we do in \ref{response-model} for estimating $\tau_{\text{PATT-C}}$ --- and then taking the mean difference in potential outcomes for treated compliers in the sample:
@@ -384,18 +384,10 @@ Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of 
 %\end{center}
 
 \begin{figure}[htbp]
-\begin{center}
-\includegraphics[width = 1\textwidth]{rmse_ratec_rates}
-\caption{Simulated RMSE, binned by compliance rate and percent eligible for the RCT. Darker tiles correspond to higher RMSE.\label{fig:rmse_ratec_rates}}
-%\caption{\label{fig:rmse_ratec_rates}}
-\end{center}
-\end{figure}
-
-\begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[width = 1\textwidth]{rmse_ratec_ratet}
-		\caption{Simulated RMSE, binned by compliance rate and percent eligible for treatment. \label{fig:rmse_ratec_ratet}}
-		%\caption{\label{fig:rmse_ratec_ratet}}
+		\includegraphics[width = 1\textwidth]{rmse_ratec_rates}
+		\caption{Simulated RMSE, binned by compliance rate and percent eligible for the RCT. Darker tiles correspond to higher RMSE and gray tiles indicates no data.\label{fig:rmse_ratec_rates}}
+		%\caption{\label{fig:rmse_ratec_rates}}
 	\end{center}
 \end{figure}
 
@@ -594,6 +586,15 @@ Explicitly modeling compliance allows us to decompose SATT-C and PATT-C estimate
 \renewcommand{\theequation}{\hbAppendixPrefix\arabic{equation}} 
 \setcounter{equation}{0}
 
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width = 1\textwidth]{rmse_ratec_ratet}
+		\caption{Simulated RMSE, binned by compliance rate and percent eligible for treatment. \label{fig:rmse_ratec_ratet}}
+		%\caption{\label{fig:rmse_ratec_ratet}}
+	\end{center}
+\end{figure}
+
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConC}
@@ -674,11 +675,11 @@ Adaboost (\texttt{gbm})  & 0.18 & 0 \\
 Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
 Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.18 & 0.55  \\ 
 Lasso regression (\texttt{glmnet})  & 0.18 & 0 \\ 
-Logistic regression (\texttt{LogicReg})  & 0.18 & 0 \\ 
+Logic regression (\texttt{LogicReg})  & 0.18 & 0 \\ 
 Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
 Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.25 & 0 \\ 
-Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0.45 \\ 
-Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\ 
+Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0.45 \\ 
+Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\ 
    \hline
   \end{tabularx}
   \begin{tabularx}{\linewidth}{l*{3}{Y}}
@@ -691,15 +692,15 @@ Adaboost (\texttt{gbm})  & 0.24 & 0.52 \\
 Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0.06 \\ 
 Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.24 & 0  \\ 
 Lasso regression (\texttt{glmnet})  & 0.24 & 0 \\ 
-Logistic regression (\texttt{LogicReg})  & 0.24 & 0 \\ 
+Logic regression (\texttt{LogicReg})  & 0.24 & 0 \\ 
 Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.39 & 0.42 \\ 
 Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.33 & 0 \\ 
-Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.24 & 0 \\ 
-Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.24 & 0 \\ 
+Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.24 & 0 \\ 
+Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.24 & 0 \\ 
    \hline
     \bottomrule
   \end{tabularx}
-\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner ensemble. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. Weights are rounded so that they sum to 1. \textsf{R} package used for implementing each algorithm in parentheses. $\# preds.$ is the number of predictors randomly sampled as candidates in each decision tree in random forests algorithm. $\alpha$ is a regularization parameter.}}
+\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner ensemble. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. Weights are rounded so that they sum to 1. \textsf{R} package used for implementing each algorithm in parentheses. $\# preds.$ is the number of predictors randomly sampled as candidates in each decision tree in random forests algorithm. $\alpha$ is a parameter that mixes L1 and L2 norms.}}
 \end{table}
 
 \pagebreak
@@ -716,11 +717,11 @@ Adaboost (\texttt{gbm})  & 0.18 & 0 \\
 Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
 Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.18 & 0  \\ 
 Lasso regression (\texttt{glmnet})  & 0.18 & 0.18 \\ 
-Logistic regression (\texttt{LogicReg})  & 0.18 & 0.68 \\ 
+Logic regression (\texttt{LogicReg})  & 0.18 & 0.68 \\ 
 Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
 Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.24 & 0 \\ 
-Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0.14 \\ 
-Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\  
+Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0.14 \\ 
+Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\  
 Ridge regression  (\texttt{glmnet})  & 0.25 & 0 \\  
 	\hline
 \end{tabularx}
@@ -734,11 +735,11 @@ Adaboost (\texttt{gbm})  & 0.23 & 0 \\
 Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0 \\ 
 Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.23 & 0  \\ 
 Lasso regression (\texttt{glmnet})  & 0.23 & 0.74 \\ 
-Logistic regression (\texttt{LogicReg})  & 0.23 & 0 \\ 
+Logic regression (\texttt{LogicReg})  & 0.23 & 0 \\ 
 Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.39 & 0.25 \\ 
 Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.32 & 0.01 \\ 
-Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.23 & 0 \\ 
-Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.23 & 0 \\  
+Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.23 & 0 \\ 
+Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.23 & 0 \\  
 	\hline
 	\bottomrule
 \end{tabularx}

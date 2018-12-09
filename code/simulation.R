@@ -136,9 +136,9 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
   return(res)
 }
 
-e <- seq(-2, 2, by = 0.5)
+e <- rnorm(5)
 e <- expand.grid(e,e,e,e,e,e)
-B <- 5
+B <- 10
 res <- foreach(i = 1:nrow(e)) %dopar% {
   cat(i)
   return(sim_estimates(B,e[i,1],e[i,2],e[i,3],e[i,4],e[i,5],e[i,6]))
@@ -155,4 +155,4 @@ colnames(mse_dup) <- c("mse_tpatt", "mse_tpatt_unadj", "mse_rct_sate", "mse_rct_
 for(i in 1:4){mse_dup[,i] <- rep(mse[,i], each = B)}
 res <- cbind(res, mse_dup)
 res <- as.data.frame(res)
-save(res, file = "results/simulation_res.Rdata")
+save(res, file = "results/simulation_res.RData")

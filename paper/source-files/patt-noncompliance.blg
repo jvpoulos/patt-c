@@ -1,20 +1,20 @@
-[0] Config.pm:302> INFO - This is Biber 2.9
+[0] Config.pm:302> INFO - This is Biber 2.11
 [0] Config.pm:305> INFO - Logfile is 'patt-noncompliance.blg'
-[17] biber:313> INFO - === Fri Nov 30, 2018, 16:43:42
-[36] Biber.pm:371> INFO - Reading 'patt-noncompliance.bcf'
-[106] Biber.pm:857> INFO - Found 21 citekeys in bib section 0
-[115] Biber.pm:3981> INFO - Processing section 0
-[123] Biber.pm:4154> INFO - Looking for bibtex format file 'refs.bib' for section 0
-[124] bibtex.pm:1468> INFO - LaTeX decoding ...
-[147] bibtex.pm:1294> INFO - Found BibTeX data source 'refs.bib'
-[168] Utils.pm:169> WARN - month field 'June' in entry 'Angrist1996' is not an integer - this will probably not sort properly.
-[226] Utils.pm:169> WARN - month field 'January' in entry 'Taubman' is not an integer - this will probably not sort properly.
-[243] Utils.pm:169> WARN - month field 'June' in entry 'NBERw22363' is not an integer - this will probably not sort properly.
-[271] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[272] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[272] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'level = 4' with 'level = 2'
-[272] Biber.pm:3809> INFO - Sorting list 'cms/global//global/global' of type 'entry' with template 'cms' and locale 'en-US'
-[272] Biber.pm:3815> INFO - No sort tailoring available for locale 'en-US'
-[293] bbl.pm:617> INFO - Writing 'patt-noncompliance.bbl' with encoding 'UTF-8'
-[308] bbl.pm:720> INFO - Output to patt-noncompliance.bbl
-[308] Biber.pm:110> INFO - WARNINGS: 3
+[21] biber:313> INFO - === Sat Dec  8, 2018, 18:52:37
+[44] Biber.pm:371> INFO - Reading 'patt-noncompliance.bcf'
+[117] Biber.pm:857> INFO - Found 23 citekeys in bib section 0
+[126] Biber.pm:3976> INFO - Processing section 0
+[135] Biber.pm:4136> INFO - Looking for bibtex format file 'refs.bib' for section 0
+[136] bibtex.pm:1489> INFO - LaTeX decoding ...
+[166] bibtex.pm:1305> INFO - Found BibTeX data source 'refs.bib'
+[187] Utils.pm:193> WARN - month field 'June' in entry 'Angrist1996' is not an integer - this will probably not sort properly.
+[259] Utils.pm:193> WARN - month field 'January' in entry 'Taubman' is not an integer - this will probably not sort properly.
+[277] Utils.pm:193> WARN - month field 'June' in entry 'NBERw22363' is not an integer - this will probably not sort properly.
+[314] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[314] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[314] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'level = 4' with 'level = 2'
+[314] Biber.pm:3804> INFO - Sorting list 'cms/global//global/global' of type 'entry' with template 'cms' and locale 'en-US'
+[315] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[338] bbl.pm:617> INFO - Writing 'patt-noncompliance.bbl' with encoding 'UTF-8'
+[354] bbl.pm:720> INFO - Output to patt-noncompliance.bbl
+[354] Biber.pm:110> INFO - WARNINGS: 3

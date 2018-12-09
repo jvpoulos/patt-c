@@ -1,7 +1,7 @@
 # Make tile plots and side-by-side boxplots for simulation comparisons
 ######################################################################
 
-load(paste0(repo.directory , "results/simulation_res.Rdata"))
+load(paste0(repo.directory , "results/simulation_res.RData"))
 library(ggplot2)
 library(gridExtra)
 color_extremes <- c("yellow", "red")

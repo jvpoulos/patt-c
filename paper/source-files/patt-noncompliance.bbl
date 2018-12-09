@@ -294,6 +294,41 @@
       \field{pages}{1057}
       \range{pages}{1}
     \endentry
+    \entry{freund1996experiments}{inproceedings}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{uniquename=0,uniquepart=base,hash=9dae54fc70ef3090ef42046937183be2}{%
+           family={Freund},
+           familyi={F\bibinitperiod},
+           given={Yoav},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=8428d6ce4d2319a5be839da6c9ae0128}{%
+           family={Schapire},
+           familyi={S\bibinitperiod},
+           given={Robert\bibnamedelima E},
+           giveni={R\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {Citeseer}%
+      }
+      \strng{namehash}{3570df99ae81c346ec36c70079c50fb9}
+      \strng{fullhash}{3570df99ae81c346ec36c70079c50fb9}
+      \strng{bibnamehash}{3570df99ae81c346ec36c70079c50fb9}
+      \strng{authorbibnamehash}{3570df99ae81c346ec36c70079c50fb9}
+      \strng{authornamehash}{3570df99ae81c346ec36c70079c50fb9}
+      \strng{authorfullhash}{3570df99ae81c346ec36c70079c50fb9}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Experiments with a new boosting algorithm}
+      \field{year}{1996}
+    \endentry
     \entry{friedman2001greedy}{article}{}
       \name{author}{1}{}{%
         {{uniquename=0,uniquepart=base,hash=35b9098abeddd115c394c7b2e7ea0264}{%
@@ -319,42 +354,54 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Annals of Statistics}
-      \field{title}{Greedy function approximation: A gradient boosting machine}
+      \field{title}{Greedy function approximation: {A} gradient boosting machine}
       \field{year}{2001}
       \field{pages}{1189\bibrangedash 1232}
       \range{pages}{44}
     \endentry
-    \entry{friedman2002stochastic}{article}{}
-      \name{author}{1}{}{%
-        {{uniquename=0,uniquepart=base,hash=35b9098abeddd115c394c7b2e7ea0264}{%
+    \entry{friedman2000additive}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=971cf69058b64a94326dea0f2a8bbcce}{%
            family={Friedman},
            familyi={F\bibinitperiod},
-           given={Jerome\bibnamedelima H},
-           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Jerome},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0cb8fe4210baa81c4b0e67913b4d2768}{%
+           family={Hastie},
+           familyi={H\bibinitperiod},
+           given={Trevor},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=88eea600247d798f8b2ce0b2dc614492}{%
+           family={Tibshirani},
+           familyi={T\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod},
            givenun=0}}%
       }
       \list{publisher}{1}{%
-        {Elsevier}%
+        {Institute of Mathematical Statistics}%
       }
-      \strng{namehash}{35b9098abeddd115c394c7b2e7ea0264}
-      \strng{fullhash}{35b9098abeddd115c394c7b2e7ea0264}
-      \strng{bibnamehash}{35b9098abeddd115c394c7b2e7ea0264}
-      \strng{authorbibnamehash}{35b9098abeddd115c394c7b2e7ea0264}
-      \strng{authornamehash}{35b9098abeddd115c394c7b2e7ea0264}
-      \strng{authorfullhash}{35b9098abeddd115c394c7b2e7ea0264}
+      \strng{namehash}{568e7b5149c552567af3c9b520d96bb3}
+      \strng{fullhash}{568e7b5149c552567af3c9b520d96bb3}
+      \strng{bibnamehash}{568e7b5149c552567af3c9b520d96bb3}
+      \strng{authorbibnamehash}{568e7b5149c552567af3c9b520d96bb3}
+      \strng{authornamehash}{568e7b5149c552567af3c9b520d96bb3}
+      \strng{authorfullhash}{568e7b5149c552567af3c9b520d96bb3}
       \field{sortinit}{F}
       \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Computational Statistics \& Data Analysis}
-      \field{number}{4}
-      \field{title}{Stochastic gradient boosting}
-      \field{volume}{38}
-      \field{year}{2002}
-      \field{pages}{367\bibrangedash 378}
-      \range{pages}{12}
+      \field{journaltitle}{The Annals of Statistics}
+      \field{number}{2}
+      \field{title}{Additive logistic regression: {A} statistical view of boosting}
+      \field{volume}{28}
+      \field{year}{2000}
+      \field{pages}{337\bibrangedash 407}
+      \range{pages}{71}
     \endentry
     \entry{Hartman}{article}{}
       \name{author}{4}{}{%
@@ -521,7 +568,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of Public Economics}
       \field{number}{11-12}
-      \field{title}{The impact of health care reform on hospital and preventive care: evidence from Massachusetts}
+      \field{title}{The impact of health care reform on hospital and preventive care: evidence from {M}assachusetts}
       \field{volume}{96}
       \field{year}{2012}
       \field{pages}{909\bibrangedash 929}
@@ -635,7 +682,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of Public Economics}
       \field{number}{11-12}
-      \field{title}{The effect of insurance on emergency room visits: an analysis of the 2006 Massachusetts health reform}
+      \field{title}{The effect of insurance on emergency room visits: an analysis of the 2006 {M}assachusetts health reform}
       \field{volume}{96}
       \field{year}{2012}
       \field{pages}{893\bibrangedash 908}
@@ -715,7 +762,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{National Center for Health Statistics. Vital and Health Statistics}
       \field{number}{165}
-      \field{title}{Design and estimation for the National Health Interview Survey, 2006--2015.}
+      \field{title}{Design and estimation for the {N}ational {H}ealth {I}nterview {S}urvey, 2006--2015.}
       \field{volume}{2}
       \field{year}{2014}
       \field{pages}{1\bibrangedash 53}
@@ -791,6 +838,50 @@
       \field{year}{1990}
       \field{pages}{472\bibrangedash 480}
       \range{pages}{9}
+    \endentry
+    \entry{ruczinski2003logic}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=840d4a48edf36727547d9e326ee27d9e}{%
+           family={Ruczinski},
+           familyi={R\bibinitperiod},
+           given={Ingo},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=7f95c4e3970aa763711f6f837120913e}{%
+           family={Kooperberg},
+           familyi={K\bibinitperiod},
+           given={Charles},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=f0593a91912d3ed657c489a088c57324}{%
+           family={LeBlanc},
+           familyi={L\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{a2ffbffdf7d37120e41fe3609396a592}
+      \strng{fullhash}{a2ffbffdf7d37120e41fe3609396a592}
+      \strng{bibnamehash}{a2ffbffdf7d37120e41fe3609396a592}
+      \strng{authorbibnamehash}{a2ffbffdf7d37120e41fe3609396a592}
+      \strng{authornamehash}{a2ffbffdf7d37120e41fe3609396a592}
+      \strng{authorfullhash}{a2ffbffdf7d37120e41fe3609396a592}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Computational and Graphical Statistics}
+      \field{number}{3}
+      \field{title}{Logic regression}
+      \field{volume}{12}
+      \field{year}{2003}
+      \field{pages}{475\bibrangedash 511}
+      \range{pages}{37}
     \endentry
     \entry{stuart2011use}{article}{}
       \name{author}{4}{}{%
