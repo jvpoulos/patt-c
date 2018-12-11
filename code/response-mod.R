@@ -6,38 +6,57 @@ load("data/analysis.RData")
 # Source superlearner scripts to ensure libraries attached
 source("code/SuperLearner.R")
 
-# Fit a regression to the compliers in the RCT
-y.col <- 1:ncol(Y.ohie) # number of responses
-Y.ohie.response <- Y.ohie[which(rct.compliers$complier==1),]
-X.ohie.response <- data.frame("treatment"=treatment.ohie[which(rct.compliers$complier==1)],
-                              X.ohie[which(rct.compliers$complier==1),])
+## For PATT-C
 
-# Run response model
+# Run response model (binary)
 set.seed(42)
-response.mod <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response[,i], 
+response.mod.binary <- lapply(y.col.binary, function (i) SuperLearner(Y=Y.ohie.response[,i], 
                                                         X=X.ohie.response, 
                                                         SL.library=SL.library.class,
                                                         family="binomial"))
 
-names(response.mod) <- colnames(Y.ohie.response) # name each element of list
+names(response.mod.binary) <- colnames(Y.ohie.response) # name each element of list
 
-response.mod # summarize
+response.mod.binary # summarize
 
-# Compute unadjusted PATT
-Y.ohie.response.unadj <- Y.ohie[which(rct.compliers$complier==1 | rct.compliers$complier==0),]
-X.ohie.response.unadj <- data.frame("treatment"=treatment.ohie,
-                                    X.ohie)
+# Run response model (num)
 set.seed(42)
-response.mod2 <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response.unadj[,i], 
+response.mod.num <- lapply(y.col.num, function (i) SuperLearner(Y=Y.ohie.response[,i], 
+                                                                      X=X.ohie.response, 
+                                                                   SL.library=SL.library.reg,
+                                                                   family="gaussian"))
+
+names(response.mod.num) <- colnames(Y.ohie.response) # name each element of list
+
+response.mod.num # summarize
+
+## For PATT
+
+# Run response model (binary)
+set.seed(42)
+response.mod.binary2 <- lapply(y.col.binary, function (i) SuperLearner(Y=Y.ohie.response.unadj[,i], 
                                                          X=X.ohie.response.unadj, 
                                                          SL.library=SL.library.class,
                                                          family="binomial"))
 
-names(response.mod2) <- colnames(Y.ohie) # name each element of list
+names(response.mod.binary2) <- colnames(Y.ohie) # name each element of list
 
-response.mod2 # summarize
+response.mod.binary2 # summarize
+
+# Run response model (num)
+set.seed(42)
+response.mod.num2 <- lapply(y.col.num, function (i) SuperLearner(Y=Y.ohie.response.unadj[,i], 
+                                                                       X=X.ohie.response.unadj, 
+                                                                       SL.library=SL.library.reg,
+                                                                       family="gaussian"))
+
+names(response.mod.num2) <- colnames(Y.ohie) # name each element of list
+
+response.mod.binary2 # summarize
 
 # Save models
-save(response.mod, file = "results/response-mod.rda")
-save(response.mod2, file = "results/response-mod2.rda")
+save(response.mod.binary, file = "results/response-mod-binary.rda")
+save(response.mod.binary2, file = "results/response-mod-binary2.rda")
 
+save(response.mod.num, file = "results/response-mod-num.rda")
+save(response.mod.num2, file = "results/response-mod-num2.rda")

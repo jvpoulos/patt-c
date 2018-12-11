@@ -2,7 +2,7 @@ library(reporttools)
 
 # Create table similar to Table 1 of Hartman et al. 
 rct.nrt.tab <- rbind(cbind(study="OHIE",X.ohie.response,
-                           Y.ohie.response[c("any.visit","any.out")]),
+                           Y.ohie.response[c("any.visit","num.visit","any.out","num.out")]),
                      cbind(study="NHIS",nrt.tr.counterfactual,
                            Y.nhis[c("any.visit","any.out")][which(insurance.nhis==1),])) # create data for table
 rct.nrt.tab$group <- NA
