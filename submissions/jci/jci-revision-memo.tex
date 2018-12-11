@@ -152,6 +152,13 @@ Moreover, in Section \label{ensemble} of the revised manuscript we describe the 
 
 %In their proof, the authors don’t make clear where they use Assumption (5). I believe its in the last line, although the authors only reference randomization. It should be in here, I believe, because it is what allows us to use the "complier controls".
 
+R2 is correct that while Assumption \ref{compl} conditions on $W$, we use propensity to comply in the estimation.  In \ref{compliance-model} of the estimation procedure it becomes clear why we write the assumption this way. Assumption \ref{compl} implies that $P(C_i=1 | S_i=1, T_i=1, W_i) = P(C_i=1 | S_i=1, T_i=0, W_i)$. We estimate the first term to get to the second term. In addition, it would be confusing to have a propensity score here because there are different propensities: propensity to comply given $W_i$, propensity to be included in the RCT, propensity to receive treatment in the observational sample. 
+
+We've included in the revised manuscript when stating Assumption \ref{compl} a justification for conditioning on $W$ and it's usefulness in the estimation strategy.
+
+R2 is right in pointing out that the original manuscript doesn't make clear where the assumption is used in the proof. The revised manuscript makes clear -- as suggested by R2 -- that the last line of the proof follows because \ref{compliance-model} allows us to use ``complier controls''. 
+
+
 \subsubsection{Placebo test}
 %In Hartman et al. (2015) there is discussion of a placebo test that can be conducted to provide evidence supporting the identifying assumptions. The test doesn’t go thorough here because the complier treatment and complier controls aren’t exchangeable by design, since we need to assume we know the complier model. Stuart et al (2011) also have a placebo test in their identification stragegy. These tests are incredibly valuable for helping evaluate the identification assumptions. Have the authors considered finding ways to conduct placebo tests in this design? If it is possible, I think it would strengthen the argument quite a bit. The test isn’t straightforward to me, but the authors are more immersed in this identification strategy and might be able to come up with something clever.
 

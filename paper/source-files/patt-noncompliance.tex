@@ -176,7 +176,7 @@ Assumptions \ref{consistency}, \ref{si_treat}, \ref{si_ctrl}, and \ref{sutva} ar
 	\end{equation*}
 \end{assumption} 
 
-\noindent Assumption \ref{consistency} requires that each individual $i$ has the same response to treatments, whether $i$ is in the RCT or not. {\color{red} Compliance status $C_i$ is not a factor in this assumption because we assume that compliance is conditionally independent of sample and treatment assignment for all individuals with covariates $W_i$. 
+\noindent Assumption \ref{consistency} requires that each individual $i$ has the same response to treatments, whether $i$ is in the RCT or not. {\color{red} Compliance status $C_i$ is not a factor in this assumption because we assume that compliance is conditionally independent of sample and treatment assignment for all individuals with covariates $W_i$.}
 	
 \vskip 0.2in
 \begin{assumption}{2}{}\label{compl}
@@ -186,7 +186,7 @@ Assumptions \ref{consistency}, \ref{si_treat}, \ref{si_ctrl}, and \ref{sutva} ar
 	\end{equation*}
 \end{assumption}
 
-\noindent Together, Assumptions \ref{consistency} and \ref{compl} ensure that potential outcomes do not differ based on sample assignment or receipt of treatment.}
+\noindent {\color{red} Assumption \ref{compl} implies that $P(C_i=1 | S_i=1, T_i=1, W_i) = P(C_i=1 | S_i=1, T_i=0, W_i)$, which is useful when predicting the probability of compliance as a function of covariates $W_i$ in the first step of our estimation procedure.} Together, Assumptions \ref{consistency} and \ref{compl} ensure that potential outcomes do not differ based on sample assignment or receipt of treatment.
 
 \vskip 0.2in
 \begin{assumption}{3}{}\label{si_treat}
@@ -286,7 +286,7 @@ We separate the expectation linearly into two terms and consider each individual
 &= \ex\left(Y_{i11} \mid S_i=0, T_i=1, C_i=1\right) \tag*{by Assumption \ref{monotonicity}} \\
 &= \ex_{01}\left[  \ex\left(Y_{i11} \mid S_i=0, T_i=1, C_i=1, W_i\right) \right] \\
 &= \ex_{01}\left[  \ex\left(Y_{i11} \mid S_i=1, T_i=1, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{si_treat}} \\
-&= \ex_{01}\left[  \ex\left(Y_{i11} \mid S_i=1, D_i=1, W_i\right)\right]
+&= \ex_{01}\left[  \ex\left(Y_{i11} \mid S_i=1, D_i=1, W_i\right)\right] 
 \end{align*}
 
 {\color{red}Intuitively, conditioning on $W_i$ makes sample selection ignorable under Assumption \ref{si_treat}. This is the critical connector between the third and fourth lines of the first expectation derivation.}
@@ -295,10 +295,10 @@ We separate the expectation linearly into two terms and consider each individual
 \ex\left(Y_{i00} \mid S_i=0, D_i=1\right) &= \ex\left(Y_{i10} \mid S_i=0, D_i=1\right) \tag*{by Assumption \ref{consistency}} \\
 &= \ex\left(Y_{i10} \mid S_i=0, T_i=1, C_i=1\right) \tag*{by Assumption \ref{monotonicity}} \\
 &= \ex_{01}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=1, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{si_ctrl}} \\
-&= \ex_{01}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=0, C_i=1, W_i\right) \right] \\
+&= \ex_{01}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=0, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{compl}}\\
 \end{align*}
 
-The last line follows because of the randomization carried out in the RCT, which guarantees $Y_{i10} \independent T_i \mid (W_i, S_i=1)$. Finally, the result follows by plugging these two expressions into Eq.~\eqref{tpatt}.
+{\color{red}The last line follows because Assumption \ref{compl} allows us to use RCT controls who would have complied had they been assigned to treatment and the RCT randomization }guarantees $Y_{i10} \independent T_i \mid (W_i, S_i=1)$. Finally, the result follows by plugging these two expressions into Eq.~\eqref{tpatt}.
 \end{proof}
 
 \section{Estimation procedure}\label{estimation}
@@ -332,7 +332,7 @@ We choose a variety of candidate algorithms to construct the ensemble, with a pr
 \section{Simulations} \label{sim}
 \color{red}We conduct a simulation study to compare the performance of the PATT and PATT-C estimators. For comparison, we also estimate the Sample Average Treatment Effect on the Treated Compliers (SATT-C) by fitting the response curve for compliers in the RCT --- which we do in \ref{response-model} for estimating $\tau_{\text{PATT-C}}$ --- and then taking the mean difference in potential outcomes for treated compliers in the sample:
 \begin{equation}\label{tsatt-est} 
-\tau_{\text{SATT-C}} = \ex(Y_{i11} \mid S_i=1, C_i=1, T_i=1, W_i) - \ex(Y_{i10} \mid S_i=1, C_i=1, T_i=1, W_i).
+\tau_{\text{SATT-C}} = \ex(Y_{i11} \mid S_i=1, C_i=1, T_i=1) - \ex(Y_{i10} \mid S_i=1, C_i=1, T_i=1).
 \end{equation}
 \color{black}
 Our simulation is designed so that the effect of treatment is heterogeneous and depends on covariates which are different in the RCT and target population. The design satisfies the conditional independence assumptions in Figure~\ref{fig:DAG}.

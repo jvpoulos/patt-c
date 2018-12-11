@@ -4,28 +4,11 @@
 
 ** Analyses **
 
-*adjusted SATT in empirical application
-	Should be positive, like A28 of Finkelstein
-
-report 95% CIs
-
-Figure on who is more likely to be compliers (using model predictions)
-
-heterogeneous treatment effects with ensemble
 
 Placebo tests - comparing the average outcomes predicted by the model with the average of the observed outcomes for the treated group. Again given sufficient power, a failure to find equivalence between the predicted and observed outcomes indicates a failure of at least one assumption underlying Theorem 1 and bias in the estimated population treatment effects.
 	Figure I.5 in Appendix I,
 
 ** Writing **
-
-More on variable selection properties of candidate learners 
-
-*Comparision with previous results*
-
-Who's a complier?
-	The individuals who take up treatment are more likely to be female, on SNAP or TANF, and they have higher ER utilization in the pre-period. (K 30) (Table 3)
-
-	Relative to our study population, compliers are somewhat older, more likely white, in worse health, and in 		lower socioeconomic status. (F 1078) (A26)
 
 ** Questions for Kellie **
 
@@ -34,12 +17,21 @@ relationship to reweighting methods
 
 	This shows that a reweighting approach is needed to extrapolate RCT results to a wider population. (4.2)
 
+** For next time**
 
----
+# ER / outpatient visits - use SL.reg
 
-module load intel/17.0.4
-module load impi/17.0.3
-module load RstatsPackages/3.4.0
-module load Rstats/3.4.0
+Rm Logic regression from binary
+
+*Comparision with previous results*
+	*adjusted SATT in empirical application
+	Should be positive, like A28 of Finkelstein
+
+report who is more likely to be compliers (using model predictions)
+
+Who's a complier?
+	The individuals who take up treatment are more likely to be female, on SNAP or TANF, and they have higher ER utilization in the pre-period. (K 30) (Table 3)
+
+	Relative to our study population, compliers are somewhat older, more likely white, in worse health, and in lower socioeconomic status. (F 1078) (A26)
 
 
