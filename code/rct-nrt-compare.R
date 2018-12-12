@@ -4,11 +4,11 @@ library(reporttools)
 rct.nrt.tab <- rbind(cbind(study="OHIE",X.ohie.response,
                            Y.ohie.response[c("any.visit","num.visit","any.out","num.out")]),
                      cbind(study="NHIS",nrt.tr.counterfactual,
-                           Y.nhis[c("any.visit","any.out")][which(insurance.nhis==1),])) # create data for table
+                           Y.nhis[c("any.visit","num.visit","any.out","num.out")][which(insurance.nhis==1),])) # create data for table
 rct.nrt.tab$group <- NA
-rct.nrt.tab$group[rct.nrt.tab$study=="OHIE" & rct.nrt.tab$treatment==0] <- 1
-rct.nrt.tab$group[rct.nrt.tab$study=="OHIE" & rct.nrt.tab$treatment==1] <- 2
-rct.nrt.tab$group[rct.nrt.tab$study=="NHIS" & rct.nrt.tab$treatment==1] <- 3
+rct.nrt.tab$group[rct.nrt.tab$study=="OHIE" & rct.nrt.tab$insurance==0] <- 1
+rct.nrt.tab$group[rct.nrt.tab$study=="OHIE" & rct.nrt.tab$insurance==1] <- 2
+rct.nrt.tab$group[rct.nrt.tab$study=="NHIS" & rct.nrt.tab$insurance==1] <- 3
 
 tableNominal(vars = rct.nrt.tab, 
              group = rct.nrt.tab$group, 
