@@ -38,26 +38,26 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3}Interpretation of estimator}{4}{subsection.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4}Relationship to AIR approach}{4}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.4}Relationship to AIR approach}{5}{subsection.2.4}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3}Reviewer: 3 (R3)}{5}{section.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.1}Generalizability and originality}{5}{subsection.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Abstract}{5}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}Abstract}{6}{subsection.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}DAG}{5}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.3}DAG}{6}{subsection.3.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.4}Clarification re: proof}{6}{subsection.3.4}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.5}Plausibility of strong ignorability assumptions}{6}{subsection.3.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.6}Clarification re: estimation procedure}{6}{subsection.3.6}
+\contentsline {subsection}{\numberline {3.6}Clarification re: estimation procedure}{7}{subsection.3.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.6.1}Prediction threshold}{6}{subsubsection.3.6.1}
+\contentsline {subsubsection}{\numberline {3.6.1}Prediction threshold}{7}{subsubsection.3.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.6.2}Relationship to reweighting methods}{6}{subsubsection.3.6.2}
+\contentsline {subsubsection}{\numberline {3.6.2}Relationship to reweighting methods}{7}{subsubsection.3.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.6.3}Description of predictive algorithms}{6}{subsubsection.3.6.3}
+\contentsline {subsubsection}{\numberline {3.6.3}Description of predictive algorithms}{7}{subsubsection.3.6.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.7}Grammatical}{7}{subsection.3.7}
