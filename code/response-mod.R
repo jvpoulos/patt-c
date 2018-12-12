@@ -15,7 +15,7 @@ response.mod.binary <- lapply(y.col.binary, function (i) SuperLearner(Y=Y.ohie.r
                                                         SL.library=SL.library.class,
                                                         family="binomial"))
 
-names(response.mod.binary) <- colnames(Y.ohie.response) # name each element of list
+names(response.mod.binary) <- colnames(Y.ohie.response)[y.col.binary] # name each element of list
 
 response.mod.binary # summarize
 
@@ -26,7 +26,7 @@ response.mod.num <- lapply(y.col.num, function (i) SuperLearner(Y=Y.ohie.respons
                                                                    SL.library=SL.library.reg,
                                                                    family="gaussian"))
 
-names(response.mod.num) <- colnames(Y.ohie.response) # name each element of list
+names(response.mod.num) <- colnames(Y.ohie.response)[y.col.num] # name each element of list
 
 response.mod.num # summarize
 
@@ -39,7 +39,7 @@ response.mod.binary2 <- lapply(y.col.binary, function (i) SuperLearner(Y=Y.ohie.
                                                          SL.library=SL.library.class,
                                                          family="binomial"))
 
-names(response.mod.binary2) <- colnames(Y.ohie) # name each element of list
+names(response.mod.binary2) <- colnames(Y.ohie)[y.col.binary] # name each element of list
 
 response.mod.binary2 # summarize
 
@@ -50,7 +50,7 @@ response.mod.num2 <- lapply(y.col.num, function (i) SuperLearner(Y=Y.ohie.respon
                                                                        SL.library=SL.library.reg,
                                                                        family="gaussian"))
 
-names(response.mod.num2) <- colnames(Y.ohie) # name each element of list
+names(response.mod.num2) <- colnames(Y.ohie)[y.col.num] # name each element of list
 
 response.mod.binary2 # summarize
 

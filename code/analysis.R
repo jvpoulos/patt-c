@@ -75,12 +75,12 @@ y.col <- 1:4
 y.col.binary <- c(1,3)
 y.col.num <- c(2,4)
 Y.ohie.response <- Y.ohie[which(rct.compliers$complier==1),]
-X.ohie.response <- data.frame("treatment.received"=insurance.ohie[which(rct.compliers$complier==1)],
+X.ohie.response <- data.frame("insurance"=insurance.ohie[which(rct.compliers$complier==1)],
                          X.ohie[which(rct.compliers$complier==1),])
 
 # For computing unadjusted PATT
 Y.ohie.response.unadj <- Y.ohie[which(rct.compliers$complier==1 | rct.compliers$complier==0),]
-X.ohie.response.unadj <- data.frame("treatment.received"=insurance.ohie,
+X.ohie.response.unadj <- data.frame("insurance"=insurance.ohie,
                                     X.ohie)
 
 if(run.model){ 
@@ -95,9 +95,9 @@ load(paste0(repo.directory,"results/response-mod-num.rda"))
 load(paste0(repo.directory,"results/response-mod-num2.rda")) 
 
 # Use response model to estimate potential outcomes for population "compliers" on medicaid
-nrt.tr.counterfactual <- cbind("treatment.received" = rep(1, length(which(insurance.nhis==1))),
+nrt.tr.counterfactual <- cbind("insurance" = rep(1, length(which(insurance.nhis==1))),
                                X.nhis[which(insurance.nhis==1),])
-nrt.ctrl.counterfactual <- cbind("treatment.received" = rep(0, length(which(insurance.nhis==1))),
+nrt.ctrl.counterfactual <- cbind("insurance" = rep(0, length(which(insurance.nhis==1))),
                                  X.nhis[which(insurance.nhis==1),])
 
 Y.hat.1 <- lapply(y.col, function (i) ifelse(y.col %in% y.col.binary, predict(response.mod.binary[[i]], nrt.tr.counterfactual, onlySL = T)$pred,
@@ -109,13 +109,10 @@ Y.hat.0 <- lapply(y.col, function (i) ifelse(y.col %in% y.col.binary, predict(re
 t.patt <- lapply(y.col, function (i) mean(Y.hat.1[[i]]) - mean(Y.hat.0[[i]]))
 
 # Compute unadjusted PATT
-Y.ohie.response.unadj <- Y.ohie[which(rct.compliers$complier==1 | rct.compliers$complier==0),]
-X.ohie.response.unadj <- data.frame("treatment.received"=insurance.ohie,
-                                    X.ohie)
 
-nrt.tr.counterfactual.unadj <- cbind("treatment.received" = rep(1, length(which(insurance.nhis==1 | insurance.nhis==0))),
+nrt.tr.counterfactual.unadj <- cbind("insurance" = rep(1, length(which(insurance.nhis==1 | insurance.nhis==0))),
                                      X.nhis[which(insurance.nhis==1| insurance.nhis==0),])
-nrt.ctrl.counterfactual.unadj <- cbind("treatment.received" = rep(0, length(which(insurance.nhis==1 | insurance.nhis==0))),
+nrt.ctrl.counterfactual.unadj <- cbind("insurance" = rep(0, length(which(insurance.nhis==1 | insurance.nhis==0))),
                                        X.nhis[which(insurance.nhis==1 | insurance.nhis==0),])
 
 Y.hat.1.unadj <- lapply(y.col, function (i) ifelse(y.col %in% y.col.binary, predict(response.mod.binary2[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred,
@@ -125,28 +122,12 @@ Y.hat.0.unadj <- lapply(y.col, function (i) ifelse(y.col %in% y.col.binary, pred
 
 t.patt.unadj <- lapply(y.col, function (i) mean(Y.hat.1.unadj[[i]]) - mean(Y.hat.0.unadj[[i]]))
 
-# Compute unadjusted SATT
-rct.tr.counterfactual.unadj <- cbind("treatment.received" = rep(1, length(which(insurance.ohie==1 | insurance.ohie==0))),
-                                     X.ohie[which(insurance.ohie==1| insurance.ohie==0),])
-rct.ctrl.counterfactual.unadj <- cbind("treatment.received" = rep(0, length(which(insurance.ohie==1 | insurance.ohie==0))),
-                                       X.ohie[which(insurance.ohie==1 | insurance.ohie==0),])
-
-Y.hat.1.unadj.rct <- lapply(y.col, function (i) ifelse(y.col %in% y.col.binary, predict(response.mod.binary2[[i]], rct.tr.counterfactual.unadj,onlySL = T)$pred,
-                                                       predict(response.mod.num2[[i]], rct.tr.counterfactual.unadj,onlySL = T)$pred))
-Y.hat.0.unadj.rct <- lapply(y.col, function (i) ifelse(y.col %in% y.col.binary, predict(response.mod.binary2[[i]], rct.ctrl.counterfactual.unadj,onlySL = T)$pred,
-                                                       predict(response.mod.num2[[i]], rct.ctrl.counterfactual.unadj,onlySL = T)$pred))
-
-t.satt.unadj <- lapply(y.col, function (i) mean(Y.hat.1.unadj.rct[[i]]) - mean(Y.hat.0.unadj.rct[[i]]))
-
 # Compute adjusted SATT using predicted values from response model for RCT compliers
 
-rct.tr.counterfactual.adj <- cbind("treatment.received" = rep(1, length(which(insurance.ohie==1))),
-                                     X.ohie[which(insurance.ohie==1),])
-rct.ctrl.counterfactual.adj <- cbind("treatment.received" = rep(0, length(which(insurance.ohie==1))),
+rct.ctrl.counterfactual.adj <- cbind("insurance" = rep(0, length(which(insurance.ohie==1))),
                                        X.ohie[which(insurance.ohie==1),])
 
-Y.hat.1.adj.rct <- lapply(y.col, function (i) ifelse(y.col %in% y.col.binary, predict(response.mod.binary[[i]], rct.tr.counterfactual.adj, onlySL = T)$pred,
-                                                     predict(response.mod.num[[i]], rct.tr.counterfactual.adj, onlySL = T)$pred))
+Y.hat.1.adj.rct <- lapply(y.col, function (i) Y.ohie[[i]][which(insurance.ohie==1)])
 Y.hat.0.adj.rct <- lapply(y.col, function (i) ifelse(y.col %in% y.col.binary, predict(response.mod.binary[[i]], rct.ctrl.counterfactual.adj, onlySL = T)$pred,
                                                      predict(response.mod.num[[i]], rct.ctrl.counterfactual.adj, onlySL = T)$pred))
 

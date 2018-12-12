@@ -10,16 +10,15 @@
 ### U, V, R, Q are N(0,1); U, V, R, Q, (W1, W2, W3) are mutually independent
 
 
-rm(list=ls())
-library(Matching)
 library(MASS)
 library(gbm)
 library(rpart)
 library(foreach)
 library(doParallel)
 library(dplyr)
+
 ## Setup
-ncores <- 28 # stampede2
+ncores <- 14 # stampede2 has 28
 registerDoParallel(ncores)
 
 sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1){
@@ -101,9 +100,9 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     nrt_compliers <- nrt[nrt$Tt == 1,]
     
     # Fit a regression to the compliers in the RCT, use it to predict response in population "compliers"
-    response_mod <- gbm(Y~Tt + W1 + W2 + W3, data = rct_compliers, distribution = "gaussian", n.minobsinnode = 3, bag.fraction =0.75) # gbm
-    nrt_tr_counterfactual <- cbind(nrt_compliers[,c("W1", "W2", "W3")], "Tt" = rep(1, nrow(nrt_compliers)))
-    nrt_ctrl_counterfactual <- cbind(nrt_compliers[,c("W1", "W2", "W3")], "Tt" = rep(0, nrow(nrt_compliers)))
+    response_mod <- gbm(Y~D + W1 + W2 + W3, data = rct_compliers, distribution = "gaussian", n.minobsinnode = 3, bag.fraction =0.75) # condition on treatment received
+    nrt_tr_counterfactual <- cbind(nrt_compliers[,c("W1", "W2", "W3")], "D" = rep(1, nrow(nrt_compliers)))
+    nrt_ctrl_counterfactual <- cbind(nrt_compliers[,c("W1", "W2", "W3")], "D" = rep(0, nrow(nrt_compliers)))
     nrt_compliers$Yhat_1 <- predict(response_mod, nrt_tr_counterfactual, n.trees = 100)
     nrt_compliers$Yhat_0 <- predict(response_mod, nrt_ctrl_counterfactual, n.trees = 100)
     
@@ -114,13 +113,16 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     
     # Compare to other estimators
     true_patt[i] <- mean(b[Tt == 1 & S == 0])
+    
     # SATE
     rct_sate[i] <- (mean(rct$Y[rct$Tt == 1]) - mean(rct$Y[rct$Tt==0]))/mean(rct$C[rct$Tt==1])
+    
     # SATT-C
-    term1 <- predict(response_mod, rct_compliers[rct_compliers$D==1,], n.trees = 100)
-    satt_ctrl_counterfactual <- rct_compliers[rct_compliers$D==1,] %>% mutate("Tt" = 0)
+    term1 <- rct_compliers$Y[rct_compliers$D==1]
+    satt_ctrl_counterfactual <- rct_compliers[rct_compliers$D==1,] %>% mutate("D" = 0)
     term2 <- predict(response_mod, satt_ctrl_counterfactual, n.trees = 100)
     rct_satt[i] <- mean(term1) - mean(term2) 
+
     # PATT (unadjusted)
     response_mod2 <- gbm(Y~Tt + W1 + W2 + W3, data = rct, distribution = "gaussian") # gbm
     nrt_tr_counterfactual <- cbind(nrt[,c("W1", "W2", "W3")], "Tt" = rep(1, nrow(nrt)))

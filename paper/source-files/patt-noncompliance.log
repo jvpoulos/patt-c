@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2018.12.4)  11 DEC 2018 12:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2018.12.4)  11 DEC 2018 15:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1579,13 +1579,13 @@ Package pdftex.def Info: DAG2.png  used on input line 235.
 (pdftex.def)             Requested size: 234.8775pt x 193.98119pt.
  [6 <./DAG2.png (PNG copy)>] [7] [8] [9] [10]
 [11] [12] [13]
-<rmse_ratec_rates.png, id=287, 794.97pt x 614.295pt>
+<rmse_ratec_rates.png, id=285, 794.97pt x 614.295pt>
 File: rmse_ratec_rates.png Graphic file (type png)
 <use rmse_ratec_rates.png>
 Package pdftex.def Info: rmse_ratec_rates.png  used on input line 391.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
  [14 <./rmse_ratec_rates.png (PNG copy)>]
-<rmse_boxplots_rateC.png, id=295, 794.97pt x 614.295pt>
+<rmse_boxplots_rateC.png, id=293, 794.97pt x 614.295pt>
 File: rmse_boxplots_rateC.png Graphic file (type png)
 <use rmse_boxplots_rateC.png>
 Package pdftex.def Info: rmse_boxplots_rateC.png  used on input line 407.
@@ -1638,34 +1638,34 @@ Overfull \hbox (22.9653pt too wide) in alignment at lines 471--498
 ] [21
 
 ] [22]
-<any-visit-plot.png, id=382, 505.89pt x 505.89pt>
+<any-visit-plot.png, id=380, 505.89pt x 505.89pt>
 File: any-visit-plot.png Graphic file (type png)
 <use any-visit-plot.png>
 Package pdftex.def Info: any-visit-plot.png  used on input line 532.
 (pdftex.def)             Requested size: 422.77664pt x 422.7833pt.
-<any-out-plot.png, id=383, 505.89pt x 505.89pt>
+<any-out-plot.png, id=381, 505.89pt x 505.89pt>
 File: any-out-plot.png Graphic file (type png)
 <use any-out-plot.png>
 Package pdftex.def Info: any-out-plot.png  used on input line 545.
 (pdftex.def)             Requested size: 422.77664pt x 422.7833pt.
  [23 <./any-visit-plot.png (PNG copy)>] [24 <./any-out-plot.png (PNG copy)>] [2
 5] [26] [27] [28] [29] [30]
-<rmse_ratec_ratet.png, id=441, 794.97pt x 614.295pt>
+<rmse_ratec_ratet.png, id=440, 794.97pt x 614.295pt>
 File: rmse_ratec_ratet.png Graphic file (type png)
 <use rmse_ratec_ratet.png>
 Package pdftex.def Info: rmse_ratec_ratet.png  used on input line 595.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConC.png, id=442, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConC.png, id=441, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConC.png Graphic file (type png)
 <use rmse_boxplots_RateConC.png>
 Package pdftex.def Info: rmse_boxplots_RateConC.png  used on input line 603.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConT.png, id=443, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConT.png, id=442, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConT.png Graphic file (type png)
 <use rmse_boxplots_RateConT.png>
 Package pdftex.def Info: rmse_boxplots_RateConT.png  used on input line 610.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConS.png, id=444, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConS.png, id=443, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConS.png Graphic file (type png)
 <use rmse_boxplots_RateConS.png>
 Package pdftex.def Info: rmse_boxplots_RateConS.png  used on input line 617.
@@ -1701,10 +1701,10 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 755.
 ### simple group (level 1) entered at line 210 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 38826 strings out of 492641
- 722596 string characters out of 6131787
- 1454387 words of memory out of 5000000
- 42043 multiletter control sequences out of 15000+600000
+ 38825 strings out of 492641
+ 722585 string characters out of 6131787
+ 1454344 words of memory out of 5000000
+ 42042 multiletter control sequences out of 15000+600000
  549499 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,17n,65p,1405b,3902s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1756,10 +1756,10 @@ exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive
 dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/symbols/msbm10.pfb>
-Output written on patt-noncompliance.pdf (38 pages, 1549511 bytes).
+Output written on patt-noncompliance.pdf (38 pages, 1549431 bytes).
 PDF statistics:
- 571 PDF objects out of 1000 (max. 8388607)
- 491 compressed objects within 5 object streams
+ 570 PDF objects out of 1000 (max. 8388607)
+ 490 compressed objects within 5 object streams
  120 named destinations out of 1000 (max. 500000)
  202 words of extra memory for PDF output out of 10000 (max. 10000000)
 
