@@ -494,7 +494,7 @@ Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with
 \hline
  \textbf{Binary response} &  $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ \\ 
 \hspace{3mm}Any ER visit &  1,377 & 25.4 & 1,301 & 25.1 & 1,659 & 26.5  \\  
-\hspace{3mm}Any outpatient visit & 3,265 & 60.2 & 3,081 & 59.3 & 4,093 & 65.4 \\
+%\hspace{3mm}Any outpatient visit & 3,265 & 60.2 & 3,081 & 59.3 & 4,093 & 65.4 \\
 \hline
 \textbf{Continuous response} &  $\mathbf{\bar{x}}$ & $\mathbf{sd}$& $\mathbf{\bar{x}}$ & $\mathbf{sd}$ & $\mathbf{\bar{x}}$ & $\mathbf{sd}$ \\  
 \hspace{3mm}$\#$ ER visits &  0.44 & 0.95 & 0.44 & 0.99 & 0.48 & 1.0  \\  
@@ -536,7 +536,7 @@ Figures \ref{fig:any-visit-plot} and \ref{fig:any-out-plot} examine conditional 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width = 0.9\textwidth]{any-visit-plot}
-    \caption{Comparison of estimators: any ER visit. Horizontal lines represent 95\% bootstrap confidence intervals.\label{fig:any-visit-plot}}
+    \caption{Comparison of estimators: any ER visit. Horizontal lines represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.\label{fig:any-visit-plot}}
 %\caption{\label{fig:any-visit-plot}}
 \end{center}
 \end{figure}
@@ -548,12 +548,22 @@ Figures \ref{fig:any-visit-plot} and \ref{fig:any-out-plot} examine conditional 
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width = 0.9\textwidth]{any-out-plot}
-    \caption{Comparison of estimators: any outpatient visit. Horizontal lines represent 95\% bootstrap confidence intervals.\label{fig:any-out-plot}}
+\includegraphics[width = 0.9\textwidth]{num-visits-plot}
+    \caption{Comparison of estimators: $\#$ ER visits.\label{fig:num-visits-plot}}
 %\vspace{10mm}
-%\caption{\label{fig:any-out-plot}}
+%\caption{\label{fig:num-visits-plot}}
 %\vspace{10mm}
 \end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width = 0.9\textwidth]{num-out-plot}
+		\caption{Comparison of estimators: $\#$ outpatient visits.\label{fig:num-out-plot}}
+		%\vspace{10mm}
+		%\caption{\label{fig:num-out-plot}}
+		%\vspace{10mm}
+	\end{center}
 \end{figure}
 
 {\color{red}
@@ -639,15 +649,15 @@ Explicitly modeling compliance allows us to decompose SATT-C and PATT-C estimate
 \end{table}
 
 \begin{table}[h]
-	\caption{Comparison of compliance-adjusted estimates on OHIE and NHIS data.\label{compliance-compare}} 
-	\begin{tabular}{@{}lll@{}}
+	\caption{Comparison of population and sample estimates.\label{compliance-compare}} 
+	\begin{tabular}{@{}llll@{}}
 		\toprule
-		\backslashbox{Estimator}{Outcome} & Any ER visit                   & Any outpatient visit        \\ \midrule
-		PATT-C                                               & -0.0002 {[}-0.0002, -0.0002{]} & 0.0006 {[}0.0004, 0.0008{]} \\
-		SATT-C                                               & -0.0002 {[}-0.0002, -0.0002{]} & 0.002 {[}0.002, 0.002{]}    \\
-		SATE                                                 & 0.12 {[}-0.01, 0.04{]}          & -0.02 {[}-0.05, 0.01{]}    \\ \bottomrule
+		\backslashbox{Estimator}{Outcome} 				& Any ER visit 	& $\#$ ER visits   & $\#$ outpatient visits      \\ \midrule
+		PATT-C                                           & 0.01 [0.01, 0.02]   & 0.0005 [0.0001, 0.0008]	& 0.002 [0.002, 0.002] \\
+		PATT                                             & 0.01 [0.01, 0.02]   & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
+		SATE                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.04, 0.06]	& -0.02 [-0.19, 0.15]  \\ \bottomrule
 	\end{tabular}\\
-\footnotesize{Notes: SATE is the ITT effect adjusted by the sample compliance rate in the RCT. Estimates in brackets represent 95\% bootstrap confidence intervals.}
+\footnotesize{Notes: SATE is the ITT effect adjusted by the sample compliance rate in the RCT. Estimates in brackets represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.}
 \end{table}
 
 % complier-mod

@@ -10,9 +10,13 @@ rct.nrt.tab$group[rct.nrt.tab$study=="OHIE" & rct.nrt.tab$insurance==0] <- 1
 rct.nrt.tab$group[rct.nrt.tab$study=="OHIE" & rct.nrt.tab$insurance==1] <- 2
 rct.nrt.tab$group[rct.nrt.tab$study=="NHIS" & rct.nrt.tab$insurance==1] <- 3
 
-tableNominal(vars = rct.nrt.tab, 
+tableNominal(vars = rct.nrt.tab[!colnames(rct.nrt.tab)%in%c("num.visit", "num.out")],
              group = rct.nrt.tab$group, 
              #      nams=c(cov.names[-1],"Any ER visit","Any primary care visit"),
              vertical=FALSE,
              prec = 3,cumsum=FALSE,lab = "rct-nrt-compare",
              cap="Pretreatment covariates and responses for the OHIE and for NHIS respondents who received Medicaid.") # RCT vs. NRT compliers
+
+tableContinuous(vars = rct.nrt.tab[colnames(rct.nrt.tab)%in%c("num.visit", "num.out")], 
+             group = rct.nrt.tab$group, 
+             prec = 3,cumsum=FALSE,lab = "rct-nrt-compare")
