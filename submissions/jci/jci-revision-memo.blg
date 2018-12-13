@@ -1,19 +1,19 @@
-[0] Config.pm:302> INFO - This is Biber 2.9
+[0] Config.pm:302> INFO - This is Biber 2.11
 [0] Config.pm:305> INFO - Logfile is 'jci-revision-memo.blg'
-[22] biber:313> INFO - === Sat Dec  1, 2018, 09:25:38
+[21] biber:313> INFO - === Thu Dec 13, 2018, 13:14:24
 [42] Biber.pm:371> INFO - Reading 'jci-revision-memo.bcf'
 [112] Biber.pm:857> INFO - Found 4 citekeys in bib section 0
-[121] Biber.pm:3981> INFO - Processing section 0
-[130] Biber.pm:4154> INFO - Looking for bibtex format file 'refs.bib' for section 0
-[131] bibtex.pm:1468> INFO - LaTeX decoding ...
-[156] bibtex.pm:1294> INFO - Found BibTeX data source 'refs.bib'
-[164] Utils.pm:169> WARN - month field 'January' in entry 'Taubman' is not an integer - this will probably not sort properly.
-[167] Utils.pm:169> WARN - month field 'June' in entry 'NBERw22363' is not an integer - this will probably not sort properly.
-[187] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[187] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'level = 4' with 'level = 2'
-[187] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[187] Biber.pm:3809> INFO - Sorting list 'cms/global//global/global' of type 'entry' with template 'cms' and locale 'en-US'
-[188] Biber.pm:3815> INFO - No sort tailoring available for locale 'en-US'
-[194] bbl.pm:617> INFO - Writing 'jci-revision-memo.bbl' with encoding 'UTF-8'
-[198] bbl.pm:720> INFO - Output to jci-revision-memo.bbl
-[198] Biber.pm:110> INFO - WARNINGS: 2
+[121] Biber.pm:3976> INFO - Processing section 0
+[130] Biber.pm:4136> INFO - Looking for bibtex format file 'refs.bib' for section 0
+[131] bibtex.pm:1489> INFO - LaTeX decoding ...
+[158] bibtex.pm:1305> INFO - Found BibTeX data source 'refs.bib'
+[167] Utils.pm:193> WARN - month field 'January' in entry 'Taubman' is not an integer - this will probably not sort properly.
+[170] Utils.pm:193> WARN - month field 'June' in entry 'NBERw22363' is not an integer - this will probably not sort properly.
+[189] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[189] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'level = 4' with 'level = 2'
+[189] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[189] Biber.pm:3804> INFO - Sorting list 'cms/global//global/global' of type 'entry' with template 'cms' and locale 'en-US'
+[189] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
+[197] bbl.pm:617> INFO - Writing 'jci-revision-memo.bbl' with encoding 'UTF-8'
+[200] bbl.pm:720> INFO - Output to jci-revision-memo.bbl
+[200] Biber.pm:110> INFO - WARNINGS: 2

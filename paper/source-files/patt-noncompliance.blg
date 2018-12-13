@@ -1,20 +1,48 @@
-[0] Config.pm:302> INFO - This is Biber 2.11
-[0] Config.pm:305> INFO - Logfile is 'patt-noncompliance.blg'
-[30] biber:313> INFO - === Wed Dec 12, 2018, 19:07:08
-[60] Biber.pm:371> INFO - Reading 'patt-noncompliance.bcf'
-[176] Biber.pm:857> INFO - Found 21 citekeys in bib section 0
-[191] Biber.pm:3976> INFO - Processing section 0
-[202] Biber.pm:4136> INFO - Looking for bibtex format file 'refs.bib' for section 0
-[203] bibtex.pm:1489> INFO - LaTeX decoding ...
-[252] bibtex.pm:1305> INFO - Found BibTeX data source 'refs.bib'
-[287] Utils.pm:193> WARN - month field 'June' in entry 'Angrist1996' is not an integer - this will probably not sort properly.
-[401] Utils.pm:193> WARN - month field 'January' in entry 'Taubman' is not an integer - this will probably not sort properly.
-[431] Utils.pm:193> WARN - month field 'June' in entry 'NBERw22363' is not an integer - this will probably not sort properly.
-[481] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[481] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[482] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'level = 4' with 'level = 2'
-[482] Biber.pm:3804> INFO - Sorting list 'cms/global//global/global' of type 'entry' with template 'cms' and locale 'en-US'
-[482] Biber.pm:3810> INFO - No sort tailoring available for locale 'en-US'
-[515] bbl.pm:617> INFO - Writing 'patt-noncompliance.bbl' with encoding 'UTF-8'
-[540] bbl.pm:720> INFO - Output to patt-noncompliance.bbl
-[540] Biber.pm:110> INFO - WARNINGS: 3
+This is BibTeX, Version 0.99d (TeX Live 2019/dev/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: patt-noncompliance.aux
+I found no \citation commands---while reading file patt-noncompliance.aux
+I found no \bibdata command---while reading file patt-noncompliance.aux
+I found no \bibstyle command---while reading file patt-noncompliance.aux
+You've used 0 entries,
+            0 wiz_defined-function locations,
+            83 strings with 510 characters,
+and the built_in function-call counts, 0 in all, are:
+= -- 0
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 0
+:= -- 0
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 0
+format.name$ -- 0
+if$ -- 0
+int.to.chr$ -- 0
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 0
+num.names$ -- 0
+pop$ -- 0
+preamble$ -- 0
+purify$ -- 0
+quote$ -- 0
+skip$ -- 0
+stack$ -- 0
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 0
+width$ -- 0
+write$ -- 0
+(There were 3 error messages)

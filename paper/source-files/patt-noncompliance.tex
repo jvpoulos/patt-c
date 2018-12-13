@@ -156,7 +156,7 @@ We apply the proposed estimator to measure the effect of Medicaid coverage on he
 The paper proceeds as follows: Section \ref{estimator} presents the proposed estimator, necessary assumptions for its identifiability; {\color{red}Section \ref{estimation} describes the estimation procedure}; Section \ref{sim} reports the estimator's performance in simulations; Section \ref{application} uses the estimator to identify the effect of extending Medicaid coverage to the low--income adult population in the U.S; Section \ref{discussion} discusses the results. 
 
 \section{Estimator} \label{estimator}
-We are interested in using the outcomes from an RCT to estimate the average treatment effect on the treated for a target population. Treatment in the population is not assigned at random, but rather may depend on other variables, confounding the effect of treatment on the outcome of interest. RCTs are needed to isolate the effect of treatment. However, strict exclusion criteria for RCTs often result in a sample {\color{red}of individuals}whose distribution of covariates differs substantially from the target population. 
+We are interested in using the outcomes from an RCT to estimate the average treatment effect on the treated for a target population. Treatment in the population is not assigned at random, but rather may depend on other variables, confounding the effect of treatment on the outcome of interest. RCTs are needed to isolate the effect of treatment. However, strict exclusion criteria for RCTs often result in a sample {\color{red}of individuals} whose distribution of covariates differs substantially from the target population. 
 
 Ideally, we would take the results of an RCT and reweight the sample such that the reweighted covariates match the those in the population. In practice, one rarely knows the true covariate distribution in the target population. Instead, we consider data from a nonrandomized, observational study in which participants are representative of the target population. Our proposed estimator combines RCT and observational data to overcome these issues.
 
@@ -268,17 +268,17 @@ The estimand of interest is the Population Average Treatment Effect on Treated C
 \end{equation}
 \vskip 0.2in
 
-{\color{red}PATT-C is interpreted as the complier-average causal effect estimated on the RCT sample extrapolated to what we would have observed in the population if treatment received $D_i$ the same.} The following theorem, which we modify from \citet{Hartman} to account for noncompliance, relates the treatment effect in the population to the treatment effect in the RCT.
+{\color{red}PATT-C is interpreted as the average treatment effect on those in the population who receive treatment.} It includes individuals who actually receive the treatment, but does not include those who are eligible for treatment and do not accept it (i.e., noncompliers).The following theorem relates the treatment effect in the population to the treatment effect in the RCT. 
 
 \vskip 0.2in
 \begin{theorem}\label{thm1}
 Under Assumptions \ref{consistency} -- \ref{ER},
 \begin{equation}\label{tpatt-est}
-\tau_{\text{PATT-C}} = \ex_{01}\left[  \ex\left(Y_{i11} \mid S_i=1, D_i=1, W_i\right)\right]
--\ex_{01}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=0, C_i=1, W_i\right) \right] 
+\tau_{\text{PATT-C}} = \ex_{11}\left[  \ex\left(Y_{i11} \mid S_i=1, D_i=1, W_i\right)\right]
+-\ex_{11}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=0, C_i=1, W_i\right) \right] 
 \end{equation}
 
-where $\ex_{01}\left[\ex(\cdot \mid\dots, W_i)\right]$ denotes the expectation with respect to the distribution of $W_i$ in the treated individuals in the target population. 
+{\color{red}where $\ex_{11}\left[\ex(\cdot \mid\dots, W_i)\right]$ denotes the expectation with respect to the distribution of $W_i$ for RCT compliers.}
 \end{theorem}
 
 \begin{proof}
@@ -286,9 +286,9 @@ We separate the expectation linearly into two terms and consider each individual
 \begin{align*}
 \ex\left(Y_{i01} \mid S_i=0,D_i=1\right) &= \ex\left(Y_{i11} \mid S_i=0, D_i=1\right) \tag*{by Assumption \ref{consistency}} \\
 &= \ex\left(Y_{i11} \mid S_i=0, T_i=1, C_i=1\right) \tag*{by Assumption \ref{monotonicity}} \\
-&= \ex_{01}\left[  \ex\left(Y_{i11} \mid S_i=0, T_i=1, C_i=1, W_i\right) \right] \\
-&= \ex_{01}\left[  \ex\left(Y_{i11} \mid S_i=1, T_i=1, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{si_treat}} \\
-&= \ex_{01}\left[  \ex\left(Y_{i11} \mid S_i=1, D_i=1, W_i\right)\right] 
+&= \ex_{11}\left[  \ex\left(Y_{i11} \mid S_i=0, T_i=1, C_i=1, W_i\right) \right] \\
+&= \ex_{11}\left[  \ex\left(Y_{i11} \mid S_i=1, T_i=1, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{si_treat}} \\
+&= \ex_{11}\left[  \ex\left(Y_{i11} \mid S_i=1, D_i=1, W_i\right)\right] 
 \end{align*}
 
 {\color{red}Intuitively, conditioning on $W_i$ makes sample selection ignorable under Assumption \ref{si_treat}. This is the critical connector between the third and fourth lines of the first expectation derivation.}
@@ -296,8 +296,8 @@ We separate the expectation linearly into two terms and consider each individual
 \begin{align*}
 \ex\left(Y_{i00} \mid S_i=0, D_i=1\right) &= \ex\left(Y_{i10} \mid S_i=0, D_i=1\right) \tag*{by Assumption \ref{consistency}} \\
 &= \ex\left(Y_{i10} \mid S_i=0, T_i=1, C_i=1\right) \tag*{by Assumption \ref{monotonicity}} \\
-&= \ex_{01}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=1, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{si_ctrl}} \\
-&= \ex_{01}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=0, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{compl}}\\
+&= \ex_{11}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=1, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{si_ctrl}} \\
+&= \ex_{11}\left[  \ex\left(Y_{i10} \mid S_i=1, T_i=0, C_i=1, W_i\right) \right] \tag*{by Assumption \ref{compl}}\\
 \end{align*}
 
 {\color{red}The last line follows because Assumption \ref{compl} allows us to use RCT controls who would have complied had they been assigned to treatment}. Finally, the result follows by plugging these two expressions into Eq.~\eqref{tpatt}.
@@ -313,7 +313,7 @@ The procedure for estimating $\tau_{\text{PATT-C}}$ using Theorem~\ref{thm1} is 
 \item Using the group assigned to treatment in the RCT $(S_i=1, T_i=1)$, train a model {\color{red}(or an ensemble of models)} to predict {\color{red}the probability of compliance as a function of covariates $W_i$.} \label{compliance-model}
 \item Using the model from \ref{compliance-model}, predict who in the RCT assigned to control \textit{would have} complied to treatment had they been assigned to the treatment group. {\color{red} We use a standard prediction threshold of 50\% in order classify compliers, $C_i=1$.\footnote{Adjusting the prediction threshold upward would result in more accurate classifications, although we do not explore this approach.}} \label{complier-predict}
 \item {\color{red}For the observed compliers assigned to treatment and predicted compliers assigned to control, train a model to predict the response using $W_i$ and $D_i$, which gives $\ex(Y_{i1d} \mid S_i=1, D_i=d, W_i)$ for $d \in \{0,1\}$.}\label{response-model}
-\item For all individuals who received treatment in the population $(S_i=0, D_i=1)$, estimate their potential outcomes using the model from \ref{response-model}. {\color{red}The mean counterfactual $Y_{i01}$ minus the mean counterfactual $Y_{i00}$ is the estimate of $\tau_{\text{PATT-C}}$.}\label{response-predict}
+\item For all individuals who received treatment in the population $(S_i=0, D_i=1)$, estimate their potential outcomes using the model from \ref{response-model}, {\color{red}which gives $Y_{i0d}$ for $d \in \{0,1\}$. The mean counterfactual $Y_{i01}$ minus the mean counterfactual $Y_{i00}$ is the estimate of $\tau_{\text{PATT-C}}$.}\label{response-predict}
 \end{enumerate}
 
 Assumptions \ref{si_treat} and \ref{si_ctrl} are particularly important for estimating $\tau_{\text{PATT-C}}$: the success of the proposed estimator hinges on the assumption that the response surface is the same for compliers in the RCT and target population. If this does not hold, then the potential outcomes $Y_{i10}$ and $Y_{i11}$ for target population individuals cannot be estimated using the model from \ref{response-model}.\footnote{{\color{red}Section \ref{verifying} discusses whether the strong ignorability assumptions are plausible in the empirical application.}}
@@ -510,12 +510,12 @@ A violation of the assumption of no-interference (Assumption \ref{sutva}) biases
 The exclusion restriction (Assumption \ref{ER}) ensures treatment assignment affects the response only through enrollment in Medicaid. It is reasonable that a person's enrollment in Medicaid, not just their eligibility to enroll, would affect their hospital use. For private health insurance one might argue that eligibility may be be negatively correlated with hospital use, as people with pre-existing conditions are less often eligible yet go to the hospital more frequently. This should not be the case with a federally funded program such as Medicaid. 
 
 {\color{red}
-	\subsubsection{Placebo tests} \label{placebo}
+	\subsubsection{Placebo tests} \label{placebo-tests}
 }
 
-Similar to the procedure proposed by \citep{Hartman}, we conduct placebo tests to check whether the average outcomes differ between the RCT compliers on Medicaid and the adjusted population ``compliers'' on Medicaid. If the placebo tests detect a significant difference between the mean outcomes of these groups, then either Assumption \ref{consistency} (for $d=1$), or Assumptions \ref{si_treat} and \ref{si_ctrl} are violated. 
+Similar to the procedure proposed by \citep{Hartman}, we conduct placebo tests to check whether the average outcomes differ between the RCT compliers on Medicaid and the adjusted population ``compliers'' on Medicaid.\footnote{Note that a placebo test for Assumption \ref{compl} is not possible because we never observe whether RCT controls would actually take-up treatment if assigned.} If the placebo tests detect a significant difference between the mean outcomes of these groups, it would indicate that either Assumption \ref{consistency} (for $d=1$), or Assumptions \ref{si_treat} and \ref{si_ctrl} are violated. 
 
-Table \ref{placebo} reports the results of placebo tests, comparing the mean outcomes of RCT compliers against the mean outcomes of adjusted population ``compliers." The former quantity is calculated from the observed RCT sample and the latter quantity is the mean counterfactual $Y_{i11}$ estimated from \ref{response-predict} of the estimation procedure. 
+Table \ref{placebo} reports the results of placebo tests, comparing the mean outcomes of RCT compliers against the mean outcomes of adjusted population ``compliers." The former quantity is calculated from the observed RCT sample and the latter quantity is the mean counterfactual $Y_{i11}$ estimated from \ref{response-predict} of the estimation procedure. Tests of equivalence between the two groups indicate that the differences across each outcome are not statistically significant. These results imply that the PATT-C estimator is not biased by differences in how Medicaid is delivered or health outcomes are measured between the RCT and population, or by differences in sample or population members' unobserved characteristics. 
 
 {\color{red}
 \subsubsection{Sensitivity to no defiers assumption} \label{sens-defiers}

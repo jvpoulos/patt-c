@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2018.12.4)  13 DEC 2018 11:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2018.12.4)  13 DEC 2018 13:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1412,14 +1412,7 @@ Package biblatex Info: ... file 'english.lbx' found.
 (/usr/share/texlive/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2018/03/04 v3.11 biblatex localization (PK/MW)
 ))
-(./patt-noncompliance.aux
-
-LaTeX Warning: Label `response-predict' multiply defined.
-
-
-LaTeX Warning: Label `placebo' multiply defined.
-
-)
+(./patt-noncompliance.aux)
 \openout1 = `patt-noncompliance.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 125.
@@ -1436,7 +1429,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 125.
 LaTeX Font Info:    ... okay on input line 125.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 125.
 LaTeX Font Info:    ... okay on input line 125.
- (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count497
 \scratchdimen=\dimen302
@@ -1571,32 +1565,147 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
 Non-PDF special ignored!
 <special> header=psfrag.pro
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]pdfTeX warning (ext4): dest
-ination with the same identifier (name{page.1}) has been already used, duplicat
-e ignored
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+
+LaTeX Warning: Citation 'ImaKinStu08' on page 1 undefined on input line 145.
+
+
+LaTeX Warning: Citation 'stuart2011use' on page 1 undefined on input line 145.
+
+
+LaTeX Warning: Citation 'Hartman' on page 1 undefined on input line 145.
+
+
+LaTeX Warning: Citation 'Hartman' on page 1 undefined on input line 147.
+
+
+LaTeX Warning: Citation 'stuart2011use' on page 1 undefined on input line 149.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.150 
-       [1] [2] [3] [4] [5]
-<DAG2.png, id=167, 152.9715pt x 126.2316pt>
+       [1]
+
+LaTeX Warning: Citation 'Angrist1996' on page 2 undefined on input line 151.
+
+
+LaTeX Warning: Citation 'imai2013experimental' on page 2 undefined on input lin
+e 151.
+
+[2] [3]
+
+LaTeX Warning: Citation 'Hartman' on page 4 undefined on input line 170.
+
+[4]
+
+LaTeX Warning: Citation 'rubin1990' on page 5 undefined on input line 214.
+
+
+Overfull \hbox (1.29904pt too wide) in paragraph at lines 214--215
+\OT1/cmr/m/n/12 comes per par-tic-i-pant, de-pend-ing on the treat-ment re-ceip
+t of other par-tic-i-pants ([]).
+ []
+
+[5]
+<DAG2.png, id=152, 152.9715pt x 126.2316pt>
 File: DAG2.png Graphic file (type png)
 <use DAG2.png>
 Package pdftex.def Info: DAG2.png  used on input line 237.
 (pdftex.def)             Requested size: 234.8775pt x 193.82132pt.
- [6 <./DAG2.png (PNG copy)>] [7] [8] [9] [10]
-[11] [12] [13]
-<rmse_ratec_rates.png, id=281, 794.97pt x 614.295pt>
+
+
+LaTeX Warning: Citation 'Angrist1996' on page 6 undefined on input line 243.
+
+[6 <./DAG2.png (PNG copy)>] [7]
+
+LaTeX Warning: Citation 'van2007' on page 8 undefined on input line 307.
+
+[8] [9]
+
+LaTeX Warning: Citation 'van2007' on page 10 undefined on input line 330.
+
+
+LaTeX Warning: Citation 'polley2010super' on page 10 undefined on input line 33
+0.
+
+
+LaTeX Warning: Citation 'buja1989linear' on page 10 undefined on input line 332
+.
+
+
+LaTeX Warning: Citation 'tibshirani2012strong' on page 10 undefined on input li
+ne 332.
+
+
+LaTeX Warning: Citation 'breiman2001' on page 10 undefined on input line 332.
+
+[10] [11] [12]
+
+LaTeX Warning: Citation 'friedman2001greedy' on page 13 undefined on input line
+ 375.
+
+[13]
+<rmse_ratec_rates.png, id=251, 794.97pt x 614.295pt>
 File: rmse_ratec_rates.png Graphic file (type png)
 <use rmse_ratec_rates.png>
 Package pdftex.def Info: rmse_ratec_rates.png  used on input line 390.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
  [14 <./rmse_ratec_rates.png (PNG copy)>]
-<rmse_boxplots_rateC.png, id=292, 794.97pt x 614.295pt>
+<rmse_boxplots_rateC.png, id=262, 794.97pt x 614.295pt>
 File: rmse_boxplots_rateC.png Graphic file (type png)
 <use rmse_boxplots_rateC.png>
 Package pdftex.def Info: rmse_boxplots_rateC.png  used on input line 407.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
- [15 <./rmse_boxplots_rateC.png (PNG copy)>] [16] [17] [18]
+ [15 <./rmse_boxplots_rateC.png (PNG copy)>]
+
+LaTeX Warning: Citation 'finkelstein2012' on page 16 undefined on input line 41
+9.
+
+
+LaTeX Warning: Citation 'baicker2013' on page 16 undefined on input line 419.
+
+
+LaTeX Warning: Citation 'baicker2014' on page 16 undefined on input line 419.
+
+
+LaTeX Warning: Citation 'Taubman' on page 16 undefined on input line 419.
+
+
+Overfull \hbox (3.20229pt too wide) in paragraph at lines 419--420
+\OT1/cmr/m/n/12 We draw RCT data from the Ore-gon Health In-sur-ance Ex-per-i-m
+ent (OHIE) ([];
+ []
+
+
+LaTeX Warning: Citation 'finkelstein2012' on page 16 undefined on input line 42
+1.
+
+[16]
+
+LaTeX Warning: Citation 'finkelstein2012' on page 17 undefined on input line 42
+5.
+
+
+LaTeX Warning: Citation 'Taubman' on page 17 undefined on input line 425.
+
+
+LaTeX Warning: Citation 'miller2012effect' on page 17 undefined on input line 4
+25.
+
+
+LaTeX Warning: Citation 'kolstad2012impact' on page 17 undefined on input line 
+425.
+
+
+LaTeX Warning: Citation 'NHIS' on page 17 undefined on input line 430.
+
+
+LaTeX Warning: Citation 'parsons2014design' on page 17 undefined on input line 
+430.
+
+[17] [18]
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: pdftex
 * paper: <default>
@@ -1630,109 +1739,157 @@ Package pdftex.def Info: rmse_boxplots_rateC.png  used on input line 407.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-Overfull \hbox (41.9471pt too wide) in alignment at lines 443--472
+Overfull \hbox (41.9471pt too wide) in alignment at lines 442--471
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (41.9471pt too wide) in alignment at lines 472--503
+Overfull \hbox (41.9471pt too wide) in alignment at lines 471--502
  [] [] [] [] [] [] [] 
  []
 
 [19
 
-] [20
+]
 
-] [21]
-Overfull \hbox (9.52663pt too wide) in paragraph at lines 542--550
+LaTeX Warning: Citation 'Hartman' on page 20 undefined on input line 516.
+
+[20
+
+]
+
+LaTeX Warning: Citation 'Angrist1996' on page 21 undefined on input line 524.
+
+[21]
+
+LaTeX Warning: Citation 'finkelstein2012' on page 22 undefined on input line 53
+4.
+
+
+LaTeX Warning: Citation 'finkelstein2012' on page 22 undefined on input line 53
+4.
+
+
+Overfull \hbox (9.52663pt too wide) in paragraph at lines 538--546
 [][] 
  []
 
-[22] [23] [24] [25] [26] [27]
-<rmse_ratec_ratet.png, id=430, 794.97pt x 614.295pt>
+
+LaTeX Warning: Citation 'Taubman' on page 22 undefined on input line 549.
+
+
+LaTeX Warning: Citation 'NBERw22363' on page 22 undefined on input line 549.
+
+
+LaTeX Warning: Citation 'Taubman' on page 22 undefined on input line 549.
+
+
+LaTeX Warning: Citation 'Taubman' on page 22 undefined on input line 549.
+
+
+LaTeX Warning: Citation 'NBERw22363' on page 22 undefined on input line 549.
+
+
+Overfull \hbox (8.65141pt too wide) in paragraph at lines 549--551
+\OT1/cmr/m/n/12 per-form sub-group anal-y-ses on the RCT sam-ple. Sim-i-lar to 
+our PATT-C es-ti-mates, []'s
+ []
+
+[22]
+
+LaTeX Warning: Citation 'Taubman' on page 23 undefined on input line 560.
+
+[23] [24]
+
+LaTeX Warning: Empty bibliography on input line 567.
+
+<rmse_ratec_ratet.png, id=355, 794.97pt x 614.295pt>
 File: rmse_ratec_ratet.png Graphic file (type png)
 <use rmse_ratec_ratet.png>
-Package pdftex.def Info: rmse_ratec_ratet.png  used on input line 591.
+Package pdftex.def Info: rmse_ratec_ratet.png  used on input line 587.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConC.png, id=431, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConC.png, id=356, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConC.png Graphic file (type png)
 <use rmse_boxplots_RateConC.png>
-Package pdftex.def Info: rmse_boxplots_RateConC.png  used on input line 599.
+Package pdftex.def Info: rmse_boxplots_RateConC.png  used on input line 595.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConT.png, id=432, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConT.png, id=357, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConT.png Graphic file (type png)
 <use rmse_boxplots_RateConT.png>
-Package pdftex.def Info: rmse_boxplots_RateConT.png  used on input line 606.
+Package pdftex.def Info: rmse_boxplots_RateConT.png  used on input line 602.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConS.png, id=433, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConS.png, id=358, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConS.png Graphic file (type png)
 <use rmse_boxplots_RateConS.png>
-Package pdftex.def Info: rmse_boxplots_RateConS.png  used on input line 613.
+Package pdftex.def Info: rmse_boxplots_RateConS.png  used on input line 609.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<any-visit-plot.png, id=434, 377.7312pt x 416.2752pt>
+<any-visit-plot.png, id=359, 377.7312pt x 416.2752pt>
 File: any-visit-plot.png Graphic file (type png)
 <use any-visit-plot.png>
-Package pdftex.def Info: any-visit-plot.png  used on input line 620.
+Package pdftex.def Info: any-visit-plot.png  used on input line 616.
 (pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
-<num-visit-plot.png, id=435, 377.7312pt x 416.2752pt>
+<num-visit-plot.png, id=360, 377.7312pt x 416.2752pt>
 File: num-visit-plot.png Graphic file (type png)
 <use num-visit-plot.png>
-Package pdftex.def Info: num-visit-plot.png  used on input line 629.
+Package pdftex.def Info: num-visit-plot.png  used on input line 625.
 (pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
-<num-out-plot.png, id=436, 377.7312pt x 416.2752pt>
+<num-out-plot.png, id=361, 377.7312pt x 416.2752pt>
 File: num-out-plot.png Graphic file (type png)
 <use num-out-plot.png>
-Package pdftex.def Info: num-out-plot.png  used on input line 639.
+Package pdftex.def Info: num-out-plot.png  used on input line 635.
 (pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
 
-
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[28 <./rmse_ratec_ratet.png (PNG copy)>] [29 <./rmse_boxplots_RateConC.png (PNG
- copy)>] [30 <./rmse_boxplots_RateConT.png (PNG copy)>] [31 <./rmse_boxplots_Ra
-teConS.png (PNG copy)>] [32 <./any-visit-plot.png (PNG copy)>] [33 <./num-visit
--plot.png (PNG copy)>] [34 <./num-out-plot.png (PNG copy)>]
+[25 <./rmse_ratec_ratet.png (PNG copy)>] [26 <./rmse_boxplots_RateConC.png (PNG
+ copy)>] [27 <./rmse_boxplots_RateConT.png (PNG copy)>] [28 <./rmse_boxplots_Ra
+teConS.png (PNG copy)>] [29 <./any-visit-plot.png (PNG copy)>] [30 <./num-visit
+-plot.png (PNG copy)>] [31 <./num-out-plot.png (PNG copy)>]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 814.
-[35] [36] [37]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 814.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 810.
+[32] [33] [34]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 810.
  (./patt-noncompliance.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 814.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 814.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 810.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 810.
 Package rerunfilecheck Info: File `patt-noncompliance.out' has not changed.
 (rerunfilecheck)             Checksum: 40EACF388E627C352CAFAE3A1EBDE928;1132.
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: There were undefined references.
 
 
-Package biblatex Warning: Please rerun LaTeX.
-(biblatex)                Page breaks have changed.
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                patt-noncompliance
+(biblatex)                and rerun LaTeX afterwards.
 
 Package logreq Info: Writing requests to 'patt-noncompliance.run.xml'.
 \openout1 = `patt-noncompliance.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 814.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 810.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 212 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 38820 strings out of 492641
- 722361 string characters out of 6131787
- 1460450 words of memory out of 5000000
- 42037 multiletter control sequences out of 15000+600000
+ 38675 strings out of 492641
+ 718954 string characters out of 6131787
+ 1459430 words of memory out of 5000000
+ 41916 multiletter control sequences out of 15000+600000
  549499 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,17n,65p,1405b,3902s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.10} has been referenced b
+pdfTeX warning (dest): name{Hfootnote.11} has been referenced b
 ut does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Hfootnote.10} has been referenced but does not exis
+t, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.9} has been referenced but does not exist
 , replaced by a fixed one
@@ -1779,10 +1936,10 @@ exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive
 dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/symbols/msbm10.pfb>
-Output written on patt-noncompliance.pdf (38 pages, 1752950 bytes).
+Output written on patt-noncompliance.pdf (35 pages, 1745378 bytes).
 PDF statistics:
- 573 PDF objects out of 1000 (max. 8388607)
- 492 compressed objects within 5 object streams
- 119 named destinations out of 1000 (max. 500000)
+ 492 PDF objects out of 1000 (max. 8388607)
+ 414 compressed objects within 5 object streams
+ 95 named destinations out of 1000 (max. 500000)
  207 words of extra memory for PDF output out of 10000 (max. 10000000)
 
