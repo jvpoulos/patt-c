@@ -313,7 +313,7 @@ The procedure for estimating $\tau_{\text{PATT-C}}$ using Theorem~\ref{thm1} is 
 \item Using the group assigned to treatment in the RCT $(S_i=1, T_i=1)$, train a model {\color{red}(or an ensemble of models)} to predict {\color{red}the probability of compliance as a function of covariates $W_i$.} \label{compliance-model}
 \item Using the model from \ref{compliance-model}, predict who in the RCT assigned to control \textit{would have} complied to treatment had they been assigned to the treatment group. {\color{red} We use a standard prediction threshold of 50\% in order classify compliers, $C_i=1$.\footnote{Adjusting the prediction threshold upward would result in more accurate classifications, although we do not explore this approach.}} \label{complier-predict}
 \item {\color{red}For the observed compliers assigned to treatment and predicted compliers assigned to control, train a model to predict the response using $W_i$ and $D_i$, which gives $\ex(Y_{i1d} \mid S_i=1, D_i=d, W_i)$ for $d \in \{0,1\}$.}\label{response-model}
-\item For all individuals who received treatment in the population $(S_i=0, D_i=1)$, estimate their potential outcomes $Y_{i10}$ and $Y_{i11}$ using the model from \ref{response-model}. The mean counterfactual $Y_{i11}$ minus the mean counterfactual $Y_{i10}$ is the estimate of $\tau_{\text{PATT-C}}$.\label{response-predict}
+\item For all individuals who received treatment in the population $(S_i=0, D_i=1)$, estimate their potential outcomes using the model from \ref{response-model}. {\color{red}The mean counterfactual $Y_{i01}$ minus the mean counterfactual $Y_{i00}$ is the estimate of $\tau_{\text{PATT-C}}$.}\label{response-predict}
 \end{enumerate}
 
 Assumptions \ref{si_treat} and \ref{si_ctrl} are particularly important for estimating $\tau_{\text{PATT-C}}$: the success of the proposed estimator hinges on the assumption that the response surface is the same for compliers in the RCT and target population. If this does not hold, then the potential outcomes $Y_{i10}$ and $Y_{i11}$ for target population individuals cannot be estimated using the model from \ref{response-model}.\footnote{{\color{red}Section \ref{verifying} discusses whether the strong ignorability assumptions are plausible in the empirical application.}}
@@ -431,11 +431,11 @@ We acquire data on the target population from the National Health Interview Stud
 
 \subsection{Verifying assumptions} \label{verifying}
 
-In order for $\tau_{\text{PATT-C}}$ to be identified, Assumptions \ref{consistency} -- \ref{ER} must be met. Assumption \ref{consistency} ensures that potential outcomes for participants in the target population (i.e., respondents in the NHIS sample) would be identical to their outcomes in the RCT if they had been randomly assigned their observed treatment. {\color{red}Medicaid coverage for uninsured individuals was applied in the same manner in the RCT as it is in the population.  Differences in potential outcomes due to sample selection might arise, however, if there are differences in the mail surveys used to elicit health care use responses between the RCT and the nonrandomized study. }
- 
+In order for $\tau_{\text{PATT-C}}$ to be identified, Assumptions \ref{consistency} -- \ref{ER} must be met. Assumption \ref{consistency} ensures that potential outcomes for participants in the target population would be identical to their outcomes in the RCT if they had been randomly assigned their observed treatment. {\color{red}In the empirical application, medicaid coverage for uninsured individuals was applied in the same manner in the RCT as it is in the population.  Differences in potential outcomes due to sample selection might arise, however, if there are differences in the mail surveys used to elicit health care use responses between the RCT and the nonrandomized study. }
+
 We cannot directly test Assumptions \ref{si_treat} and \ref{si_ctrl}, which state that potential outcomes for treatment and control are independent of sample assignment for individuals with the same covariates and assignment to treatment. The assumptions are only met if every possible confounder associated with the response and the sample assignment is accounted for. In our estimation of the response surface, we use all demographic, socioeconomic, and pre-existing health condition data that were common in the OHIE and NHIS data. Potentially important unobserved confounders include the number of hospital and outpatient visits in the previous year, proximity to health services, and enrollment in other federal programs. 
 
-The final two columsn of Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with population members on Medicaid. Compared to the RCT compliers, the target population ``compliers''  are predominantly female, younger, more racially and ethnically diverse, less educated, and live in higher income households. Diagnoses of diabetes, asthma, high blood pressure, and heart disease are more common among the population on Medicaid then the RCT treated.
+The final two columns of Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with population members on Medicaid. Compared to the RCT compliers, the target population ``compliers''  are predominantly female, younger, more racially and ethnically diverse, less educated, and live in higher income households. Diagnoses of diabetes, asthma, high blood pressure, and heart disease are more common among the population on Medicaid then the RCT treated.
 
 \newgeometry{left=3cm,bottom=0.1cm}
 \begin{singlespace}
@@ -510,6 +510,14 @@ A violation of the assumption of no-interference (Assumption \ref{sutva}) biases
 The exclusion restriction (Assumption \ref{ER}) ensures treatment assignment affects the response only through enrollment in Medicaid. It is reasonable that a person's enrollment in Medicaid, not just their eligibility to enroll, would affect their hospital use. For private health insurance one might argue that eligibility may be be negatively correlated with hospital use, as people with pre-existing conditions are less often eligible yet go to the hospital more frequently. This should not be the case with a federally funded program such as Medicaid. 
 
 {\color{red}
+	\subsubsection{Placebo tests} \label{placebo}
+}
+
+Similar to the procedure proposed by \citep{Hartman}, we conduct placebo tests to check whether the average outcomes differ between the RCT compliers on Medicaid and the adjusted population ``compliers'' on Medicaid. If the placebo tests detect a significant difference between the mean outcomes of these groups, then either Assumption \ref{consistency} (for $d=1$), or Assumptions \ref{si_treat} and \ref{si_ctrl} are violated. 
+
+Table \ref{placebo} reports the results of placebo tests, comparing the mean outcomes of RCT compliers against the mean outcomes of adjusted population ``compliers." The former quantity is calculated from the observed RCT sample and the latter quantity is the mean counterfactual $Y_{i11}$ estimated from \ref{response-predict} of the estimation procedure. 
+
+{\color{red}
 \subsubsection{Sensitivity to no defiers assumption} \label{sens-defiers}
 }
 
@@ -548,7 +556,6 @@ The simulations presented in Section \ref{sim} show that the PATT-C estimator ou
 In particular, the strength of correlation between the covariates and compliance governs how well the estimator will perform, since \ref{compliance-model} of the estimation procedure is to predict who \textit{would be} a complier in the RCT control group, had they been assigned to treatment. If it is difficult to predict compliance using the observed covariates, then the estimator will perform badly because of noise introduced by incorrectly treating noncompliers as compliers. Further research should be done into ways to test how well the model of compliance works in the population. Further research might also explore models to more accurately predict compliance in RCTs.  Accurately predicting compliance is not only essential for yielding unbiased estimates of the average causal effects for target populations, it is also useful for researchers and policymakers to know which groups of individuals are unlikely to comply with treatment. 
 
 In the OHIE trial, only about $30\%$ of those selected to receive Medicaid benefits actually enrolled. Our compliance ensemble accurately classified compliance status for 77\% of treated RCT participants using only the pretreatment covariates as features. While we don't know how well the compliance ensemble predicts for the control group, the control group should be similar to the treatment group on pretreatment covariates because of the RCT randomization. The model's performance on the training set suggests that compliance is not purely random and depends on observed covariates. This gives evidence in favor of using the proposed estimator. 
-
 
 In our empirical application, the sample population differs in several dimensions from the target population of individuals who will be covered by other Medicaid expansions, such as the ACA expansion to cover all adults up to 138\% of the FPL. For instance, the RCT participants are disproportionately white urban--dwellers \citep{Taubman}. The RCT participants volunteered for the study and therefore may be in poorer health compared to the target population. These differences in baseline covariates make {\color{red}reweighting or response surface methods} necessary to extend the RCT results to the population.
 
@@ -649,9 +656,11 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{table}[h]
 	\begin{center}
 		\caption{Placebo test results comparing the mean outcomes of RCT compliers and adjusted population ``compliers''.\label{placebo}} 
-	\begin{tabular}{@{}lllll@{}}
+	\begin{tabular}{@{}lcccc@{}}
 		\toprule
-		Outcome                & RCT complier mean & Adjusted pop. ``complier" mean & Difference & $p$-value \\ \midrule
+		Outcome                & RCT complier & Adjusted pop. ``complier" & Difference & $p$-value \\
+				                &  mean & mean & &  \\		
+		 \midrule
 		Any ER visit           & 0.25              & 0.25                           & 0.0001     & 0.97    \\
 		$\#$ ER vists          & 0.45              & 0.45                           & 0.002      & 0.85    \\
 		$\#$ outpatient visits & 1.90              & 1.94                           & -0.03      & 0.26    \\ \bottomrule
