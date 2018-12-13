@@ -1,0 +1,5 @@
+we also estimate the Sample Average Treatment Effect on the Treated Compliers (SATT-C) by fitting the response curve for compliers in the RCT --- which we do in \ref{response-model} for estimating $\tau_{\text{PATT-C}}$ --- and then taking the mean difference in potential outcomes for treated compliers in the sample:
+\begin{equation}\label{tsatt-est} 
+\tau_{\text{SATT-C}} = \ex(Y_{i11} \mid S_i=1, D_i=1) - \ex(Y_{i10} \mid S_i=1, D_i=1).
+\end{equation}
+\color{black}

@@ -123,6 +123,10 @@ conf.int <- lapply(y.col, function(i){
   cbind(ci.lower, ci.upper)
 })
 
+# Find middle of bootstrap CIs for sate
+
+sate.het.m <- lapply(y.col, function (i) (sapply(sate.het.boot.ci, "[[", i)[1,]+sapply(sate.het.boot.ci, "[[", i)[2,])/2)
+
 # Create data for plot
 Overall  <- c("Overall")
 Sex <- c("Female")
@@ -138,7 +142,7 @@ cov.names <- c(Overall,Sex,Age,Race.ethn,Health.stat,Education,Income)
 het.plot <- lapply(y.col, function (i) data.frame(x=factor(c(rep(cov.names,3)), levels=rev(cov.names)), 
                                                   y = c(t.patt[[i]],unlist(patt.het[[i]]),
                                                         t.patt.unadj[[i]],unlist(patt.unadj.het[[i]]),
-                                                        rct.sate[[i]],unlist(sate.het[i])), 
+                                                        rct.sate[[i]],unlist(sate.het.m[i])), 
                                                   Group = factor(rep(c(cov.groups[1],rep(cov.groups[2],length(Sex)),rep(cov.groups[3],length(Age)),
                                                                        rep(cov.groups[4],length(Race.ethn)),rep(cov.groups[5],length(Health.stat)),
                                                                        rep(cov.groups[6],length(Education)),rep(cov.groups[7],length(Income))),3), levels=cov.groups),
@@ -196,9 +200,9 @@ ThemeBw1 <- function(base_size = 11, base_family = "") {
 }
 
 het.plot.all <- lapply(y.col, function (i) 
-  ggplot(subset(het.plot[[i]], Estimator!="SATE"), aes(x=x, y=y, ymin = ci.lower, ymax = ci.upper, colour=Estimator)) +
+  ggplot(het.plot[[i]], aes(x=x, y=y, ymin = ci.lower, ymax = ci.upper, colour=Estimator)) +
     geom_pointrange(size=1, alpha=0.8) +
-    scale_colour_manual(values=c("red","blue"), breaks=levels(het.plot[[i]]$Estimator)) + # change colors for estimators
+    scale_colour_manual(values=c("red","blue","green"), breaks=levels(het.plot[[i]]$Estimator)) + # change colors for estimators
     coord_flip() +
     geom_line() +
    geom_hline(aes(x=0,yintercept=0), lty=2) +
@@ -209,7 +213,7 @@ het.plot.all <- lapply(y.col, function (i)
 
 any.visit.plot <- het.plot.all[[1]] + ggtitle("Any ER visit")
 num.visit.plot <- het.plot.all[[2]] + ggtitle("# ER visits")
-num.out.plot <- het.plot.all[[4]] + ggtitle("# outpatient visits")
+num.out.plot <- het.plot.all[[4]] + ggtitle("# outpatient visits") 
                                               
 ggsave(paste0(repo.directory, "plots/any-visit-plot.png"), any.visit.plot)
 ggsave(paste0(repo.directory, "plots/num-visit-plot.png"), num.visit.plot)

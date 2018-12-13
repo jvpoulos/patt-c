@@ -5,27 +5,10 @@
 ** Analyses **
 
 
-Placebo tests - comparing the average outcomes predicted by the model with the average of the observed outcomes for the treated group. Again given sufficient power, a failure to find equivalence between the predicted and observed outcomes indicates a failure of at least one assumption underlying Theorem 1 and bias in the estimated population treatment effects.
-	Figure I.5 in Appendix I,
-
 ** Writing **
 
-** Questions for Kellie **
-
-relationship to reweighting methods
-	The result enables us to estimate $\tau_{\text{PATT}}$ by reweighting the RCT responses according to the distribution of covariates in the population. (2.2)
-
-	This shows that a reweighting approach is needed to extrapolate RCT results to a wider population. (4.2)
 
 ** For next time**
-
-# ER / outpatient visits - use SL.reg
-
-Rm Logic regression from binary
-
-*Comparision with previous results*
-	*adjusted SATT in empirical application
-	Should be positive, like A28 of Finkelstein
 
 report who is more likely to be compliers (using model predictions)
 

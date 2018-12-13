@@ -226,6 +226,48 @@
       \field{pages}{5\bibrangedash 32}
       \range{pages}{28}
     \endentry
+    \entry{buja1989linear}{article}{}
+      \name{author}{3}{}{%
+        {{uniquename=0,uniquepart=base,hash=8f2cab157c7b78a6c10f7f85cb83676f}{%
+           family={Buja},
+           familyi={B\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=0cb8fe4210baa81c4b0e67913b4d2768}{%
+           family={Hastie},
+           familyi={H\bibinitperiod},
+           given={Trevor},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=88eea600247d798f8b2ce0b2dc614492}{%
+           family={Tibshirani},
+           familyi={T\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {JSTOR}%
+      }
+      \strng{namehash}{a9d26384872e0fe1a82cbc4d3a3779e0}
+      \strng{fullhash}{a9d26384872e0fe1a82cbc4d3a3779e0}
+      \strng{bibnamehash}{a9d26384872e0fe1a82cbc4d3a3779e0}
+      \strng{authorbibnamehash}{a9d26384872e0fe1a82cbc4d3a3779e0}
+      \strng{authornamehash}{a9d26384872e0fe1a82cbc4d3a3779e0}
+      \strng{authorfullhash}{a9d26384872e0fe1a82cbc4d3a3779e0}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Annals of Statistics}
+      \field{title}{Linear smoothers and additive models}
+      \field{year}{1989}
+      \field{pages}{453\bibrangedash 510}
+      \range{pages}{58}
+    \endentry
     \entry{finkelstein2012}{article}{}
       \name{author}{7}{}{%
         {{uniquename=0,uniquepart=base,hash=8302593e3b893aa848cec33d5fabb13f}{%
@@ -294,41 +336,6 @@
       \field{pages}{1057}
       \range{pages}{1}
     \endentry
-    \entry{freund1996experiments}{inproceedings}{}
-      \true{moreauthor}
-      \true{morelabelname}
-      \name{author}{2}{}{%
-        {{uniquename=0,uniquepart=base,hash=9dae54fc70ef3090ef42046937183be2}{%
-           family={Freund},
-           familyi={F\bibinitperiod},
-           given={Yoav},
-           giveni={Y\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=8428d6ce4d2319a5be839da6c9ae0128}{%
-           family={Schapire},
-           familyi={S\bibinitperiod},
-           given={Robert\bibnamedelima E},
-           giveni={R\bibinitperiod\bibinitdelim E\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{organization}{1}{%
-        {Citeseer}%
-      }
-      \strng{namehash}{3570df99ae81c346ec36c70079c50fb9}
-      \strng{fullhash}{3570df99ae81c346ec36c70079c50fb9}
-      \strng{bibnamehash}{3570df99ae81c346ec36c70079c50fb9}
-      \strng{authorbibnamehash}{3570df99ae81c346ec36c70079c50fb9}
-      \strng{authornamehash}{3570df99ae81c346ec36c70079c50fb9}
-      \strng{authorfullhash}{3570df99ae81c346ec36c70079c50fb9}
-      \field{sortinit}{F}
-      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{year}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Experiments with a new boosting algorithm}
-      \field{year}{1996}
-    \endentry
     \entry{friedman2001greedy}{article}{}
       \name{author}{1}{}{%
         {{uniquename=0,uniquepart=base,hash=35b9098abeddd115c394c7b2e7ea0264}{%
@@ -358,50 +365,6 @@
       \field{year}{2001}
       \field{pages}{1189\bibrangedash 1232}
       \range{pages}{44}
-    \endentry
-    \entry{friedman2000additive}{article}{}
-      \name{author}{3}{}{%
-        {{uniquename=0,uniquepart=base,hash=971cf69058b64a94326dea0f2a8bbcce}{%
-           family={Friedman},
-           familyi={F\bibinitperiod},
-           given={Jerome},
-           giveni={J\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=0cb8fe4210baa81c4b0e67913b4d2768}{%
-           family={Hastie},
-           familyi={H\bibinitperiod},
-           given={Trevor},
-           giveni={T\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=88eea600247d798f8b2ce0b2dc614492}{%
-           family={Tibshirani},
-           familyi={T\bibinitperiod},
-           given={Robert},
-           giveni={R\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Institute of Mathematical Statistics}%
-      }
-      \strng{namehash}{568e7b5149c552567af3c9b520d96bb3}
-      \strng{fullhash}{568e7b5149c552567af3c9b520d96bb3}
-      \strng{bibnamehash}{568e7b5149c552567af3c9b520d96bb3}
-      \strng{authorbibnamehash}{568e7b5149c552567af3c9b520d96bb3}
-      \strng{authornamehash}{568e7b5149c552567af3c9b520d96bb3}
-      \strng{authorfullhash}{568e7b5149c552567af3c9b520d96bb3}
-      \field{sortinit}{F}
-      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{year}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{The Annals of Statistics}
-      \field{number}{2}
-      \field{title}{Additive logistic regression: {A} statistical view of boosting}
-      \field{volume}{28}
-      \field{year}{2000}
-      \field{pages}{337\bibrangedash 407}
-      \range{pages}{71}
     \endentry
     \entry{Hartman}{article}{}
       \name{author}{4}{}{%
@@ -838,50 +801,6 @@
       \field{year}{1990}
       \field{pages}{472\bibrangedash 480}
       \range{pages}{9}
-    \endentry
-    \entry{ruczinski2003logic}{article}{}
-      \name{author}{3}{}{%
-        {{uniquename=0,uniquepart=base,hash=840d4a48edf36727547d9e326ee27d9e}{%
-           family={Ruczinski},
-           familyi={R\bibinitperiod},
-           given={Ingo},
-           giveni={I\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=7f95c4e3970aa763711f6f837120913e}{%
-           family={Kooperberg},
-           familyi={K\bibinitperiod},
-           given={Charles},
-           giveni={C\bibinitperiod},
-           givenun=0}}%
-        {{uniquename=0,uniquepart=base,hash=f0593a91912d3ed657c489a088c57324}{%
-           family={LeBlanc},
-           familyi={L\bibinitperiod},
-           given={Michael},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Taylor \& Francis}%
-      }
-      \strng{namehash}{a2ffbffdf7d37120e41fe3609396a592}
-      \strng{fullhash}{a2ffbffdf7d37120e41fe3609396a592}
-      \strng{bibnamehash}{a2ffbffdf7d37120e41fe3609396a592}
-      \strng{authorbibnamehash}{a2ffbffdf7d37120e41fe3609396a592}
-      \strng{authornamehash}{a2ffbffdf7d37120e41fe3609396a592}
-      \strng{authorfullhash}{a2ffbffdf7d37120e41fe3609396a592}
-      \field{sortinit}{R}
-      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{year}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Journal of Computational and Graphical Statistics}
-      \field{number}{3}
-      \field{title}{Logic regression}
-      \field{volume}{12}
-      \field{year}{2003}
-      \field{pages}{475\bibrangedash 511}
-      \range{pages}{37}
     \endentry
     \entry{stuart2011use}{article}{}
       \name{author}{4}{}{%

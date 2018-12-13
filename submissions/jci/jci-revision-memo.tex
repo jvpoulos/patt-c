@@ -91,6 +91,16 @@
 
 %Perhaps the solution here is to expand the set of simulations to be more of an experimental design themselves, by varying the parameters that determine the degree of confounding with sample selection, confounding with the treatment assignment, and confounding with compliance.  Your current design can handle this I believe – you just need to expand the set of parameters considered in your models on p. 8.  Otherwise the simulation results would suggest to me that I shouldn’t use the PATT approach unless my compliance rate is high, which is presumably the opposite of what the authors are trying to suggest.
 
+Following R1's excellent suggestion, we expand the set of simulations to be more of an experimental design themselves, by varying the parameters that determine the degree of confounding with sample selection, confounding with treatment assignment, and confounding with compliance. In addition, we made the following changes to the simulations:
+
+\begin{itemize}
+	\item Compare the PATT and complier-adjusted PATT (PATT-C) estimators against the SATE, which is just the ITT effect scaled by the compliance rate, since the SATE is a more commonly used estimator
+	\item Use gradient boosting to predict compliance rate in the RCT and to predict the potential outcomes of observed and predicted RCT compliers
+	\item Vary the $e_k$, $k = \{1...6\}$ parameters along a grid of five standard normal deviates
+\end{itemize}
+
+In the new simulations, we find that the estimation error of PATT-C is invariant to increases in the compliance rate and also increases in the three dimensions of confounding. In comparison, SATE performs worse when the compliance rate is low, and is also considerably more variable than both of the population estimators due to the fact that SATE is unable to account for differences in pretreatment covariates between the RCT sample and target population.
+
 \subsection{Presentation}
 
 \subsubsection{Assumptions}
@@ -105,7 +115,7 @@ R1 points out that the subject-level index $i$ is inconsistently used in the ori
 
 \subsubsection{Define SATT}
 %Third, the SATT is introduced on p. 7 but not defined that I could see. 
-The revised manuscript formally defines SATT in Eq.~\eqref{tsatt-est}.	
+In the revised manuscript, we compare the PATT and PATT-C estimators against the SATE, which is just the ITT effect scaled by the compliance rate, since the SATE is a more common estimator. 
  
 \subsubsection{NHIS sample design}
 
@@ -115,7 +125,7 @@ R1 points out that the complex sample design of the NHIS was ignored in the appl
 \subsubsection{Interpretation of results}
 %Fifth, I was surprised at the number of interactions there were in the Medicaid expansion results – I am not arguing with the results, but it might be nice to see if this is a reasonable finding, either by consulting the broader literature or health care policy experts in this area.  
 
-R1 suggests providing more context for interpreting whether the subgroup analyses presented in Figs. \ref{any-visit-plot} and \ref{fig:any-out-plot} are reasonable. We expand Section \ref{results-compare} in the revised manuscript to compare our sample subgroup estimates with those published in the online appendices of \citep{Taubman} and \citet{NBERw22363}. These studies do not perform subgroup analyses for the broader population. Similar to our sample estimates, these studies find considerable treatment effect heterogeneity in terms of gender, age, smoking status, and pre-lottery welfare participation. 
+R1 suggests providing more context for interpreting whether the subgroup analyses presented in Figs. \ref{any-visit-plot} and \ref{fig:any-out-plot} are reasonable. We expand Section \ref{results} in the revised manuscript to compare our sample subgroup estimates with those published in the online appendices of \citep{Taubman} and \citet{NBERw22363}. These studies do not perform subgroup analyses for the broader population. Similar to our sample estimates, these studies find considerable treatment effect heterogeneity in terms of gender, age, smoking status, and pre-lottery welfare participation. 
 
 %Finally, it seems that the results in Figures 4 and 5 contradict the wording on the next to last paragraph of the paper (p. 19) – the figures suggest that the PATT estimates suggest an increase in ER visits and a decrease in outpatient visits, whereas the text states the opposite.
 
@@ -184,7 +194,7 @@ We describe the prediction threshold and discuss additional modeling assumptions
 
 R2 raises concerns with regards to the interpretation of our proposed estimator (PATT-C). The correct interpretation for the estimator is the following: it's the complier-average causal effect estimated on the RCT sample extrapolated to what we would have seen in the population if treatment received were the same. It is not the ITT extrapolated to those who receive treatment in the population. The revised manuscript clarifies this interpretation when defining PATT-C. 
 
-We believe that R2 is referring to the \citet{Hartman} estimator and wondering how to interpret this estimator \emph{if} there is in fact non-compliance. In this case, R2 is correct in stating that the \citet{Hartman} estimator is the ITT estimator extrapolated those who take treatment in the population. 
+We believe that R2 is referring to the \citet{Hartman} estimator and wondering how to interpret this estimator \emph{if} there is in fact non-compliance. In this case, R2 is correct in stating that the \citet{Hartman} estimator is the ITT effect extrapolated those who take treatment in the population. 
 
 Confusion regarding the interpretation of our estimator likely results from the original manuscript mixing up treatment eligibility and treatment taken. We have corrected the manuscript and results such that the response curve is fitted to treatment received $D_i$ in the RCT rather than treatment eligibility, $T_i$, since we cannot actually observe $T_i$ in the population. 
 

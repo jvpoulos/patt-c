@@ -122,17 +122,6 @@ Y.hat.0.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.oh
 
 t.patt.unadj <- lapply(y.col, function (i) mean(Y.hat.1.unadj[[i]]) - mean(Y.hat.0.unadj[[i]]))
 
-# Compute adjusted SATT using predicted values from response model for RCT compliers
-
-rct.ctrl.counterfactual.adj <- cbind("insurance" = rep(0, length(which(insurance.ohie==1))),
-                                       X.ohie[which(insurance.ohie==1),])
-
-Y.hat.1.adj.rct <- lapply(colnames(Y.ohie), function (i) Y.ohie[[i]][which(insurance.ohie==1)])
-Y.hat.0.adj.rct <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col.binary], return(predict(response.mod.binary[[i]], rct.ctrl.counterfactual.adj, onlySL = T)$library.predict[,10]),
-                                                     return(predict(response.mod.num[[i]], rct.ctrl.counterfactual.adj, onlySL = T)$pred)))
-
-t.satt.adj <- lapply(y.col, function (i) mean(Y.hat.1.adj.rct[[i]]) - mean(Y.hat.0.adj.rct[[i]]))
-
 # Compute SATE
 rct.sate <- lapply(y.col, function (i) (mean(Y.ohie[[i]][which(treatment.ohie==1)]) - # Num. is ITT effect
                                              mean(Y.ohie[[i]][which(treatment.ohie==0)])) 

@@ -329,14 +329,11 @@ In addition to the identification assumptions, we require additional modeling as
 
 In the empirical application, we use the weighted ensemble method described in \citet{van2007} for \ref{compliance-model} and \ref{response-model} of the estimation procedure. This ensemble method combines algorithms with a convex combination of weights based on minimizing cross-validated error. It is shown to control for overfitting and outperforms single algorithms selected by cross-validation \citep{polley2010super}. 
 
-We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes. We select five types of candidate algorithms: decision tree boosting algorithms (e.g., AdaBoost, gradient boosting, and XGBoost) \citep{freund1996experiments,friedman2000additive,friedman2001greedy}; L1 or L2-regularized linear models (e.g., Lasso or ridge regression, respectively) \citep{tibshirani2012strong}; and random forests \citep{breiman2001}. L1-regularized linear models are important for our application due to their variable selection properties --- Lasso is particularly attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
+We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes. We select three types of candidate algorithms: nonparametric additive regression models \citep{buja1989linear}; L1 or L2-regularized linear models (e.g., Lasso or ridge regression, respectively) \citep{tibshirani2012strong}; and random forests \citep{breiman2001}. L1-regularized linear models are important for our application due to their variable selection properties --- Lasso is particularly attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
 
 \section{Simulations} \label{sim}
-\color{red}We conduct a simulation study to compare the performance of the PATT and PATT-C estimators. For comparison, we also estimate the Sample Average Treatment Effect on the Treated Compliers (SATT-C) by fitting the response curve for compliers in the RCT --- which we do in \ref{response-model} for estimating $\tau_{\text{PATT-C}}$ --- and then taking the mean difference in potential outcomes for treated compliers in the sample:
-\begin{equation}\label{tsatt-est} 
-\tau_{\text{SATT-C}} = \ex(Y_{i11} \mid S_i=1, D_i=1) - \ex(Y_{i10} \mid S_i=1, D_i=1).
-\end{equation}
-\color{black}
+{\color{red}We conduct a simulation study to compare the performance of the PATT and PATT-C estimators. For comparison, we compare the population estimates to the SATE, which is the ITT effect estimated from the RCT sample adjusted by the sample compliance rate.}
+
 Our simulation is designed so that the effect of treatment is heterogeneous and depends on covariates which are different in the RCT and target population. The design satisfies the conditional independence assumptions in Figure~\ref{fig:DAG}.
 
 \subsection{Simulation design}
@@ -375,13 +372,13 @@ We generate a population of 30,000 individuals and randomly sample 5,000. Those 
 We set each individual's treatment received $D_i$ according to their treatment assignment and complier status and observe their responses $Y_{isd}$. In this design, the way that we've set $S_i$, $T_i$, $D_i$, $C_i$, and $Y_{isd}$ ensures that Assumptions \ref{consistency} -- \ref{ER} hold.
 
 {\color{red}
-In the assigned-treatment RCT group $(S_i = 1, T_i = 1)$, we train a gradient boosting algorithm on the covariates to predict who in the control group $(S_i = 1, T_i = 0)$ would comply with treatment ($C_i=1$), which is unobservable.} These individuals \textit{would have} complied had they been assigned to the treatment group. For this group of observed compliers to treatment and predicted compliers from the control group of the RCT, we estimate the response surface {\color{red}using gradient boosting} with features $(W^{1}_i, W^{2}_i, W^{3}_i)$ and $D_i$. The PATT-C is estimated according to the estimation procedure outlined above.
+In the assigned-treatment RCT group $(S_i = 1, T_i = 1)$, we train a gradient boosting algorithm \citep{friedman2001greedy} on the covariates to predict who in the control group $(S_i = 1, T_i = 0)$ would comply with treatment ($C_i=1$), which is unobservable.} These individuals \textit{would have} complied had they been assigned to the treatment group. For this group of observed compliers to treatment and predicted compliers from the control group of the RCT, we estimate the response surface {\color{red}using gradient boosting} with features $(W^{1}_i, W^{2}_i, W^{3}_i)$ and $D_i$. The PATT-C is estimated according to the estimation procedure outlined above.
 
 \subsection{Simulation results}\label{sim-results}
 
-{\color{red}We vary each of the parameters $e_1, e_2,$, $e_3$, $e_4$, $e_5$, and $e_6$ along a grid of five random standard normal values in order to generate different combinations of rates of compliance, treatment eligibility, RCT eligibility in the population, and confounding. For each possible combination of the six parameters, we run the simulation ten times and compute the average root mean squared error (RMSE) of PATT-C, PATT, and the SATT-C.} All other parameters are held constant. The PATT and PATT-C estimates are obtained by estimating the response surface on all individuals in the RCT and applying \ref{response-predict} of our estimation procedure to the nonrandomized trial individuals. {\color{red}SATT-C is estimated using the predicted values from the response model trained in \ref{response-model}.}
+{\color{red}We vary each of the parameters $e_1, e_2$, $e_3$, $e_4$, $e_5$, and $e_6$ along a grid of five random standard normal values in order to generate different combinations of rates of compliance, treatment eligibility, RCT eligibility in the population, and confounding. For each possible combination of the six parameters, we run the simulation ten times and compute the average root mean squared error (RMSE) of PATT-C, PATT, and the SATE.} All other parameters are held constant. The PATT and PATT-C estimates are obtained by estimating the response surface on all individuals in the RCT and applying \ref{response-predict} of our estimation procedure to the nonrandomized trial individuals.
 
-Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of compliers in the whole population, the percentage of people in the whole population eligible to participate in the RCT, and the RMSE of the PATT and PATT-C estimators. The pattern of performance is qualitatively similar: both perform best when compliance is high and perform badly when compliance is low. {\color{red}Figure~\ref{fig:rmse_ratec_ratet}} shows that for a fixed rate of compliance, the RMSE of both estimators increases with the fraction of the total population eligible to participate in the RCT. When less than 70\% of the RCT is compliers, PATT-C tends to have lower RMSE than PATT.
+Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of compliers in the whole population, the percentage of people in the population eligible to participate in the RCT, and the RMSE of the PATT and PATT-C estimators. {\color{red}The PATT estimator performs badly when the compliance rate is low, whereas the PATT-C estimator is comparatively insensitive to changes in the compliance rate. A similar pattern emerges when the compliance rate varies with the population treatment rate (Figure~\ref{fig:rmse_ratec_ratet}).}
 %
 %\vspace{10mm}
 %\begin{center}
@@ -396,8 +393,9 @@ Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of 
 	\end{center}
 \end{figure}
 
-Figure~\ref{fig:rmse_boxplots_rateC} compares the RMSE of PATT and PATT-C with the SATT-C  at varying levels of compliance in the total population. When compliance is low, both PATT and PATT-C estimators have a large RMSE. The adjusted estimator has a large variance because the subset of the RCT who are considered compliers is relatively small, whereas the unadjusted estimator has bias from the large amount of crossover. For low levels of compliance, the SATT-C actually tends to estimate the average causal effects for the target population more closely than either PATT or PATT-C. On the other hand, when the compliance rate is high, both PATT and PATT-C estimators have low RMSE, with {\color{red} the} adjusted estimator performing slightly better. Meanwhile, the median RMSE for the SATT-C stays relatively constant regardless of compliance rate {\color{red}, and} the estimator is unbiased for the SATT-C rather than the PATT-C. The SATT-C estimate accounts for noncompliance, but is unable to account for differences in pretreatment covariates between the RCT sample and target population. This shows that {\color{red}reweighting or response surface methods} are needed to extrapolate RCT results to a wider population.
+{\color{red}Figure~\ref{fig:rmse_boxplots_rateC} compares the RMSE of PATT and PATT-C with the SATE at varying levels of compliance in the total population. PATT-C is relatively invariant to changes in the compliance rate and outperforms both PATT and SATE in terms of minimizing RMSE when the compliance rate is below 70\% and . For high levels of compliance, the SATE actually tends to estimate the average causal effects for the target population as closely than as PATT or PATT-C.  
 
+Figures~\ref{fig:rmse_boxplots_RateConC}, \ref{fig:rmse_boxplots_RateConT}, and \ref{fig:rmse_boxplots_RateConS} explore how the degrees of confounding in the mechanisms that determine sample selection, treatment assignment, and compliance affect estimation error. PATT-C tends to be invariant to increases in the degree of confounding, whereas PATT is sensitive to confounding in the sample selection mechanism. The SATE estimates are generally more variable than the population estimates due to the sample estimator's inability to account for differences in pretreatment covariates between the RCT sample and target population. }
 %
 %\vspace{10mm}
 %\begin{center}
@@ -407,7 +405,7 @@ Figure~\ref{fig:rmse_boxplots_rateC} compares the RMSE of PATT and PATT-C with t
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width = 1\textwidth]{rmse_boxplots_rateC}
-\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to compliance rates in the total population.\label{fig:rmse_boxplots_rateC}}
+\caption{Simulated RMSE of PATT-C, PATT, and SATE, according to compliance rates in the total population.\label{fig:rmse_boxplots_rateC}}
 %\caption{\label{fig:rmse_boxplots_rateC}}
 \end{center}
 \end{figure}
@@ -420,7 +418,7 @@ We apply the proposed estimator to measure the effect of Medicaid coverage on he
 
 We draw RCT data from the Oregon Health Insurance Experiment (OHIE) \citep{finkelstein2012,baicker2013,baicker2014,Taubman}. In 2008, approximately 90,000 uninsured low-income adults participated in the OHIE to receive Medicaid benefits.\footnote{Eligible participants include Oregon residents (US citizens or legal immigrants) aged 19 to 64 not otherwise eligible for public insurance, who have been without insurance for six months, and have income below the FPL and assets below \$2,000.} Treatment occurred at the household level: participants selected by the lottery won the opportunity for themselves and any household member to apply for Medicaid. Within a sample of 74,922 individuals representing 66,385 households, 29,834 participants were selected by the lottery; the remaining 45,008 participants served as controls in the experiment. Participants in selected households received benefits if they returned an enrollment application within 45 days of receipt. Among participants in selected households, about 60\% mailed back applications and only 30\% successfully enrolled.\footnote{{\color{red}About half of the returned applications were deemed ineligible, primarily due to failure to demonstrate income below the FPL. Enrolled participants were required to recertify their eligibility status every six months.}}
 
-The response data originate from a mail survey that was administered to participants over July and August 2009 ($n = 23,741$ survey respondents). We use the same definition of insurance coverage as \citet{finkelstein2012} to form our measure of compliance, which is a binary variable indicating whether the participant was enrolled in any Medicaid program between the notification date and 30 September 2009. The OHIE data include pretreatment covariates for gender, age, race, ethnicity, health status, education, and household income.  {\color{red}Table~\ref{rct-nrt-compare} presents summary statistics on the $n=10,619$ RCT participants in our sample who were on Medicaid during the study period.}
+The response data originate from a mail survey that was administered to participants over July and August 2009 ($n = 23,741$ survey respondents). We use the same definition of insurance coverage as \citet{finkelstein2012} to form our measure of compliance, which is a binary variable indicating whether the participant was enrolled in any Medicaid program between the notification date and 30 September 2009. The OHIE data include pretreatment covariates for gender, age, race, ethnicity, health status, education, and household income.  
 
 Our outcomes of interest are binary variables for any emergency room (ER) and outpatient visits in the past 12 months. {\color{red}ER use is an important outcome because it is the main delivery system through which the the uninsured receive health care. The uninsured could potentially receive higher quality and less affordable healthcare through outpatient visits. An important question for policymakers is whether Medicaid expansions will decrease ER utilization by the previously uninsured.   	
 
@@ -429,7 +427,7 @@ Subsequent research calls in to question the external validity of the OHIE, whic
 
 \subsection{Observational data} 
 
-We acquire data on the target population from the National Health Interview Study (NHIS) for years {\color{red}2008 to 2017} \citep{NHIS}.\footnote{{\color{red}A possible limitation of this application is that it ignores the complex sampling techniques of the NHIS sample design such as differential sampling, which is discussed in detail in \citet{parsons2014design}.}\label{nhis-ftn}} We restrict our sample to respondents with income below 138\% of the FPL and who are uninsured or on Medicaid {\color{red}($n=11,129$)}. We select covariates on respondent characteristics that match the OHIE pretreatment covariates. The outcomes of interest from NHIS are variables on ER and outpatient visits in the past 12 months. We use a recoded variable that indicates whether respondents are on Medicaid as an analogue to the OHIE compliance measure. 
+We acquire data on the target population from the National Health Interview Study (NHIS) for years {\color{red}2008 to 2017} \citep{NHIS}.\footnote{{\color{red}A possible limitation of this application is that it ignores the complex sampling techniques of the NHIS sample design such as differential sampling, which is discussed in detail in \citet{parsons2014design}.}\label{nhis-ftn}} We restrict our sample to respondents with income below 138\% of the FPL and who are uninsured or on Medicaid and select covariates on respondent characteristics that match the OHIE pretreatment covariates. The outcomes of interest from NHIS are variables on ER and outpatient visits in the past 12 months. We use a recoded variable that indicates whether respondents are on Medicaid as an analogue to the OHIE compliance measure. 
 
 \subsection{Verifying assumptions} \label{verifying}
 
@@ -437,7 +435,7 @@ In order for $\tau_{\text{PATT-C}}$ to be identified, Assumptions \ref{consisten
  
 We cannot directly test Assumptions \ref{si_treat} and \ref{si_ctrl}, which state that potential outcomes for treatment and control are independent of sample assignment for individuals with the same covariates and assignment to treatment. The assumptions are only met if every possible confounder associated with the response and the sample assignment is accounted for. In our estimation of the response surface, we use all demographic, socioeconomic, and pre-existing health condition data that were common in the OHIE and NHIS data. Potentially important unobserved confounders include the number of hospital and outpatient visits in the previous year, proximity to health services, and enrollment in other federal programs. 
 
-Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with NRT participants on Medicaid. Compared to the RCT treated, the target population ``treated''  group is predominantly female, younger, more racially and ethnically diverse, less educated, and live in higher income households. Diagnoses of diabetes, asthma, high blood pressure, and heart disease are more common among the population on Medicaid then the RCT treated.
+The final two columsn of Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with population members on Medicaid. Compared to the RCT compliers, the target population ``compliers''  are predominantly female, younger, more racially and ethnically diverse, less educated, and live in higher income households. Diagnoses of diabetes, asthma, high blood pressure, and heart disease are more common among the population on Medicaid then the RCT treated.
 
 \newgeometry{left=3cm,bottom=0.1cm}
 \begin{singlespace}
@@ -518,72 +516,43 @@ The exclusion restriction (Assumption \ref{ER}) ensures treatment assignment aff
 \citet{Angrist1996} show that the bias due to violations of Assumption \ref{monotonicity} is equivalent to the difference of average causal effects of treatment received for compliers and defiers, multiplied by the relative proportion of defiers, 
 $\pr(i\text{ is a defier}) / (\pr(i\text{ is a complier]}) - \pr(i\text{ is a defier})).$
 
-Table \ref{ohie-status} reports the distribution of participants in the OHIE by status of treatment assignment and treatment received. Assumption \ref{monotonicity} does not hold due to the presence of defiers; i.e., participants who were assigned to control and enrolled in Medicaid during the study period. About 6.7\% of the RCT sample were assigned to control but were enrolled in Medicaid ($T_i < D_i$) and 65.5\% of the sample complied with treatment assignment ($D_i = T_i$), which results in a bias multiplier of 0.11. Suppose that the difference of average causal effects of Medicaid received on ER use for compliers and defiers is 1.2\%.\footnote{This quantity is the difference between the adjusted and unadjusted SATT on ER use reported in Section \ref{results}.} The resulting bias is only 0.1\%, which would not meaningfully alter the interpretation of the SATT-C or PATT-C reported in Section \ref{results}. 
+Table \ref{ohie-status} reports the distribution of participants in the OHIE by status of treatment assignment and treatment received. Assumption \ref{monotonicity} does not hold due to the presence of defiers; i.e., participants who were assigned to control and enrolled in Medicaid during the study period. About 6.7\% of the RCT sample were assigned to control but were enrolled in Medicaid ($T_i < D_i$) and 65.5\% of the sample complied with treatment assignment ($D_i = T_i$), which results in a bias multiplier of 0.11. Suppose that the difference of average causal effects of Medicaid received on ER use for compliers and defiers is 1.2\%. The resulting bias is only 0.1\%, which would not meaningfully alter the interpretation of the SATE or PATT-C reported in Section \ref{results}. 
  
 \subsection{Empirical results}\label{results}
 
-We compare PATT-C and SATT estimates for ER and outpatient use. We obtain estimates for the overall group of participants and subgroups according to sex, age, race, health status, education, and household income. Subgroup treatment effects are estimated by taking differences across response surfaces for a given covariate subgroup, and response surfaces are estimated with {\color{red}the ensemble mean predictions}. We use treatment assignment, number of household members, and the subgroup covariates as features in the response models. We generate 95\% confidence intervals for these estimates using 1,000 bootstrap samples. The entire RCT sample size is $n=23,205$ and the population sample is {\color{red}$n=17,145$}. There are $n=10,619$ RCT compliers and {\color{red}$n=6,261$ individuals in the target population are covered by Medicaid}. 
-
-{\color{red}Table \ref{compliance-compare} compares PATT-C estimates of the effect of Medicaid coverage on ER and outpatient usage to SATT-C and compliance-adjusted SATE estimates. The estimated effect of Medicaid on the likelihood of visiting the ER is practically zero for both compliers in the population and sample. In comparison, the estimated treatment effect on RCT compliers is 1.2\% [-1.1\%, 3.8\%]. For population and sample compliers, the effect of Medicaid coverage on the likelihood of outpatient use is also near zero. In comparison, the SATE estimate on outpatient use is -2\% [-4.9\%, 0.6\%].
-
-Figures \ref{fig:any-visit-plot} and \ref{fig:any-out-plot} examine conditional treatment effect estimates on ER and outpatient use, respectively. There exists substantial heterogeniety in treatment effect estimates in our PATT-C estimator compared to the PATT and SATT-C estimators. For instance, Medicaid coverage decreases the probability of ER use for white and hispanic population compliers and increases ER use for black population compliers. Conversely, Medicaid coverage decreases outpatient use for black population compliers, while white and hispanic population compliers experience an increase in outpatient use due to Medicaid.}
-%
-%\vspace{10mm}
-%\begin{center}
-%[FIGURE 4 HERE]
-%\end{center}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width = 0.9\textwidth]{any-visit-plot}
-    \caption{Comparison of estimators: any ER visit. Horizontal lines represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.\label{fig:any-visit-plot}}
-%\caption{\label{fig:any-visit-plot}}
-\end{center}
-\end{figure}
-%
-%\vspace{15mm}
-%\begin{center}
-%[FIGURE 5 HERE]
-%\end{center}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width = 0.9\textwidth]{num-visits-plot}
-    \caption{Comparison of estimators: $\#$ ER visits.\label{fig:num-visits-plot}}
-%\vspace{10mm}
-%\caption{\label{fig:num-visits-plot}}
-%\vspace{10mm}
-\end{center}
-\end{figure}
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[width = 0.9\textwidth]{num-out-plot}
-		\caption{Comparison of estimators: $\#$ outpatient visits.\label{fig:num-out-plot}}
-		%\vspace{10mm}
-		%\caption{\label{fig:num-out-plot}}
-		%\vspace{10mm}
-	\end{center}
-\end{figure}
+We compare PATT-C and PATT estimates for ER and outpatient use. We obtain estimates for the overall group of participants and subgroups according to sex, age, race, health status, education, and household income. Subgroup treatment effects are estimated by taking differences across response surfaces for a given covariate subgroup, and response surfaces are estimated with {\color{red}the ensemble mean predictions}. We use treatment assignment, number of household members, and the subgroup covariates as features in the response models. We generate 95\% confidence intervals for these estimates using 1,000 bootstrap samples. %The entire RCT sample size is $n=23,205$ and the population sample is {\color{red}$n=17,145$}. There are $n=10,619$ RCT compliers and {\color{red}$n=6,261$ individuals in the target population are covered by Medicaid}. 
 
 {\color{red}
-\subsubsection{Comparison with previous results} \label{results-compare}
+\citet{finkelstein2012}, who report population estimates of the effect of Medicaid coverage on \emph{the number of} ER and out-patient visits using 2004--2009 NHIS data on adults aged 19--64 below 100 percent of the federal poverty line ($n=15,528$). \citet{finkelstein2012} estimates Medicaid coverage significantly increases the number of ER visits by 0.08 [0.05, 0.12] and increases the number of outpatient visits by 1.45 [1.33, 1.57]. Table \ref{compliance-compare} presents our PATT-C estimates, which indicate that Medicaid coverage has a positive, but considerably smaller effect on the number of ER and outpatient visits. }
+
+\begin{table}[h]
+	\caption{Comparison of population and sample estimates.\label{compliance-compare}} 
+	\begin{tabular}{@{}llll@{}}
+		\toprule
+		\backslashbox{Estimator}{Outcome} 				& Any ER visit 	& $\#$ ER visits   & $\#$ outpatient visits      \\ \midrule
+		PATT-C                                           & 0.01 [0.01, 0.02]   & 0.0005 [0.0001, 0.0008]	& 0.002 [0.002, 0.002] \\
+		PATT                                             & 0.01 [0.01, 0.02]   & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
+		SATE                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.04, 0.06]	& -0.02 [-0.19, 0.15]  \\ \bottomrule
+	\end{tabular}\\
+	\footnotesize{Notes: SATE is the ITT effect adjusted by the sample compliance rate in the RCT. Estimates in brackets represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.}
+\end{table}
+
+{\color{red}
+Figures \ref{fig:any-visit-plot}, \ref{fig:num-visit-plot}, and \ref{fig:num-out-plot} examine heterogeneous treatment effect estimates on ER and outpatient use in the sample and population. While our study is the first to our knowledge to estimate heterogeniety in treatment effects for the target population, \citet{Taubman} and \citet{NBERw22363} perform subgroup analyses on the RCT sample. Similar to our PATT-C estimates, \possessivecite{Taubman} subgroup analyses indicate that increases in ER use due to Medicaid are significantly larger for younger individuals and those with high school-level education.%\citet{NBERw22363} perform subgroup analyses on OHIE sample data and find larger increases in ER use as a result of Medicaid for men, English speakers, and individuals enrolled in a food stamp program prior to the lottery. 
 }
-In this section, we compare our population estimates with \citet{finkelstein2012}, who report population estimates of the effect of Medicaid coverage on \emph{the number of} ER and out-patient visits using 2004--2009 NHIS data on adults aged 19--64 below 100 percent of the federal poverty line ($n=15,528$). \citet{finkelstein2012} estimates Medicaid coverage significantly increases the number of ER visits by 0.08 [0.05, 0.12] and increases the number of outpatient visits by 1.45 [1.33, 1.57]. In contrast, our PATT-C estimates indicate that Medicaid coverage has little effect on the probability of ER and outpatient visits.
-
-While our study is the first to our knowledge to estimate heterogeniety in treatment effects for the target population, \citet{Taubman} and \citet{NBERw22363} perform subgroup analyses on the RCT sample. Across subgroups in the sample, \citet{Taubman} estimates mostly positive effects of Medicaid on ER use. Similar to our PATT-C estimates, \possessivecite{Taubman} subgroup analyses indicate that increases in ER use due to Medicaid are significantly larger for men and younger individuals in the sample. The authors similarly find that ndividuals with an education level of high school and those pre-lottery diagnoses experience larger increases in ER use due to Medicaid. \citet{NBERw22363} perform subgroup analyses on OHIE sample data and find larger increases in ER use as a result of Medicaid for men, English speakers, and individuals enrolled in a food stamp program prior to the lottery. 
-
 \section{Discussion} \label{discussion}
 
-The simulations presented in Section \ref{sim} shed light on the conditions under which the proposed estimator should work well. When the rate of crossover from treatment to control is low, the proposed estimator performs better than the estimator which doesn't adjust for noncompliance. Here, the unadjusted estimator gives the ITT effect, which tends to underestimate the average treatment effect on compliers. Of course, the simulation results depend on the particular way we parameterized the compliance, selection, treatment assignment, and response schedules. In particular, the strength of correlation between the covariates and compliance governs how well the estimator will perform, since \ref{compliance-model} of the estimation procedure is to predict who \textit{would be} a complier in the RCT control group, had they been assigned to treatment. If it is difficult to predict compliance using the observed covariates, then the estimator will perform badly because of noise introduced by incorrectly treating noncompliers as compliers. Further research should be done into ways to test how well the model of compliance works in the population. 
+{\color{red}Our proposed estimator PATT-C can be interpreted as the complier-average causal effect estimated on the RCT sample extrapolated to what we would have seen in the population if treatment received were the same.
+The simulations presented in Section \ref{sim} show that the PATT-C estimator outperforms its unadjusted counterpart when the compliance rate is low. PATT gives the ITT effect extrapolated those who take treatment in the population, which tends to underestimate the average treatment effect on compliers.} Of course, the simulation results depend on the particular way we parameterized the compliance, selection, treatment assignment, and response schedules. 
 
-The proposed estimator, adjusting for noncompliance, performs better in simulations than the unadjusted estimator when compliance is low and can be predicted by observed covariates (Figure~\ref{fig:rmse_boxplots_rateC}). In the OHIE trial, only about $30\%$ of those selected to receive Medicaid benefits actually enrolled. Our compliance ensemble accurately classified compliance status for 77\% of treated RCT participants using only the pretreatment covariates as features. While we don't know how well the compliance ensemble predicts for the control group, the control group should be similar to the treatment group on pretreatment covariates because of the randomization done. The model's performance on the training set suggests that compliance is not purely random and depends on observed covariates. This gives evidence in favor of using the proposed estimator. 
+In particular, the strength of correlation between the covariates and compliance governs how well the estimator will perform, since \ref{compliance-model} of the estimation procedure is to predict who \textit{would be} a complier in the RCT control group, had they been assigned to treatment. If it is difficult to predict compliance using the observed covariates, then the estimator will perform badly because of noise introduced by incorrectly treating noncompliers as compliers. Further research should be done into ways to test how well the model of compliance works in the population. Further research might also explore models to more accurately predict compliance in RCTs.  Accurately predicting compliance is not only essential for yielding unbiased estimates of the average causal effects for target populations, it is also useful for researchers and policymakers to know which groups of individuals are unlikely to comply with treatment. 
 
-Further research might explore models to more accurately predict compliance in RCTs.  Accurately predicting compliance is not only essential for yielding unbiased estimates of the average causal effects for target populations, it is also useful for researchers and policymakers to know which groups of individuals are unlikely to comply with treatment. 
+In the OHIE trial, only about $30\%$ of those selected to receive Medicaid benefits actually enrolled. Our compliance ensemble accurately classified compliance status for 77\% of treated RCT participants using only the pretreatment covariates as features. While we don't know how well the compliance ensemble predicts for the control group, the control group should be similar to the treatment group on pretreatment covariates because of the RCT randomization. The model's performance on the training set suggests that compliance is not purely random and depends on observed covariates. This gives evidence in favor of using the proposed estimator. 
+
 
 In our empirical application, the sample population differs in several dimensions from the target population of individuals who will be covered by other Medicaid expansions, such as the ACA expansion to cover all adults up to 138\% of the FPL. For instance, the RCT participants are disproportionately white urban--dwellers \citep{Taubman}. The RCT participants volunteered for the study and therefore may be in poorer health compared to the target population. These differences in baseline covariates make {\color{red}reweighting or response surface methods} necessary to extend the RCT results to the population.
 
-Explicitly modeling compliance allows us to decompose SATT-C and PATT-C estimates by subgroup according to pretreatment covariates common to both RCT and observational datasets{\color{red}; e.g, demographic variables, pre--existing conditions, and insurance coverage}. We find substantial differences between sample and population estimates in terms of race, education, and health status subgroups. This pattern is expected because RCT participants volunteered for the study and are predominately white and educated.
+Explicitly modeling compliance allows us to decompose population estimates by subgroup according to pretreatment covariates common to both RCT and observational datasets{\color{red}; e.g, demographic variables, pre--existing conditions, and insurance coverage}. We find substantial differences between sample and population estimates in terms of race, education, and health status subgroups. This pattern is expected because RCT participants volunteered for the study and are predominately white and educated.
 
 \pagebreak
 
@@ -609,7 +578,7 @@ Explicitly modeling compliance allows us to decompose SATT-C and PATT-C estimate
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_ratec_ratet}
-		\caption{Simulated RMSE, binned by compliance rate and percent eligible for treatment. \label{fig:rmse_ratec_ratet}}
+		\caption{Simulated RMSE, binned by compliance rate and treatment rate. \label{fig:rmse_ratec_ratet}}
 		%\caption{\label{fig:rmse_ratec_ratet}}
 	\end{center}
 \end{figure}
@@ -617,21 +586,50 @@ Explicitly modeling compliance allows us to decompose SATT-C and PATT-C estimate
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConC}
-		\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to degree of confounding in compliance.\label{fig:rmse_boxplots_RateConC}}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATE, according to degree of confounding in compliance.\label{fig:rmse_boxplots_RateConC}}
 	\end{center}
 \end{figure}
 
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConT}
-		\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to degree of confounding in treatment assignment.\label{fig:rmse_boxplots_RateConT}}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATE, according to degree of confounding in treatment assignment.\label{fig:rmse_boxplots_RateConT}}
 	\end{center}
 \end{figure}
 
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConS}
-		\caption{Simulated RMSE of PATT-C, PATT, and SATT-C, according to degree of confounding in sample selection.\label{fig:rmse_boxplots_RateConS}}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATE, according to degree of confounding in sample selection.\label{fig:rmse_boxplots_RateConS}}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width = 0.9\textwidth]{any-visit-plot}
+		\caption{Heterogeneity in sample and population treatment effect estimates: any ER visit. Horizontal lines represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.\label{fig:any-visit-plot}}
+		%\caption{\label{fig:any-visit-plot}}
+	\end{center}
+\end{figure}
+
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width = 0.9\textwidth]{num-visit-plot}
+		\caption{Heterogeneity in sample and population treatment effect estimates: $\#$ ER visits.\label{fig:num-visit-plot}}
+		%\vspace{10mm}
+		%\caption{\label{fig:num-visit-plot}}
+		%\vspace{10mm}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width = 0.9\textwidth]{num-out-plot}
+		\caption{Heterogeneity in sample and population treatment effect estimates: $\#$ outpatient visits.\label{fig:num-out-plot}}
+		%\vspace{10mm}
+		%\caption{\label{fig:num-out-plot}}
+		%\vspace{10mm}
 	\end{center}
 \end{figure}
 
@@ -646,18 +644,6 @@ Explicitly modeling compliance allows us to decompose SATT-C and PATT-C estimate
 		n         & 16,456    & 6,749     & 23,205 \\ \bottomrule
 	\end{tabular}
 	\end{center}
-\end{table}
-
-\begin{table}[h]
-	\caption{Comparison of population and sample estimates.\label{compliance-compare}} 
-	\begin{tabular}{@{}llll@{}}
-		\toprule
-		\backslashbox{Estimator}{Outcome} 				& Any ER visit 	& $\#$ ER visits   & $\#$ outpatient visits      \\ \midrule
-		PATT-C                                           & 0.01 [0.01, 0.02]   & 0.0005 [0.0001, 0.0008]	& 0.002 [0.002, 0.002] \\
-		PATT                                             & 0.01 [0.01, 0.02]   & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
-		SATE                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.04, 0.06]	& -0.02 [-0.19, 0.15]  \\ \bottomrule
-	\end{tabular}\\
-\footnotesize{Notes: SATE is the ITT effect adjusted by the sample compliance rate in the RCT. Estimates in brackets represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.}
 \end{table}
 
 % complier-mod
@@ -690,36 +676,52 @@ Ridge regression (\texttt{glmnet}) & 0.22  & 0.001 & 0.21 & 0.23 \\
     \midrule
  Algorithm &  MSE & Weight \\ 
   \hline
-Adaboost (\texttt{gbm})  & 0.18 & 0 \\ 
-Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
-Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.18 & 0.55  \\ 
-Lasso regression (\texttt{glmnet})  & 0.18 & 0 \\ 
-Logic regression (\texttt{LogicReg})  & 0.18 & 0 \\ 
+Lasso regression (\texttt{glmnet})  & 0.18 & 1 \\ 
 Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
-Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.25 & 0 \\ 
-Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0.45 \\ 
-Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\ 
+Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.24 & 0 \\ 
+Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.19 & 0 \\ 
+Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.19 & 0 \\ 
+Regularized logistic regression, $\alpha=0.75$ (\texttt{glmnet})  & 0.19 & 0 \\ 
+Ridge regression (\texttt{glmnet})  & 0.18 & 0 \\ 
    \hline
   \end{tabularx}
   \begin{tabularx}{\linewidth}{l*{3}{Y}}
     \toprule
-    \multicolumn{3}{l}{\textbf{Any outpatient visit}} \\
+    \multicolumn{3}{l}{\textbf{$\#$ ER visits}} \\
     \midrule
 Algorithm  & MSE & Weight \\ 
 \hline
-Adaboost (\texttt{gbm})  & 0.24 & 0.52 \\ 
-Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0.06 \\ 
-Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.24 & 0  \\ 
-Lasso regression (\texttt{glmnet})  & 0.24 & 0 \\ 
-Logic regression (\texttt{LogicReg})  & 0.24 & 0 \\ 
-Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.39 & 0.42 \\ 
-Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.33 & 0 \\ 
-Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.24 & 0 \\ 
-Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.24 & 0 \\ 
+Additive regression, $\text{degree} = 3$ (\texttt{gam})  & 0.95 & 0 \\ 
+Additive regression, $\text{degree} = 4$ (\texttt{gam})  & 0.95 & 0 \\ 
+Lasso regression (\texttt{glmnet})  & 0.95 & 0.92 \\ 
+Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.95 & 0 \\ 
+Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.99 & 0.08 \\ 
+Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.95 & 0 \\ 
+Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.95 & 0 \\ 
+Regularized linear regression, $\alpha=0.75$ (\texttt{glmnet})  & 0.95 & 0 \\ 
+Ridge regression (\texttt{glmnet})  & 0.18 & 0 \\ 
    \hline
     \bottomrule
   \end{tabularx}
-\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner ensemble. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. Weights are rounded so that they sum to 1. \textsf{R} package used for implementing each algorithm in parentheses. $\# preds.$ is the number of predictors randomly sampled as candidates in each decision tree in random forests algorithm. $\alpha$ is a parameter that mixes L1 and L2 norms.}}
+  \begin{tabularx}{\linewidth}{l*{3}{Y}}
+	\toprule
+	\multicolumn{3}{l}{\textbf{$\#$ outpatient visits}} \\
+	\midrule
+	Algorithm  & MSE & Weight \\ 
+	\hline
+	Additive regression, $\text{degree} = 3$ (\texttt{gam})  & 8.40 & 0 \\ 
+	Additive regression, $\text{degree} = 4$ (\texttt{gam})  & 8.40 & 0 \\ 
+	Lasso regression (\texttt{glmnet})  & 8.38 & 0 \\ 
+	Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 8.38 & 0 \\ 
+	Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 8.79 & 0.02 \\ 
+	Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 8.38 & 0 \\ 
+	Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 8.38 & 0 \\ 
+	Regularized linear regression, $\alpha=0.75$ (\texttt{glmnet})  & 8.38 & 0.92 \\ 
+	Ridge regression (\texttt{glmnet})  & 8.38 & 0 \\ 
+	\hline
+	\bottomrule
+\end{tabularx}
+\footnotesize{{\color{red}Notes: cross-validated error and weights used for each algorithm in super learner ensemble. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. Weights are rounded so that they sum to 1. \textsf{R} package used for implementing each algorithm in parentheses. $\# preds.$ is the number of predictors randomly sampled as candidates in each decision tree in random forests algorithm. $\alpha$ is a parameter that mixes L1 and L2 norms. $\text{degree}$ is the smoothing term for smoothing splines.}}
 \end{table}
 
 \pagebreak
@@ -732,33 +734,47 @@ Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.24 & 0 \\
 	\midrule
 	Algorithm &  MSE & Weight \\ 
 	\hline
-Adaboost (\texttt{gbm})  & 0.18 & 0 \\ 
-Extreme gradient boosting (\texttt{XGBoost})  & 0.19 & 0 \\ 
-Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.18 & 0  \\ 
-Lasso regression (\texttt{glmnet})  & 0.18 & 0.18 \\ 
-Logic regression (\texttt{LogicReg})  & 0.18 & 0.68 \\ 
-Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
-Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.24 & 0 \\ 
-Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0.14 \\ 
-Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\  
-Ridge regression  (\texttt{glmnet})  & 0.25 & 0 \\  
+	Lasso regression (\texttt{glmnet})  & 0.18 & 0.96 \\ 
+	Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
+	Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.24 & 0.04 \\ 
+	Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0 \\ 
+	Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\ 
+	Regularized logistic regression, $\alpha=0.75$ (\texttt{glmnet})  & 0.18 & 0 \\ 
 	\hline
 \end{tabularx}
 \begin{tabularx}{\linewidth}{l*{3}{Y}}
 	\toprule
-	\multicolumn{3}{l}{\textbf{Any outpatient visit}} \\
+	\multicolumn{3}{l}{\textbf{$\#$ ER visits}} \\
 	\midrule
 	Algorithm  & MSE & Weight \\ 
 	\hline
-Adaboost (\texttt{gbm})  & 0.23 & 0 \\ 
-Extreme gradient boosting (\texttt{XGBoost})  & 0.24 & 0 \\ 
-Gradient boosting, Bernoulli dist.  (\texttt{gbm}) & 0.23 & 0  \\ 
-Lasso regression (\texttt{glmnet})  & 0.23 & 0.74 \\ 
-Logic regression (\texttt{LogicReg})  & 0.23 & 0 \\ 
-Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.39 & 0.25 \\ 
-Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.32 & 0.01 \\ 
-Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.23 & 0 \\ 
-Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.23 & 0 \\  
+	Additive regression, $\text{degree} = 3$ (\texttt{gam})  & 0.94 & 0 \\ 
+	Additive regression, $\text{degree} = 4$ (\texttt{gam})  & 0.94 & 0 \\ 
+	Lasso regression (\texttt{glmnet})  & 0.93 & 0.88 \\ 
+	Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.93 & 0 \\ 
+	Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.97 & 0.11 \\ 
+	Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.93 & 0 \\ 
+	Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.93 & 0 \\ 
+	Regularized linear regression, $\alpha=0.75$ (\texttt{glmnet})  & 0.93 & 0 \\ 
+	Ridge regression (\texttt{glmnet})  & 0.93 & 0 \\ 
+	\hline
+	\bottomrule
+\end{tabularx}
+\begin{tabularx}{\linewidth}{l*{3}{Y}}
+	\toprule
+	\multicolumn{3}{l}{\textbf{$\#$ outpatient visits}} \\
+	\midrule
+	Algorithm  & MSE & Weight \\ 
+	\hline
+	Additive regression, $\text{degree} = 3$ (\texttt{gam})  & 8.42 & 0 \\ 
+	Additive regression, $\text{degree} = 4$ (\texttt{gam})  & 8.42 & 0 \\ 
+	Lasso regression (\texttt{glmnet})  & 8.41 & 0 \\ 
+	Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 8.41 & 0.99 \\ 
+	Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 8.79 & 0.01 \\ 
+	Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 8.41 & 0 \\ 
+	Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 8.41 & 0 \\ 
+	Regularized linear regression, $\alpha=0.75$ (\texttt{glmnet})  & 8.41 & 0 \\ 
+	Ridge regression (\texttt{glmnet})  & 8.41 & 0 \\ 
 	\hline
 	\bottomrule
 \end{tabularx}
