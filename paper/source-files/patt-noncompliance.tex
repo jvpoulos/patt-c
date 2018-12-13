@@ -530,15 +530,15 @@ We compare PATT-C and PATT estimates for ER and outpatient use. We obtain estima
 	\begin{tabular}{@{}llll@{}}
 		\toprule
 		\backslashbox{Estimator}{Outcome} 				& Any ER visit 	& $\#$ ER visits   & $\#$ outpatient visits      \\ \midrule
-		PATT-C                                           & 0.01 [0.01, 0.02]   & 0.0005 [0.0001, 0.0008]	& 0.002 [0.002, 0.002] \\
-		PATT                                             & 0.01 [0.01, 0.02]   & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
-		SATE                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.04, 0.06]	& -0.02 [-0.19, 0.15]  \\ \bottomrule
+		PATT-C                                           & 0.0001 [0.0001, 0.0001]   & 0.0005 [0.0002, 0.0008]	& 0.002 [0.002, 0.002] \\
+		PATT                                             & 0.0006 [0.0005, 0.0007]   & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
+		SATE                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.05, 0.06]	& -0.02 [-0.19, 0.14]  \\ \bottomrule
 	\end{tabular}\\
 	\footnotesize{Notes: SATE is the ITT effect adjusted by the sample compliance rate in the RCT. Estimates in brackets represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.}
 \end{table}
 
 {\color{red}
-Figures \ref{fig:any-visit-plot}, \ref{fig:num-visit-plot}, and \ref{fig:num-out-plot} examine heterogeneous treatment effect estimates on ER and outpatient use in the sample and population. While our study is the first to our knowledge to estimate heterogeniety in treatment effects for the target population, \citet{Taubman} and \citet{NBERw22363} perform subgroup analyses on the RCT sample. Similar to our PATT-C estimates, \possessivecite{Taubman} subgroup analyses indicate that increases in ER use due to Medicaid are significantly larger for younger individuals and those with high school-level education.%\citet{NBERw22363} perform subgroup analyses on OHIE sample data and find larger increases in ER use as a result of Medicaid for men, English speakers, and individuals enrolled in a food stamp program prior to the lottery. 
+Figures \ref{fig:any-visit-plot}, \ref{fig:num-visit-plot}, and \ref{fig:num-out-plot} examine heterogeneous treatment effect estimates on ER and outpatient use in the population. While our study is the first to our knowledge to estimate heterogeniety in treatment effects for the target population, \citet{Taubman} and \citet{NBERw22363} perform subgroup analyses on the RCT sample. Similar to our PATT-C estimates, \possessivecite{Taubman} subgroup analyses indicate that increases in ER use due to Medicaid are significantly larger for younger individuals and those with high school-level education.\footnote{\citet{NBERw22363} perform subgroup analyses on OHIE sample data and find larger increases in ER use as a result of Medicaid for men, English speakers, and individuals enrolled in a food stamp program prior to the lottery.}
 }
 \section{Discussion} \label{discussion}
 
@@ -616,7 +616,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 0.9\textwidth]{num-visit-plot}
-		\caption{Heterogeneity in sample and population treatment effect estimates: $\#$ ER visits.\label{fig:num-visit-plot}}
+		\caption{Heterogeneity in population treatment effect estimates: $\#$ ER visits.\label{fig:num-visit-plot}}
 		%\vspace{10mm}
 		%\caption{\label{fig:num-visit-plot}}
 		%\vspace{10mm}
@@ -626,7 +626,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 0.9\textwidth]{num-out-plot}
-		\caption{Heterogeneity in sample and population treatment effect estimates: $\#$ outpatient visits.\label{fig:num-out-plot}}
+		\caption{Heterogeneity in population treatment effect estimates: $\#$ outpatient visits.\label{fig:num-out-plot}}
 		%\vspace{10mm}
 		%\caption{\label{fig:num-out-plot}}
 		%\vspace{10mm}
@@ -644,6 +644,20 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 		n         & 16,456    & 6,749     & 23,205 \\ \bottomrule
 	\end{tabular}
 	\end{center}
+\end{table}
+
+\begin{table}[h]
+	\begin{center}
+		\caption{Placebo test results comparing the mean outcomes of RCT compliers and adjusted population ``compliers''.\label{placebo}} 
+	\begin{tabular}{@{}lllll@{}}
+		\toprule
+		Outcome                & RCT complier mean & Adjusted pop. ``complier" mean & Difference & $p$-value \\ \midrule
+		Any ER visit           & 0.25              & 0.25                           & 0.0001     & 0.97    \\
+		$\#$ ER vists          & 0.45              & 0.45                           & 0.002      & 0.85    \\
+		$\#$ outpatient visits & 1.90              & 1.94                           & -0.03      & 0.26    \\ \bottomrule
+	\end{tabular}
+\end{center}
+\footnotesize{Notes: $p$-values for difference-in-means calculated from two-sided t-test.}
 \end{table}
 
 % complier-mod

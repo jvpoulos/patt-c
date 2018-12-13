@@ -152,7 +152,8 @@ het.plot <- lapply(y.col, function (i) data.frame(x=factor(c(rep(cov.names,3)), 
                                                   ci.lower = conf.int[[i]][,1],
                                                   ci.upper = conf.int[[i]][,2]))
 for(i in y.col){
-  het.plot[[i]]$Estimator <- factor(het.plot[[i]]$Estimator, levels = c("PATT-C","PATT","SATE"))
+  het.plot[[i]] <- subset( het.plot[[i]], Estimator!="SATE") #rm sate
+  het.plot[[i]]$Estimator <- factor(het.plot[[i]]$Estimator, levels = c("PATT-C","PATT"))
   offset <- c("   ") 
   het.plot[[i]]$x <- paste(offset,het.plot[[i]]$x) # make offset in x var name
   
@@ -169,13 +170,13 @@ for(i in y.col){
                         #           "    ",
                                    "Education:",
                         #           "    ",
-                                   "Income:"),3), 
+                                   "Income:"),2), 
 #                           order=c(.5,1.1,1.5,2.1,2.5,4.1,4.5,7.1,7.5,11.1,11.5,15.1,15.5,
 #                                   18.5,19.1,19.5,20.1,20.5,22.1,22.5,25.1,25.5,29.1,29.5,33.1,33.5,
 #                                   36.5,37.1,37.5,38.1,38.5,40.1,40.5,43.1,43.5,47.1,47.5,51.1,51.5), 
                           order=c(.5,1.5,2.5,4.5,7.5,11.5,15.5,
-                                  18.5,19.5,20.5,22.5,25.5,29.5,33.5,
-                                  36.5,37.5,38.5,40.5,43.5,47.5,51.5), 
+                                  18.5,19.5,20.5,22.5,25.5,29.5,33.5),
+                             #     36.5,37.5,38.5,40.5,43.5,47.5,51.5), 
                           y=NA,
                           Group=NA,
                           Estimator=NA,
@@ -200,9 +201,9 @@ ThemeBw1 <- function(base_size = 11, base_family = "") {
 }
 
 het.plot.all <- lapply(y.col, function (i) 
-  ggplot(het.plot[[i]], aes(x=x, y=y, ymin = ci.lower, ymax = ci.upper, colour=Estimator)) +
+  ggplot(het.plot[[i]][], aes(x=x, y=y, ymin = ci.lower, ymax = ci.upper, colour=Estimator)) +
     geom_pointrange(size=1, alpha=0.8) +
-    scale_colour_manual(values=c("red","blue","green"), breaks=levels(het.plot[[i]]$Estimator)) + # change colors for estimators
+    scale_colour_manual(values=c("red","blue"), breaks=levels(het.plot[[i]]$Estimator)) + # change colors for estimators
     coord_flip() +
     geom_line() +
    geom_hline(aes(x=0,yintercept=0), lty=2) +
