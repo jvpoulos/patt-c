@@ -20,25 +20,23 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1}Identifying assumptions}{3}{subsection.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.1}Notation}{3}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Conditioning on $D_i$}{3}{subsubsection.2.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{\numberline {2.1.1.1}Conditioning on $D_i$}{3}{paragraph.2.1.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}$Y$ subscripts}{3}{subsubsection.2.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{\numberline {2.1.1.2}$Y$ subscripts}{4}{paragraph.2.1.1.2}
+\contentsline {subsubsection}{\numberline {2.1.3}$W_i$}{4}{subsubsection.2.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{\numberline {2.1.1.3}$W_i$}{4}{paragraph.2.1.1.3}
+\contentsline {subsubsection}{\numberline {2.1.4}Assumption \ref {compl}}{4}{subsubsection.2.1.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.2}Assumption \ref {compl}}{4}{subsubsection.2.1.2}
+\contentsline {subsubsection}{\numberline {2.1.5}Placebo test}{4}{subsubsection.2.1.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.3}Placebo test}{4}{subsubsection.2.1.3}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.4}Violation of no defiers assumption}{5}{subsubsection.2.1.4}
+\contentsline {subsubsection}{\numberline {2.1.6}Violation of no defiers assumption}{5}{subsubsection.2.1.6}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.2}Prediction threshold and modeling assumptions}{5}{subsection.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3}Interpretation of estimator}{5}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.3}Interpretation of PATT}{5}{subsection.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4}Relationship to AIR approach}{6}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.4}Relationship to AIR approach}{5}{subsection.2.4}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3}Reviewer: 3 (R3)}{6}{section.3}
 \defcounter {refsection}{0}\relax 
@@ -46,7 +44,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.2}Abstract}{6}{subsection.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}DAG}{7}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.3}DAG}{6}{subsection.3.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.4}Clarification re: proof}{7}{subsection.3.4}
 \defcounter {refsection}{0}\relax 

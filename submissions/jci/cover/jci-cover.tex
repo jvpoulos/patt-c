@@ -1,10 +1,18 @@
-\documentclass[10pt,stdletter,dateno]{newlfm}
+\documentclass[11pt,stdletter,dateno]{newlfm}
 \usepackage{kpfonts}
-\usepackage{url}
+\usepackage{url,hyperref}
+
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\@zfancyhead}{\fancy@reset}{\f@nch@reset}{}{}
+\patchcmd{\@set@em@up}{\f@ncyolh}{\f@nch@olh}{}{}
+\patchcmd{\@set@em@up}{\f@ncyolh}{\f@nch@olh}{}{}
+\patchcmd{\@set@em@up}{\f@ncyorh}{\f@nch@orh}{}{}
+\makeatother
 
 \widowpenalty=1000
 \clubpenalty=1000
-
 \newlfmP{headermarginskip=20pt}
 \newlfmP{sigsize=20pt}
 \newlfmP{dateskipafter=20pt}
@@ -34,9 +42,11 @@
 \begin{document}
 \begin{newlfm}
 
-I am writing to submit our manuscript entitled, ``Estimating population average treatment effects from experiments with noncompliance" for consideration for publication as a research article in \textit{JCI}. 
+I am writing to re-submit our manuscript entitled, ``Estimating population average treatment effects from experiments with noncompliance" for consideration for publication as a research article in \textit{JCI}. 
 
-The manuscript extends a method of estimating population average treatment effects from RCTs in settings with noncompliance. It has been submitted solely to this journal and is not published, in press, or submitted elsewhere.
+The manuscript has been improved considerably with the help of the reviewers. This paper makes an original contribution to the literature on extrapolating clinical trial results to populations to deal with noncompliance. 
+
+It has been submitted solely to this journal and is not published, in press, or submitted elsewhere.
 
 Thank you for receiving the manuscript and considering it for review. 
 

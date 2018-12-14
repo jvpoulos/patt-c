@@ -91,15 +91,15 @@
 
 %Perhaps the solution here is to expand the set of simulations to be more of an experimental design themselves, by varying the parameters that determine the degree of confounding with sample selection, confounding with the treatment assignment, and confounding with compliance.  Your current design can handle this I believe – you just need to expand the set of parameters considered in your models on p. 8.  Otherwise the simulation results would suggest to me that I shouldn’t use the PATT approach unless my compliance rate is high, which is presumably the opposite of what the authors are trying to suggest.
 
-Following R1's excellent suggestion, we expand the set of simulations to be more of an experimental design themselves, by varying the parameters that determine the degree of confounding with sample selection, confounding with treatment assignment, and confounding with compliance. In addition, we made the following changes to the simulations:
+Following R1's excellent suggestion, we expand the set of simulations to follow more of an experimental design, by varying the parameters that determine the degree of confounding with sample selection, confounding with treatment assignment, and confounding with compliance. In addition, we made the following changes to the simulations:
 
 \begin{itemize}
-	\item Compare the PATT and complier-adjusted PATT (PATT-C) estimators against the SATE, which is just the ITT effect scaled by the compliance rate, since the SATE is a more commonly used estimator
+	\item Compare the PATT and PATT-C estimators against the SATE, which is just the ITT effect scaled by the compliance rate, since the SATE is a more appropriate benchmark
 	\item Use gradient boosting to predict compliance rate in the RCT and to predict the potential outcomes of observed and predicted RCT compliers
 	\item Vary the $e_k$, $k = \{1...6\}$ parameters along a grid of five standard normal deviates
 \end{itemize}
 
-In the new simulations, we find that the estimation error of PATT-C is invariant to increases in the compliance rate and also increases in the three dimensions of confounding. In comparison, SATE performs worse when the compliance rate is low, and is also considerably more variable than both of the population estimators due to the fact that SATE is unable to account for differences in pretreatment covariates between the RCT sample and target population.
+In the new simulations, we find that the estimation error of PATT-C is invariant to increases in the compliance rate. In comparison, SATE performs worse when the compliance rate is low, and is also considerably more variable than both of the population estimators due to the fact that SATE is unable to account for differences in pretreatment covariates between the RCT sample and target population.
 
 \subsection{Presentation}
 
@@ -129,32 +129,30 @@ R1 suggests providing more context for interpreting whether the subgroup analyse
 
 %Finally, it seems that the results in Figures 4 and 5 contradict the wording on the next to last paragraph of the paper (p. 19) – the figures suggest that the PATT estimates suggest an increase in ER visits and a decrease in outpatient visits, whereas the text states the opposite.
 
-In addition, R1 points out that in the Discussion (Section \ref{discussion}) of the original manuscript, the direction of the PATT estimates on ER and outpatient visits are incorrectly described. The revision removes this description as it is not relevant to the discussion on subgroup analyses. 
+In addition, R1 points out that in the Discussion of the original manuscript, the direction of the PATT estimates on ER and outpatient visits are incorrectly described. The revision removes this description as it is not relevant to the discussion on subgroup analyses. 
 
 \section{Reviewer: 2 (R2)}
 
 \subsection{Identifying assumptions}
 
-\subsubsection{Notation}
-
-\paragraph{Conditioning on $D_i$}
+\subsubsection{Conditioning on $D_i$}
 %On line 38 of page 3, the authors reference Assumptions (1) - (4), which are made in Hartman et al. (2015). In the appendix, these assumptions frame the ignorability assumptions conditional on T = 1 and C = 1. I’m curious why these assumptions are not made on D = 1 (which is, I assume, the only thing we can observe in the population), and then later combined with the no-defiers assumption. This would be more consistent with the Hartman et al. (2015) framing, which discusses the need for treatment to mean the same thing in both the experiment and population–so if PATT is defined by receipt of treatment, their counter part would be those who receive treatment in the experiment.
 
-R2 suggests framing the ignorability Assumptions \ref{si_treat} and \ref{si_ctrl} on $D_i$ rather than $T_i$ and $C_i$ to be more consistent with the framing of \citet{Hartman} and to ensure that treatment means the same thing in both the experiment and the population. The reason we decided to frame the ignorability assumptions conditional on $T_i$ and $C_i$ is to distinguish between noncompliers who should have received treatment (i.e., individuals with $T_i=1$ and $D_i = 0$) from noncompliers assigned to control; i.e., individuals with $T_i = 0$ and $D_i = 0$. Conditioning on $T_i$ and $C_i$ is important for deriving the estimator for $\tau_{\text{PATT}}$ (Eq. \ref{tpatt-est}). 
+R2 suggests framing the ignorability Assumptions \ref{si_treat} and \ref{si_ctrl} on $D_i$ rather than $T_i$ and $C_i$ to be more consistent with the framing of \citet{Hartman} and to ensure that treatment means the same thing in both the experiment and the population. The reason we decided to frame the ignorability assumptions conditional on $T_i$ and $C_i$ is to distinguish between noncompliers who should have received treatment (i.e., individuals with $T_i=1$ and $D_i = 0$) from noncompliers assigned to control; i.e., individuals with $T_i = 0$ and $D_i = 0$. Conditioning on $T_i$ and $C_i$ is important for deriving the estimator for $\tau_{\text{PATT-C}}$ (Eq. \ref{tpatt-est}). 
 
 We have made more clear our motivation for conditioning on  $T_i$ and $C_i$ when introducing notation in Section \ref{assumptions} in the revised manuscript. 
 
-\paragraph{$Y$ subscripts}
+\subsubsection{$Y$ subscripts}
 %The consistency under parallel assumption–in Hartman et al. (2015), this is defined on Yist, but in this case I’m curious if it would be more appropriate to define it based on d? If the compliance patterns/decision might differ in the RCT vs. the population, the potential outcomes might differ based on treatment assign- ment, but I could see an argument that they shouldn’t differ based on receipt of treatment. If this is incorrect, I’d like to see the authors discuss why compliance status isn’t a factor in this assumption.
 
 R2 is correct that it would be more appropriate to define $Y$ based on $d$ rather than $t$. As described in the comment \ref{interpret} below, the original manuscript confused treatment eligibility $T_i$ with treatment received $D_i$. Our estimation procedure relies on fitting a response curve to $D_i$ in the RCT, since we cannot actually observe $T_i$ in the population. We have revised the manuscript accordingly. 
 
-\paragraph{$W_i$} \label{Wi}
+\subsubsection{$W_i$} \label{Wi}
 %The authors use the same W for all of their assumptions. It seems to be that the set of covariates that predict compliance could be different than those that predict sample selection, and the sets necessary for identification in those steps could be (possibly very) different. It seems that notational ease might be the reason to use the same W across all assumptions, but I’d like to see the authors at least discuss how these processes relate, and how we’d consider the different sets.
 
 With regards to our use of the same $W_i$ across all assumptions, here we are implicitly assuming that the covariates that determine sample selection also determine population treatment assignment and complier status. This is useful not only for notational ease but also reflects our modeling assumption that $W_i$ is the same. In the revised manuscript, we discuss this choice in Sections \ref{assumptions} and \ref{modeling-assumptions}. 
 
-Moreover, in Section \label{ensemble} of the revised manuscript we describe the need for using candidate learners with built-in variable selection methods, such as the Lasso, in the compliance and response model ensembles. The idea is that we input the same $W_i$ and each candidate learner selects the most important covariates for predicting complier status or potential outcomes. 
+Moreover, in Section \ref{ensemble} of the revised manuscript we describe the need for using candidate learners with built-in variable selection methods, such as the lasso, in the compliance and response model ensembles. The idea is that we input the same $W_i$ and each candidate learner selects the most important covariates for predicting complier status or potential outcomes. 
 
 \subsubsection{Assumption \ref{compl}}
 
@@ -166,7 +164,7 @@ R2 is correct that while Assumption \ref{compl} conditions on $W$, we use propen
 
 We've included in the revised manuscript when stating Assumption \ref{compl} a justification for conditioning on $W$ and it's usefulness in the estimation strategy.
 
-R2 is right in pointing out that the original manuscript doesn't make clear where the assumption is used in the proof. The revised manuscript makes clear -- as suggested by R2 -- that the last line of the proof follows because \ref{compliance-model} allows us to use ``complier controls''. 
+R2 is right in pointing out that the original manuscript doesn't make clear where the assumption is used in the proof. The revised manuscript makes clear -- as suggested by R2 -- that the last line of the proof follows because \ref{compliance-model} allows us to use ``complier controls.'' 
 
 \subsubsection{Placebo test}
 %In Hartman et al. (2015) there is discussion of a placebo test that can be conducted to provide evidence supporting the identifying assumptions. The test doesn’t go thorough here because the complier treatment and complier controls aren’t exchangeable by design, since we need to assume we know the complier model. Stuart et al (2011) also have a placebo test in their identification stragegy. These tests are incredibly valuable for helping evaluate the identification assumptions. Have the authors considered finding ways to conduct placebo tests in this design? If it is possible, I think it would strengthen the argument quite a bit. The test isn’t straightforward to me, but the authors are more immersed in this identification strategy and might be able to come up with something clever.
@@ -179,7 +177,7 @@ However, we are able to compare the observed responses of RCT compliers and the 
 
 % In the application, I like the authors discussion of the assumptions. This is a great example of how researchers should approach these problems. However, the authors note that the defiers assumption is violated–and they do not discuss how this could impact our findings. I’d like to see more discussion of how to consider violations in this framework. Are there sensitivity analyses we can run? Are there principled ways to think about the impact?
 
-R2 justifiably asks for more discussion regarding how the violation of Assumption \ref{monotonicity} would impact our empirical findings. Section \label{sens-defiers} discusses two sources of bias arising from the presence of defiers: the proportion of defiers in the study and the difference in the average causal effects of treatment received for compliers and defiers. 
+R2 justifiably asks for more discussion regarding how the violation of Assumption \ref{monotonicity} would impact our empirical findings. Section \ref{sens-defiers} discusses two sources of bias arising from the presence of defiers: the proportion of defiers in the study and the difference in the average causal effects of treatment received for compliers and defiers. 
 
 In the OHIE, the proportion of defiers is relatively small. We argue that the difference in average causal effects of treatment received for compliers and defiers would have to be considerably large in order for the bias to meaningfully alter the interpretation of the empirical results. 
 
@@ -192,15 +190,13 @@ We use a standard prediction threshold of 50\% to classify compliers, so that co
 
 We describe the prediction threshold and discuss additional modeling assumptions in Section \ref{modeling-assumptions} of the revised manuscript. 
 
-\subsection{Interpretation of estimator}\label{interpret}
+\subsection{Interpretation of PATT}\label{interpret}
 
 %In the simulations, the authors refer to Hartman et al.’s (2015) estimator when discussing the unadjusted PATT estimator. I feel this is an inappropriate comparison–in the face of non-compliance the assumptions in Hartman et al. (2015) wouldn’t be met–thus the need for this extension. I’m not sure exactly how to interpret what this estimator is estimating–the ITT in the experiment extrapolated to those who receive treatment in the population? Or is it the ITT effect in the population–which would imply weighting to the individuals who were eligible for treatment in the population? But, if noncompliance is an issue, wouldn’t assumption (1) be violated for the non-complying individuals if we weighted the ITT to PATT? I’d like a little more discussion on how to think about the interpretation of this estimator.
 
-R2 raises concerns with regards to the interpretation of our proposed estimator (PATT-C). The correct interpretation for the estimator is the following: it's the complier-average causal effect estimated on population, adjusted to what we would have seen in the RCT if treatment received were the same. It is not the ITT extrapolated to those who receive treatment in the population. The revised manuscript clarifies this interpretation when defining PATT-C. 
+R2 is correct in stating that the comparison between PATT and the \citet{Hartman} estimator is not an appropriate comparison. The (unadjusted ) PATT estimator in our study is the population-average causal effect of taking up treatment, adjusted according to the covariate distribution of RCT participants. In contrast, the \citet{Hartman} estimator is the ITT estimator reweighted according the to covariate distribution of the population. We clarify the distinction in Section \ref{sim} of the revised manuscript. We have also corrected the manuscript and to make clear that the response curve is fitted to treatment received $D_i$ rather than treatment eligibility $T_i$, since we cannot actually observe $T_i$ in the population. 
 
-We believe that R2 is referring to the \citet{Hartman} estimator and wondering how to interpret this estimator \emph{if} there is in fact non-compliance. In this case, R2 is correct in stating that the \citet{Hartman} estimator is the ITT effect extrapolated those who take treatment in the population. 
-
-Confusion regarding the interpretation of our estimator likely results from the original manuscript mixing up treatment eligibility and treatment taken. We have corrected the manuscript and results such that the response curve is fitted to treatment received $D_i$ in the RCT rather than treatment eligibility, $T_i$, since we cannot actually observe $T_i$ in the population. 
+Assumption \ref{consistency} would indeed be violated if the \citet{Hartman} estimator were applied in a setting with noncompliance.
 
 \subsection{Relationship to AIR approach}\label{reweighting}
 %In estimation of ATE from the ITT in a randomized trial, we usually divide by the compliance rate under the assumptions outlined in Angrist, Imbens, and Rubin (1996) (particularly no defiers), but we aren’t required to actually identify individuals in the control group are actually compliers. The authors instead suggest actually identifying the likely compliers in the control group–a very different strategy that makes sense in the context of the reweighting methods to get from the sample to population effect. I am, first, curious if there is any way to reweight this effect in some way, rather than actually identify the compliers. Second, if not, I think it is worth discussing the relation to this approach, and why we need a different approach. Being able to identify compliers is, of course, a strong assumption, so it might be nice to consider if there were a way to leverage the typical complier effect in the experiment.

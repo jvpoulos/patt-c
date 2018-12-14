@@ -3536,8 +3536,10 @@
     <bcf:citekey order="9">Hartman</bcf:citekey>
     <bcf:citekey order="10">Hartman</bcf:citekey>
     <bcf:citekey order="11">Hartman</bcf:citekey>
-    <bcf:citekey order="12">stuart2011use</bcf:citekey>
-    <bcf:citekey order="13">stuart2011use</bcf:citekey>
+    <bcf:citekey order="12">Hartman</bcf:citekey>
+    <bcf:citekey order="13">Hartman</bcf:citekey>
+    <bcf:citekey order="14">stuart2011use</bcf:citekey>
+    <bcf:citekey order="15">stuart2011use</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="cms">
