@@ -74,7 +74,7 @@ setwd(paste0(repo.directory, "data/NHIS"))
 # choose what year of data to analyze
 # note: this can be changed to any year that has already been downloaded locally
 # by the "1963-2011 - download all microdata.R" program above
-# year <- 2008 #JP: set year outside script
+#  year <- 2015  #JP: set year outside script
 
 
 # construct the filepath (within the current working directory) to the three rda files
@@ -173,7 +173,7 @@ sa <- sa[ , !( names( sa ) %in% redundant.columns ) ]
 # at this point, the only overlap between the personsx and samadult files
 # should be the three merge.vars
 # throw an error if that's not true
-stopifnot( merge.vars == intersect( names( sa ) , names( x ) ) )
+stopifnot( merge.vars %in% intersect( names( sa ) , names( x ) ) )
 
 
 # remember that the samadult file contains a subset of the individuals in personsx
