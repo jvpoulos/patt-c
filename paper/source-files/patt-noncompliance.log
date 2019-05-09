@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2018.12.4)  6 MAR 2019 08:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2018.12.4)  8 MAY 2019 13:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1265,43 +1265,52 @@ File: DAG2.png Graphic file (type png)
 Package pdftex.def Info: DAG2.png  used on input line 207.
 (pdftex.def)             Requested size: 281.85587pt x 232.58867pt.
  [5] [6 <./DAG2.png (PNG copy)>] [7] [8] [9] [10]
+Overfull \hbox (1.97682pt too wide) in paragraph at lines 324--325
+\OT1/cmr/m/n/12 la-tion de-pend on mul-ti-vari-ate nor-mal co-vari-ates $(\OML/
+cmm/m/it/12 W[]; W[]; W[]; W[]\OT1/cmr/m/n/12 )$ with mean $(0\OML/cmm/m/it/12 
+:\OT1/cmr/m/n/12 5\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1\OML/cmm/m/it/12 ; \OMS/c
+msy/m/n/12 ^^@\OT1/cmr/m/n/12 1\OML/cmm/m/it/12 ; \OMS/cmsy/m/n/12 ^^@\OT1/cmr/
+m/n/12 1)$
+ []
+
 [11] [12] [13]
-<rmse_ratec_rates.png, id=299, 794.97pt x 614.295pt>
+<rmse_ratec_rates.png, id=297, 794.97pt x 614.295pt>
 File: rmse_ratec_rates.png Graphic file (type png)
 <use rmse_ratec_rates.png>
-Package pdftex.def Info: rmse_ratec_rates.png  used on input line 364.
+Package pdftex.def Info: rmse_ratec_rates.png  used on input line 368.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
  [14 <./rmse_ratec_rates.png (PNG copy)>]
-<rmse_boxplots_rateC.png, id=311, 794.97pt x 614.295pt>
+<rmse_boxplots_rateC.png, id=309, 794.97pt x 614.295pt>
 File: rmse_boxplots_rateC.png Graphic file (type png)
 <use rmse_boxplots_rateC.png>
-Package pdftex.def Info: rmse_boxplots_rateC.png  used on input line 376.
+Package pdftex.def Info: rmse_boxplots_rateC.png  used on input line 380.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
- [15 <./rmse_boxplots_rateC.png (PNG copy)>] [16] [17] [18] [19] [20] [21] [22]
- [23] [24] [25]
-<rmse_ratec_ratet.png, id=454, 794.97pt x 614.295pt>
+ [15] [16 <./rmse_boxplots_rateC.png (PNG copy)>] [17] [18] [19] [20] [21] [22]
+ [23] [24] [25] [26]
+<rmse_ratec_ratet.png, id=457, 794.97pt x 614.295pt>
 File: rmse_ratec_ratet.png Graphic file (type png)
 <use rmse_ratec_ratet.png>
-Package pdftex.def Info: rmse_ratec_ratet.png  used on input line 619.
+Package pdftex.def Info: rmse_ratec_ratet.png  used on input line 623.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConC.png, id=455, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConC.png, id=458, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConC.png Graphic file (type png)
 <use rmse_boxplots_RateConC.png>
-Package pdftex.def Info: rmse_boxplots_RateConC.png  used on input line 627.
+Package pdftex.def Info: rmse_boxplots_RateConC.png  used on input line 631.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConT.png, id=456, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConT.png, id=459, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConT.png Graphic file (type png)
 <use rmse_boxplots_RateConT.png>
-Package pdftex.def Info: rmse_boxplots_RateConT.png  used on input line 635.
+Package pdftex.def Info: rmse_boxplots_RateConT.png  used on input line 639.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
-<rmse_boxplots_RateConS.png, id=457, 794.97pt x 614.295pt>
+<rmse_boxplots_RateConS.png, id=460, 794.97pt x 614.295pt>
 File: rmse_boxplots_RateConS.png Graphic file (type png)
 <use rmse_boxplots_RateConS.png>
-Package pdftex.def Info: rmse_boxplots_RateConS.png  used on input line 643.
+Package pdftex.def Info: rmse_boxplots_RateConS.png  used on input line 647.
 (pdftex.def)             Requested size: 469.75502pt x 363.00267pt.
- [26 <./rmse_ratec_ratet.png (PNG copy)>] [27 <./rmse_boxplots_RateConC.png (PN
-G copy)>] [28 <./rmse_boxplots_RateConT.png (PNG copy)>] [29 <./rmse_boxplots_R
-ateConS.png (PNG copy)>]
+
+[27 <./rmse_ratec_ratet.png (PNG copy)>] [28 <./rmse_boxplots_RateConC.png (PNG
+ copy)>] [29 <./rmse_boxplots_RateConT.png (PNG copy)>] [30 <./rmse_boxplots_Ra
+teConS.png (PNG copy)>]
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: pdftex
 * paper: <default>
@@ -1335,70 +1344,67 @@ ateConS.png (PNG copy)>]
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-Overfull \hbox (40.24573pt too wide) in alignment at lines 651--680
+Overfull \hbox (40.24573pt too wide) in alignment at lines 655--684
  [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (40.24573pt too wide) in alignment at lines 680--711
+Overfull \hbox (40.24573pt too wide) in alignment at lines 684--715
  [] [] [] [] [] [] [] 
  []
-
-[30
-
-]
-Overfull \hbox (9.52663pt too wide) in paragraph at lines 746--754
-[][] 
- []
-
-<any-visit-plot.png, id=479, 377.7312pt x 416.2752pt>
-File: any-visit-plot.png Graphic file (type png)
-<use any-visit-plot.png>
-Package pdftex.def Info: any-visit-plot.png  used on input line 758.
-(pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
-<num-visit-plot.png, id=480, 377.7312pt x 416.2752pt>
-File: num-visit-plot.png Graphic file (type png)
-<use num-visit-plot.png>
-Package pdftex.def Info: num-visit-plot.png  used on input line 767.
-(pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
-<num-out-plot.png, id=481, 377.7312pt x 416.2752pt>
-File: num-out-plot.png Graphic file (type png)
-<use num-out-plot.png>
-Package pdftex.def Info: num-out-plot.png  used on input line 775.
-(pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
 
 [31
 
-] [32 <./any-visit-plot.png (PNG copy)>] [33 <./num-visit-plot.png (PNG copy)>]
- [34 <./num-out-plot.png (PNG copy)>]
+]
+Overfull \hbox (9.52663pt too wide) in paragraph at lines 750--758
+[][] 
+ []
+
+<any-visit-plot.png, id=482, 377.7312pt x 416.2752pt>
+File: any-visit-plot.png Graphic file (type png)
+<use any-visit-plot.png>
+Package pdftex.def Info: any-visit-plot.png  used on input line 762.
+(pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
+<num-visit-plot.png, id=483, 377.7312pt x 416.2752pt>
+File: num-visit-plot.png Graphic file (type png)
+<use num-visit-plot.png>
+Package pdftex.def Info: num-visit-plot.png  used on input line 771.
+(pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
+<num-out-plot.png, id=484, 377.7312pt x 416.2752pt>
+File: num-out-plot.png Graphic file (type png)
+<use num-out-plot.png>
+Package pdftex.def Info: num-out-plot.png  used on input line 779.
+(pdftex.def)             Requested size: 422.77664pt x 465.92651pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 919.
-[35] [36] [37]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 919.
+[32
+
+] [33 <./any-visit-plot.png (PNG copy)>] [34 <./num-visit-plot.png (PNG copy)>]
+ [35 <./num-out-plot.png (PNG copy)>]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 923.
+[36] [37] [38]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 923.
  (./patt-noncompliance.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 919.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 919.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 923.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 923.
 Package rerunfilecheck Info: File `patt-noncompliance.out' has not changed.
 (rerunfilecheck)             Checksum: 40EACF388E627C352CAFAE3A1EBDE928;1132.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 919.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 923.
  ) 
 Here is how much of TeX's memory you used:
- 30280 strings out of 492641
- 556918 string characters out of 6131787
- 666457 words of memory out of 5000000
- 33590 multiletter control sequences out of 15000+600000
+ 30282 strings out of 492641
+ 556932 string characters out of 6131787
+ 666495 words of memory out of 5000000
+ 33591 multiletter control sequences out of 15000+600000
  549499 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,17n,65p,1357b,519s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.16} has been referenced but does not ex
+ 62i,17n,65p,1357b,517s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Hfootnote.15} has been referenced but does not ex
 ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{Hfootnote.15} has been referenced but does not exis
-t, replaced by a fixed one
 
 pdfTeX warning (dest): name{Hfootnote.14} has been referenced but does not exis
 t, replaced by a fixed one
@@ -1461,10 +1467,10 @@ ist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
 lic/amsfonts/symbols/msbm10.pfb>
-Output written on patt-noncompliance.pdf (38 pages, 1759750 bytes).
+Output written on patt-noncompliance.pdf (39 pages, 1759797 bytes).
 PDF statistics:
- 610 PDF objects out of 1000 (max. 8388607)
- 527 compressed objects within 6 object streams
- 117 named destinations out of 1000 (max. 500000)
+ 613 PDF objects out of 1000 (max. 8388607)
+ 529 compressed objects within 6 object streams
+ 118 named destinations out of 1000 (max. 500000)
  207 words of extra memory for PDF output out of 10000 (max. 10000000)
 

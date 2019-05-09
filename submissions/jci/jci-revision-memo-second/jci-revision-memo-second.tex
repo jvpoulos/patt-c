@@ -1,0 +1,145 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[hidelinks,12pt,letterpaper]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+       
+% settings:
+%\author{Jason Poulos} % Define the authors
+
+%***% change title %***%
+%\title{Jason Poulos --- PS290} % Define the title
+%\pagestyle{headings} % Define the page style for page numbers and headings
+%\addtolength{\textheight}{1cm}
+%\makeindex
+
+%% Header
+%\usepackage{fancyhdr}
+%\thispagestyle{fancy}  %change to pagestyle for fancy on all pages
+%\fancyhf{} % delete current setting for header and footer
+%\fancyhead[L]{\textbf{Ms. No. XPS-D-16-00013}}
+%\fancyhead[C]{}
+%\fancyhead[R]{Revision Memo}
+%\renewcommand{\headrulewidth}{0.5pt}
+%\renewcommand{\footrulewidth}{0pt}
+%\addtolength{\headheight}{3pt} % make space for the rule
+%\fancypagestyle{plain}{%
+%       \fancyhead{} % get rid of headers on plain pages
+%       \renewcommand{\headrulewidth}{0pt} % and the line
+%}
+
+% Subsubsection
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% Margins
+\usepackage[margin=1in]{geometry} %1 inch margins
+
+%Spacing
+%\usepackage{setspace}
+%\doublespacing
+
+%indent and break
+\usepackage{parskip}
+\setlength{\parindent}{15pt}
+
+% Appendix
+\usepackage[page]{appendix}
+\usepackage{graphicx}
+\usepackage{longtable}
+
+% Etc
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+%New commands
+\newcommand{\possessivecite}[1]{\citeauthor{#1}'s [\citeyear{#1}]} 
+
+% Reference labels
+\usepackage{xr}
+\externaldocument{patt-noncompliance}
+
+% Table of contents
+\renewcommand*\contentsname{Revision memo:\\ ``Estimating population average treatment effects from experiments with noncompliance"\\ (DGJCI.2018.0011)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document} 
+
+\pagenumbering{roman}% Roman-numbered pages (start from i)
+
+\tableofcontents
+
+\pagebreak
+\pagenumbering{arabic}% Arabic-numbered pages (start from 1)
+
+\section{Editor's comments}
+
+\subsection{Definition of SATE}
+%1) I agree with the reviewer that what you call SATE should be referred to as the sample local average treatment effect among the compliers.
+
+Following R1's guidance, we now call this quantity the sample Complier Average Causal Effect (CACE) (see \ref{SATE-def} below). 
+
+\subsection{DAG}
+%2) The DAG in Figure 1 appears to encode ignorability assumptions that are not needed for Assumptions 1-5 to hold. For example, W alone blocks all the back-door paths from D to Y, implying that the average causal effect of D on Y can be identified by just conditioning on W (i.e. you can ignore RCT vs. observational and compliance status). This clearly does not make sense. I would therefore encourage you to replace it with another DAG that is as close as possible to a maximal DAG that still satisfies Assumptions 1-5. Specifically, can you add "confounding arcs" that are accommodated by Assumptions 1-5?
+
+\subsection{No defier assumption}
+%3) Page 6: The no defier assumption itself does not ensure one-sided crossover, since it still accommodates both never-takers and always-takers. On the other hand, the assumed missingness structure for C appears to presume one-sided compliance. So Assumption 6 should be either strengthened to the actual one-sided noncompliance assumption, or alternatively you could state the setup implicitly assumes one-sided noncompliance, which implies no defier, and Drop A6.
+
+\subsection{Assumption 7}
+%4) Assumption 7 appears misstated, since the third subscript of Y refers to the actual treatment (D) rather than assigned treatment (T). Under the framework of Angrist et al. Y_{i11} would be undefined for never-takers. I would suggest dropping A7 and simply state that the notation for the potential outcomes (i.e. the fact that it does not have T in the subscript) implicitly assumes the exclusion restriction.
+
+\subsection{Conceptualizing PATT-C}
+
+%5) I am having hard time conceptualizing "compliers" outside the context of an RCT, since whether someone complies to the treatment assignment crucially depends on the nature of the assignment. Specifically, how should one conceptualize PATT-C? Is the conditioning set simply "those in the population who receive the treatment" as stated on the bottom of page 6, or should it rather be "those in the population who would receive the treatment if they were in the RCT and assigned to the treatment"? The treated in the population did not take the treatment as a result of the experimental treatment assignment---they voluntarily chose to take the treatment without encouragement---so the difference is substantively meaningful. Or is it the case that the assumed ignorability conditions obviate the difference? Please clarify in Section 2.2 when you define PATT-C.
+
+\subsection{Theorem 1}
+%6) Theorem 1 does not show that PATT-C is nonparametrically identifiable from observed data, because the second term is counterfactual, i.e. it equals the average potential outcome under control in the population among those who actually received treatment in the population. Therefore Theorem 1 itself does not seem to justify the estimation procedure proposed in the following section. Specifically, S.3 and S.4 appear to imply that you are estimating E[Y_{00}| S=0, D=1, W] by E[Y| S=1, D=0, W]. You should show explicitly that these two quantities are equal, and incorporate that in the theorem.
+
+\subsection{Prediction threshold}
+%7) Using the threshold of 50% for predicting compliance seems suboptimal. It appears that you can do better by matching the empirical probability of compliance in the RCT control group for a given W stratum to that of the corresponding RCT treatment group stratum. For example, if your model from S.1 predicts the RCT treatment observations with W=w to be 30% compliers, then randomly assign 30% of the RCT control observations with W=w to be compliers.
+
+\subsection{Same $W$}
+%8) Section 3.1: "First, we assume that the W that determine sample selection..." -- is this already implied by the fact that Assumptions 2-4 all condition in the same W?
+
+\subsection{Formal definition of PATT}
+%9) You refer to a "PATT estimate" in multiple places in the paper and also use it in the simulation analysis, but you only define it informally in footnote 8. I would like to see a more formal, explicit definition in the main text. In doing this, please incorporate the reviewer's comments on the estimation of PATT.
+
+\section{Reviewer 1 (R1)'s comments}
+
+\subsection{Definition of SATE} \label{SATE-def}
+
+R1 points out that what we have referred to as SATE is inconsistent with how we'd usually define SATE, and that the appropriate sample analog to the population estimand of interest (PATT-C) is the sample local average treatment effect among the compliers.
+
+Following R1's guidance, we refer to this quantity in the revised manuscript as the sample Complier Average Causal Effect (CACE) and define it in Eq. \ref{tcace}. 
+
+\subsection{Estimation of PATT}
+
+\subsection{Small points}
+
+\paragraph*{Pg. 2}
+%Pg. 2: “one might simply weight the PATT estimate by the population compliance rate in order to yield a population average effect of treatment on treated compliers”. I found this confusing, because isn’t the PATT estimate already projected on to those who received treatment (i.e. the compliers). I am not sure this would work, but it isn’t a more appropriate thought experiment to reweight/project the ITT effect to the whole population and then divide by population compliance?
+
+\paragraph*{Pg. 5}
+%Pg. 5 “RCT study designs that apply restrictive exclusion criteria may increase the likelihood that there are unobserved differences...” This sentence was a bit unclear to me. I could could see that the strict inclusion/exclusion violate positivity. But why would strict inclusion/exclusion criteria necessarily make for unobservable differences? In medical trials where the inclusion/exclusion criteria are known , it seems that would be preferable to an unknown, even if weaker, set of criteria. I think that the authors intuition is correct we might be somewhat more concerned, but I’m not sure the point is so straightforward.
+
+
+\paragraph*{Motivation}
+%Pg. 16: I thought the sentence “An important question for policymakers is whether...” was nice motivation that could be emphasized in the intro.
+
+\paragraph*{Interference}
+%Pg. 18: The authors state that interference is less likely in this RCT because of HH level treatment–how is this addressed in the analysis, and in particular, what does it mean for the definition of the population?
+
+\paragraph*{Typos}
+%Pg. 5: footnote 3 has “Assumption 3 and 3”
+%Pg. 14: Typo: “as closely than”
+We fixed the two typos helpfully pointed out by R1. 
+
+
+\end{document}
