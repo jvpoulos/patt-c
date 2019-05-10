@@ -110,13 +110,6 @@ Jason Poulos\thanks{\emph{Corresponding author:} Department of Political Science
 \newcommand{\possessivecite}[1]{\citeauthor{#1}'s [\citeyear{#1}]} 
 \newcommand{\todo}[1]{{\color{red}{TO DO: \sc #1}}}
 
-%% Chicago 15 ed. author-date
-%\usepackage[utf8]{inputenc}
-%\usepackage[american]{babel}
-%\usepackage{csquotes}
-%\usepackage[authordate,backend=biber,natbib]{biblatex-chicago}
-%\addbibresource{refs.bib}
-
 \begin{document}
 \begin{singlespace} % single space for title
 \maketitle  
@@ -135,15 +128,15 @@ This paper extends a method of estimating population average treatment effects t
 \vspace{20mm}
 
 \section{Introduction}\label{intro}
-Randomized control trials (RCTs) are the gold standard for estimating the causal effect of a treatment. An RCT may give an unbiased \textcolor{red}{estimates of sample average causal effects}, but external validity is an issue when the individuals in the RCT are unrepresentative of the actual population of interest. For example, the participants in an RCT in which individuals volunteer to sign up for health insurance may be in poorer health at baseline than the overall population. External validity is particularly relevant to policymakers who want to know how the treatment effect would generalize to the broader population. 
+Randomized control trials (RCTs) are the gold standard for estimating the causal effect of a treatment. An RCT may give an unbiased \textcolor{red}{estimates of sample average treatment effects}, but external validity is an issue when the individuals in the RCT are unrepresentative of the actual population of interest. For example, the participants in an RCT in which individuals volunteer to sign up for health insurance may be in poorer health at baseline than the overall population. External validity is particularly relevant to policymakers who want to know how the treatment effect would generalize to the broader population. 
 
-This paper improves on the transportability of clinical trial results to a population by extending a method of estimating population average treatment effects to settings with noncompliance. Previous approaches to the problem of extrapolating RCT results to a population \citep{ImaKinStu08, stuart2011use, Hartman} are designed for settings where there is full compliance with treatment. This paper contributes to the literature by defining the assumptions required to identify complier--average causal effects for the target population and proposing an estimation procedure to recover this estimand.
+This paper improves on the transportability of clinical trial results to a population by extending a method of estimating population average treatment effects to settings with noncompliance. Previous approaches to the problem of extrapolating RCT results to a population \citep{ImaKinStu08, stuart2011use, Hartman} are designed for settings where there is full compliance with treatment. This paper contributes to the literature by defining the assumptions required to identify complier--average causal effects for the target population and proposing an estimation procedure to recover this quantity.
 
-\citet{Hartman} propose a method of reweighting the responses of individuals in an RCT according to the distribution of covariates in the target population in order to estimate the population average treatment effect on the treated (PATT). We extend the method to estimate the complier--average causal effects for the target population from RCT data with noncompliance, and refer to this estimator as PATT-C. Noncompliance occurs when individuals who are assigned to the treatment group do not comply with the treatment; for individuals assigned to control, we are unable to observe who would have complied had they been assigned treatment. Noncompliance in treatment assignment is a prevalent issue in RCTs and biases the intention--to--treat (ITT) estimate towards zero.
+\citet{Hartman} propose a method of reweighting the responses of individuals in an RCT according to the distribution of covariates in the target population in order to estimate the population average treatment effect on the treated (PATT). We extend the method to estimate the complier--average causal effects for the target population from RCT data with noncompliance, and refer to this \textcolor{red}{estimand} as PATT-C. Noncompliance occurs when individuals who are assigned to the treatment group do not comply with the treatment; for individuals assigned to control, we are unable to observe who would have complied had they been assigned treatment. Noncompliance in treatment assignment is a prevalent issue in RCTs and biases the intention--to--treat (ITT) estimate towards zero.
 
 PATT-C involves the expectation of the response of RCT compliers, conditional on their covariates, where the expectation is taken over the distribution of covariates for population members receiving treatment. Note that our estimation strategy differs from reweighting methods that use propensity scores to adjust the RCT data \citep{stuart2011use}. In this context, the propensity score model predicts participation in the RCT, given pretreatment covariates common to both the RCT and population data. Individuals in the RCT and population are then weighted according to the inverse of the estimated propensity score. We propose an alternative approach of predicting the response surface for RCT compliers, and then use the predicted values from the response surface model to estimate the potential outcomes of population members who received treatment, given their covariates.
 
-When estimating the average causal effect from an RCT, researchers typically scale the ITT estimate by the compliance rate under the identifying assumptions outlined in \citet{Angrist1996}. When extrapolating RCT results to a population, one might simply weight the PATT estimate by the population compliance rate in order to yield a population average effect of treatment on treated compliers.\footnote{A similar approach is used by \cite{imai2013experimental} for estimating average complier indirect effects.} However, the compliance rate is likely to differ between the sample and population, as well as across subgroups based on pretreatment covariates. We propose an alternative approach of actually identifying the likely compliers in the control group. By explicitly modeling compliance, this approach allows researchers to decompose population estimates by covariate group and also predict which population members are likely to comply with treatment. Both of these features are useful for policymakers in evaluating the efficacy of policy interventions for subgroups of interest in a population. 
+When estimating the average causal effect \textcolor{red}{for compliers} from an RCT, researchers typically scale the ITT estimate by the compliance rate under the \textcolor{red}{identifying assumption that there is only single crossover from treatment to control}. When extrapolating RCT results to a population, one might simply weight the PATT estimate by the population compliance rate in order to yield a population average effect of treatment on treated compliers.\footnote{A similar approach is used by \cite{imai2013experimental} for estimating average complier indirect effects.} However, the compliance rate is likely to differ between the sample and population, as well as across subgroups based on pretreatment covariates. We propose an alternative approach of actually identifying the likely compliers in the control group. By explicitly modeling compliance, this approach allows researchers to decompose population estimates by covariate group and also predict which population members are likely to comply with treatment. Both of these features are useful for policymakers in evaluating the efficacy of policy interventions for subgroups of interest in a population. 
 
 We apply the proposed estimator to measure the effect of Medicaid coverage on health care use for a target population of adults who may benefit from government-backed expansions to the Medicaid program. We draw RCT data from a large-scale health insurance experiment, in which only $30\%$ of those randomly selected to receive Medicaid benefits actually enrolled. We find substantial differences between sample and population estimates in terms of race, education, and health status subgroups. 
 
@@ -222,7 +215,8 @@ Interference undermines the framework because it creates more than two potential
 	%where $L_j$ is the treatment and sample assignment vector for unit $j$. 
 \end{assumption} 
 
-We additionally include Assumptions \ref{monotonicity} and \ref{ER}, which are made by \citet{Angrist1996} to ensure identifiability. The former assumption ensures that crossover is only possible from treatment to control:
+\textcolor{red}{We also include the following assumptions made by \citet{Angrist1996} to identify the average
+causal effect for compliers.} Assumption \ref{monotonicity} ensures that crossover is only possible from treatment to control:
 
 \vskip 0.2in
 \begin{assumption}{6}{}\label{monotonicity}
@@ -309,13 +303,16 @@ In the empirical application, we use the weighted ensemble method described in \
 We choose a variety of candidate algorithms to construct the ensemble, with a preference towards algorithms that tend to outperform in supervised classification tasks. We also have a preference for algorithms that have a built-in variable selection property. The idea is that we input the same $W_i$ and each candidate algorithm selects the most important covariates for predicting compliance status or potential outcomes.\footnote{A potential concern when predicting potential outcomes is that the algorithm might shrink the treatment received predictor to zero, which would result in no difference between counterfactual potential outcomes.} We select three types of candidate algorithms: nonparametric additive regression models \citep{buja1989linear}; L1 or L2-regularized linear models (i.e., Lasso or ridge regression, respectively) \citep{tibshirani2012strong}; and ensembles of decision trees (i.e., random forests) \citep{breiman2001}. L1-regularized linear models are important for the application due to their variable selection properties: Lasso is particularly attractive because it tends to shrink all but one of the coefficients of correlated covariates to zero. 
 
 \section{Simulations} \label{sim}
-We conduct a simulation study to compare the performance of the PATT and PATT-C estimators. For comparison, we compare the population estimates to the \textcolor{red}{sample Complier Average Causal Effect (CACE), which is the sample analog to PATT-C:
+
+We conduct a simulation study to compare the performance of the PATT and PATT-C estimators. For comparison, we compare the population estimates to the \textcolor{red}{Sample Average Treatment Effect on Treated Compliers (SATE-C). SATE-C is estimated by scaling the ITT effect by the share of treated compliers in the RCT under the identifying Assumptions \ref{sutva}, \ref{monotonicity}, and \ref{ER}:
+%	
+\begin{equation}\label{tsatec}
+\tau_{\text{SATE-C}} = \ex\left( Y_{i11} - Y_{i10} \mid S_i=1\right) / \pr(T_i = D_i = 1 \mid S_i=1).
+\end{equation}	
 %
-\begin{equation}\label{tcace}
-\tau_{\text{CACE}} = \ex\left( Y_{i11} - Y_{i10} \mid S_i=1, C_i=1\right).
-\end{equation}
-%
-The PATT and PATT-C estimates are obtained by estimating the response surface on all individuals in the RCT and applying \ref{response-predict} of the estimation procedure to the population members. Note that the PATT estimator described here is the population-average causal effect of taking up treatment, adjusted according to the covariate distribution of population ``compliers.'' In contrast, the \citet{Hartman} population estimator is the ITT estimator reweighted according the to covariate distribution of the population.}
+\citet{freedman2006} points out that the instrumental variables estimator of the average causal effect for compliers proposed by \citet{Angrist1996} is a generalization of the SATE-C estimator.}
+
+The PATT and PATT-C estimates are obtained by estimating the response surface on all individuals in the RCT and applying \ref{response-predict} of the estimation procedure to the population members. Note that the PATT estimator described here is the population-average causal effect of taking up treatment, adjusted according to the covariate distribution of population ``compliers.'' In contrast, the \citet{Hartman} population estimator is the ITT estimator reweighted according the to covariate distribution of the population.
 
 \subsection{Simulation design}
 
@@ -359,7 +356,7 @@ In the assigned-treatment RCT group $(S_i = 1, T_i = 1)$, we train a gradient bo
 
 \subsection{Simulation results}\label{sim-results}
 
-We vary each of the parameters $e_1, e_2$, $e_3$, $e_4$, $e_5$, and $e_6$ along a grid of five random standard normal values in order to generate different combinations of rates of compliance, treatment eligibility, RCT eligibility in the population, and confounding. For each possible combination of the six parameters, we run the simulation ten times and compute the average root mean squared error (RMSE) of PATT-C, PATT, and the CACE. All other parameters are held constant. 
+We vary each of the parameters $e_1, e_2$, $e_3$, $e_4$, $e_5$, and $e_6$ along a grid of five random standard normal values in order to generate different combinations of rates of compliance, treatment eligibility, RCT eligibility in the population, and confounding. For each possible combination of the six parameters, we run the simulation ten times and compute the average root mean squared error (RMSE) of PATT-C, PATT, and the SATE-C. All other parameters are held constant. 
 
 Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of compliers in the whole population, the percentage of people in the population eligible to participate in the RCT, and the RMSE of the PATT and PATT-C estimators. The PATT estimator performs badly when the compliance rate is low, whereas the PATT-C estimator is comparatively insensitive to changes in the compliance rate. A similar pattern emerges when the compliance rate varies with the population treatment rate (Figure~\ref{fig:rmse_ratec_ratet}).
 
@@ -371,14 +368,14 @@ Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of 
 	\end{center}
 \end{figure}
 
-Figure~\ref{fig:rmse_boxplots_rateC} compares the RMSE of PATT and PATT-C with the CACE at varying levels of compliance in the total population. PATT-C is relatively invariant to changes in the compliance rate and outperforms both PATT and CACE in terms of minimizing RMSE when the compliance rate is below 70\%. For high levels of compliance, the CACE \textcolor{red}{performs comparably to the PATT or PATT-C estimators}.  
+Figure~\ref{fig:rmse_boxplots_rateC} compares the RMSE of PATT and PATT-C with the SATE-C at varying levels of compliance in the total population. PATT-C is relatively invariant to changes in the compliance rate and outperforms both PATT and SATE-C in terms of minimizing RMSE when the compliance rate is below 70\%. For high levels of compliance, the SATE-C \textcolor{red}{performs comparably to the PATT or PATT-C estimators}.  
 
-Figures~\ref{fig:rmse_boxplots_RateConC}, \ref{fig:rmse_boxplots_RateConT}, and \ref{fig:rmse_boxplots_RateConS} explore how the degrees of confounding in the mechanisms that determine sample selection, treatment assignment, and compliance affect estimation error. PATT-C tends to be invariant to increases in the degree of confounding, whereas PATT is sensitive to confounding in the sample selection mechanism. The CACE estimates are generally more variable than the population estimates due to the sample estimator's inability to account for differences in pretreatment covariates between the RCT sample and target population. 
+Figures~\ref{fig:rmse_boxplots_RateConC}, \ref{fig:rmse_boxplots_RateConT}, and \ref{fig:rmse_boxplots_RateConS} explore how the degrees of confounding in the mechanisms that determine sample selection, treatment assignment, and compliance affect estimation error. PATT-C tends to be invariant to increases in the degree of confounding, whereas PATT is sensitive to confounding in the sample selection mechanism. The SATE-C estimates are generally more variable than the population estimates due to the sample estimator's inability to account for differences in pretreatment covariates between the RCT sample and target population. 
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width = 1\textwidth]{rmse_boxplots_rateC.png}
-\caption{Simulated RMSE of PATT-C, PATT, and CACE, according to compliance rates in the total population.\label{fig:rmse_boxplots_rateC}}
+\caption{Simulated RMSE of PATT-C, PATT, and SATE-C, according to compliance rates in the total population.\label{fig:rmse_boxplots_rateC}}
 %\caption{\label{fig:rmse_boxplots_rateC} here}
 \end{center}
 \end{figure}
@@ -429,7 +426,7 @@ Table \ref{placebo} reports the results of placebo tests, comparing the mean out
 \citet{Angrist1996} show that the bias due to violations of Assumption \ref{monotonicity} is equivalent to the difference of average causal effects of treatment received for compliers and defiers, multiplied by the relative proportion of defiers, 
 $\pr(i\text{ is a defier}) / (\pr(i\text{ is a complier]}) - \pr(i\text{ is a defier})).$
 
-Table \ref{ohie-status} reports the distribution of participants in the OHIE by status of treatment assignment and treatment received. Assumption \ref{monotonicity} does not hold due to the presence of defiers; i.e., participants who were assigned to control and enrolled in Medicaid during the study period. About 6.7\% of the RCT sample were assigned to control but were enrolled in Medicaid ($T_i < D_i$) and 65.5\% of the sample complied with treatment assignment ($D_i = T_i$), which results in a bias multiplier of 0.11. Suppose that the difference of average causal effects of Medicaid received on ER use for compliers and defiers is 1.2\%. The resulting bias is only 0.1\%, which would not meaningfully alter the interpretation of the CACE or PATT-C estimates reported below. 
+Table \ref{ohie-status} reports the distribution of participants in the OHIE by status of treatment assignment and treatment received. Assumption \ref{monotonicity} does not hold due to the presence of defiers; i.e., participants who were assigned to control and enrolled in Medicaid during the study period. About 6.7\% of the RCT sample were assigned to control but were enrolled in Medicaid ($T_i < D_i$) and 65.5\% of the sample complied with treatment assignment ($D_i = T_i$), which results in a bias multiplier of 0.11. Suppose that the difference of average causal effects of Medicaid received on ER use for compliers and defiers is 1.2\%. The resulting bias is only 0.1\%, which would not meaningfully alter the interpretation of the SATE-C or PATT-C estimates reported below. 
  
 \subsection{Empirical results}\label{results}
 
@@ -454,154 +451,8 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \pagebreak
 
 %Bibliography
-%\printbibliography
-
-%Bibliography
 \bibliographystyle{chicago}
-\begin{thebibliography}{}
-	
-	\bibitem[\protect\citeauthoryear{Angrist, Imbens, and Rubin}{Angrist
-		et~al.}{1996}]{Angrist1996}
-	Angrist, J.~D., G.~W. Imbens, and D.~B. Rubin (1996, June).
-	\newblock Identification of causal effects using instrumental variables.
-	\newblock {\em Journal of the American Statistical Association\/}~{\em
-		91\/}(434), 444--455.
-	
-	\bibitem[\protect\citeauthoryear{Baicker, Finkelstein, Song, and
-		Taubman}{Baicker et~al.}{2014}]{baicker2014}
-	Baicker, K., A.~Finkelstein, J.~Song, and S.~Taubman (2014).
-	\newblock The impact of Medicaid on labor market activity and program
-	participation: Evidence from the Oregon health insurance experiment.
-	\newblock {\em The American Economic Review\/}~{\em 104\/}(5), 322.
-	
-	\bibitem[\protect\citeauthoryear{Baicker, Taubman, Allen, Bernstein, Gruber,
-		Newhouse, Schneider, Wright, Zaslavsky, and Finkelstein}{Baicker
-		et~al.}{2013}]{baicker2013}
-	Baicker, K., S.~L. Taubman, H.~L. Allen, M.~Bernstein, J.~H. Gruber, J.~P.
-	Newhouse, E.~C. Schneider, B.~J. Wright, A.~M. Zaslavsky, and A.~N.
-	Finkelstein (2013).
-	\newblock The Oregon experiment --- effects of Medicaid on clinical outcomes.
-	\newblock {\em New England Journal of Medicine\/}~{\em 368\/}(18), 1713--1722.
-	
-	\bibitem[\protect\citeauthoryear{Breiman}{Breiman}{2001}]{breiman2001}
-	Breiman, L. (2001).
-	\newblock Random forests.
-	\newblock {\em Machine Learning\/}~{\em 45\/}(1), 5--32.
-	
-	\bibitem[\protect\citeauthoryear{Buja, Hastie, and Tibshirani}{Buja
-		et~al.}{1989}]{buja1989linear}
-	Buja, A., T.~Hastie, and R.~Tibshirani (1989).
-	\newblock Linear smoothers and additive models.
-	\newblock {\em The Annals of Statistics\/}, 453--510.
-	
-	\bibitem[\protect\citeauthoryear{Finkelstein, Taubman, Wright, Bernstein,
-		Gruber, Newhouse, and Allen}{Finkelstein et~al.}{2012}]{finkelstein2012}
-	Finkelstein, A., S.~Taubman, B.~Wright, M.~Bernstein, J.~Gruber, J.~P.
-	Newhouse, and H.~Allen (2012).
-	\newblock The Oregon health insurance experiment: Evidence from the first year.
-	\newblock {\em The Quarterly Journal of Economics\/}~{\em 127\/}(3), 1057.
-	
-	\bibitem[\protect\citeauthoryear{Friedman}{Friedman}{2001}]{friedman2001greedy}
-	Friedman, J.~H. (2001).
-	\newblock Greedy function approximation: {A} gradient boosting machine.
-	\newblock {\em Annals of Statistics\/}, 1189--1232.
-	
-	\bibitem[\protect\citeauthoryear{Hartman, Grieve, Ramsahai, and Sekhon}{Hartman
-		et~al.}{2015}]{Hartman}
-	Hartman, E., R.~Grieve, R.~Ramsahai, and J.~S. Sekhon (2015).
-	\newblock From SATE to PATT: Combining experimental with observational studies
-	to estimate population treatment effects.
-	\newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
-		in Society)\/}~{\em 10}, 1111.
-	
-	\bibitem[\protect\citeauthoryear{Imai, King, and Stuart}{Imai
-		et~al.}{2008}]{ImaKinStu08}
-	Imai, K., G.~King, and E.~Stuart (2008).
-	\newblock Misunderstandings among experimentalists and observationalists about
-	causal inference.
-	\newblock {\em Journal of the Royal Statistical Society, Series A\/}~{\em 171,
-		part 2}, 481{\textendash}502.
-	
-	\bibitem[\protect\citeauthoryear{Imai, Tingley, and Yamamoto}{Imai
-		et~al.}{2013}]{imai2013experimental}
-	Imai, K., D.~Tingley, and T.~Yamamoto (2013).
-	\newblock Experimental designs for identifying causal mechanisms.
-	\newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
-		in Society)\/}~{\em 176\/}(1), 5--51.
-	
-	\bibitem[\protect\citeauthoryear{Kolstad and Kowalski}{Kolstad and
-		Kowalski}{2012}]{kolstad2012impact}
-	Kolstad, J.~T. and A.~E. Kowalski (2012).
-	\newblock The impact of health care reform on hospital and preventive care:
-	Evidence from {M}assachusetts.
-	\newblock {\em Journal of Public Economics\/}~{\em 96\/}(11-12), 909--929.
-	
-	\bibitem[\protect\citeauthoryear{Kowalski}{Kowalski}{2016}]{NBERw22363}
-	Kowalski, A.~E. (2016, June).
-	\newblock Doing more when you're running {LATE}: Applying marginal treatment
-	effect methods to examine treatment effect heterogeneity in experiments.
-	\newblock Working Paper 22363, National Bureau of Economic Research.
-	
-	\bibitem[\protect\citeauthoryear{Miller}{Miller}{2012}]{miller2012effect}
-	Miller, S. (2012).
-	\newblock The effect of insurance on emergency room visits: an analysis of the
-	2006 {M}assachusetts health reform.
-	\newblock {\em Journal of Public Economics\/}~{\em 96\/}(11-12), 893--908.
-	
-	\bibitem[\protect\citeauthoryear{Parsons, Moriarity, Jonas, Moore, Davis, and
-		Tompkins}{Parsons et~al.}{2014}]{parsons2014design}
-	Parsons, V.~L., C.~L. Moriarity, K.~Jonas, T.~F. Moore, K.~E. Davis, and
-	L.~Tompkins (2014).
-	\newblock Design and estimation for the {N}ational {H}ealth {I}nterview
-	{S}urvey, 2006--2015.
-	\newblock {\em National Center for Health Statistics. Vital and Health
-		Statistics\/}~{\em 2\/}(165), 1--53.
-	
-	\bibitem[\protect\citeauthoryear{Polley and Van Der~Laan}{Polley and Van
-		Der~Laan}{2010}]{polley2010super}
-	Polley, E.~C. and M.~J. Van Der~Laan (2010).
-	\newblock Super learner in prediction.
-	\newblock Working Paper 266, Division of Biostatistics, University of
-	California, Berkeley.
-	
-	\bibitem[\protect\citeauthoryear{Rubin}{Rubin}{1990}]{rubin1990}
-	Rubin, D.~B. (1990).
-	\newblock Comment: Neyman (1923) and causal inference in experiments and
-	observational studies.
-	\newblock {\em Statistical Science\/}~{\em 5\/}(4), 472--480.
-	
-	\bibitem[\protect\citeauthoryear{Stuart, Cole, Bradshaw, and Leaf}{Stuart
-		et~al.}{2011}]{stuart2011use}
-	Stuart, E.~A., S.~R. Cole, C.~P. Bradshaw, and P.~J. Leaf (2011).
-	\newblock The use of propensity scores to assess the generalizability of
-	results from randomized trials.
-	\newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
-		in Society)\/}~{\em 174\/}(2), 369--386.
-	
-	\bibitem[\protect\citeauthoryear{Taubman, Allen, Wright, Baicker, and
-		Finkelstein}{Taubman et~al.}{2014}]{Taubman}
-	Taubman, S., H.~Allen, B.~Wright, K.~Baicker, and A.~Finkelstein (2014,
-	January).
-	\newblock Medicaid increases emergency department use: Evidence from Oregon's
-	health insurance experiment.
-	\newblock {\em Science\/}~{\em 343\/}(6168), 263--268.
-	
-	\bibitem[\protect\citeauthoryear{Tibshirani, Bien, Friedman, Hastie, Simon,
-		Taylor, and Tibshirani}{Tibshirani et~al.}{2012}]{tibshirani2012strong}
-	Tibshirani, R., J.~Bien, J.~Friedman, T.~Hastie, N.~Simon, J.~Taylor, and R.~J.
-	Tibshirani (2012).
-	\newblock Strong rules for discarding predictors in lasso-type problems.
-	\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
-		Methodology)\/}~{\em 74\/}(2), 245--266.
-	
-	\bibitem[\protect\citeauthoryear{van~der Laan, Polley, and Hubbard}{van~der
-		Laan et~al.}{2007}]{van2007}
-	van~der Laan, M.~J., E.~C. Polley, and A.~E. Hubbard (2007).
-	\newblock Super learner.
-	\newblock {\em Statistical Applications in Genetics and Molecular
-		Biology\/}~{\em 6\/}(1).
-	
-\end{thebibliography}
+\bibliography{refs}
 
 %Appendix
 \pagebreak
@@ -629,7 +480,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConC.png}
-		\caption{Simulated RMSE of PATT-C, PATT, and CACE, according to degree of confounding in compliance.\label{fig:rmse_boxplots_RateConC}}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATE-C, according to degree of confounding in compliance.\label{fig:rmse_boxplots_RateConC}}
 	%	\caption{\label{fig:rmse_boxplots_RateConC} here}
 	\end{center}
 \end{figure}
@@ -637,7 +488,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConT.png}
-		\caption{Simulated RMSE of PATT-C, PATT, and CACE, according to degree of confounding in treatment assignment.\label{fig:rmse_boxplots_RateConT}}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATE-C, according to degree of confounding in treatment assignment.\label{fig:rmse_boxplots_RateConT}}
 	%		\caption{\label{fig:rmse_boxplots_RateConT} here}
 	\end{center}
 \end{figure}
@@ -645,7 +496,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConS.png}
-		\caption{Simulated RMSE of PATT-C, PATT, and CACE, according to degree of confounding in sample selection.\label{fig:rmse_boxplots_RateConS}}
+		\caption{Simulated RMSE of PATT-C, PATT, and SATE-C, according to degree of confounding in sample selection.\label{fig:rmse_boxplots_RateConS}}
 	%		\caption{\label{fig:rmse_boxplots_RateConS} here}
 	\end{center}
 \end{figure}
@@ -752,7 +603,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 		\backslashbox{Estimator}{Outcome} 				& Any ER visit 	& $\#$ ER visits   & $\#$ outpatient visits      \\ \midrule
 		PATT-C                                           & 0.0001 [0.0001, 0.0001]   & 0.0005 [0.0002, 0.0008]	& 0.002 [0.002, 0.002] \\
 		PATT                                             & 0.0006 [0.0005, 0.0007]   & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
-		CACE                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.05, 0.06]	& -0.02 [-0.19, 0.14]  \\ \bottomrule
+		SATE-C                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.05, 0.06]	& -0.02 [-0.19, 0.14]  \\ \bottomrule
 	\end{tabular}\\
 	\footnotesize{Notes: Estimates in brackets represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.}
 \end{table}

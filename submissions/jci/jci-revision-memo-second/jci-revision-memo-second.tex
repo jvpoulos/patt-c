@@ -2,30 +2,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[hidelinks,12pt,letterpaper]{article}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-       
-% settings:
-%\author{Jason Poulos} % Define the authors
-
-%***% change title %***%
-%\title{Jason Poulos --- PS290} % Define the title
-%\pagestyle{headings} % Define the page style for page numbers and headings
-%\addtolength{\textheight}{1cm}
-%\makeindex
-
-%% Header
-%\usepackage{fancyhdr}
-%\thispagestyle{fancy}  %change to pagestyle for fancy on all pages
-%\fancyhf{} % delete current setting for header and footer
-%\fancyhead[L]{\textbf{Ms. No. XPS-D-16-00013}}
-%\fancyhead[C]{}
-%\fancyhead[R]{Revision Memo}
-%\renewcommand{\headrulewidth}{0.5pt}
-%\renewcommand{\footrulewidth}{0pt}
-%\addtolength{\headheight}{3pt} % make space for the rule
-%\fancypagestyle{plain}{%
-%       \fancyhead{} % get rid of headers on plain pages
-%       \renewcommand{\headrulewidth}{0pt} % and the line
-%}
+      
 
 % Subsubsection
 \usepackage{titlesec}
@@ -115,16 +92,20 @@ Following R1's guidance, we now call this quantity the sample Complier Average C
 
 \subsection{Definition of SATE} \label{SATE-def}
 
-R1 points out that what we have referred to as SATE is inconsistent with how we'd usually define SATE, and that the appropriate sample analog to the population estimand of interest (PATT-C) is the sample local average treatment effect among the compliers.
+R1 points out that what we have referred to as SATE is inconsistent with how we'd usually define SATE. The quantity we're interested in estimating is the sample local average treatment effect among the compliers, which Freedman 2006 shows can be recovered by scaling the ITT effect by the proportion of treated compliers in the RCT. This estimator is equivalent to the instrumental variables estimator for the LATE proposed by AIR 1996.
 
-Following R1's guidance, we refer to this quantity in the revised manuscript as the sample Complier Average Causal Effect (CACE) and define it in Eq. \ref{tcace}. 
+Following the guidance of R1 and the Editor, we refer to this quantity in the revised manuscript as the Sample Average Treatment Effect on Treated Compliers (SATE-C) and define its estimator in Eq. \ref{tsatec}. 
 
 \subsection{Estimation of PATT}
+
+%I am still somewhat confused about the PATT estimator the authors use–as I understand it, they are estimating Y1 and Y0 in the RCT (based on actual treatment received) and then projecting this on to the population units to received treatment. This seems like it would require additional assumptions above the ones outlined in most of the extant literature that rely on reweighting methods. Usually these methods leverage the exchangeability in the randomized trial before projecting (more or less relying on similar estimates in small subgroups or strata), but here the authors implicitly adding an ignorability assumption within the experiment in order to assume they’ve properly (non-parametrically) modeled Y1 and Y0 in the face of non-compliance. In the RCT, receipt of treatment is driven by the C i equation, but in the population it is driven by the T i equation (and maybe also C i ). It is unclear to me, then, if the PATT estimator is per- forming poorly because of failure of the ignorability assumption in the sample, modeling assumptions, or the confounding? I think making the additional necessary assumption clear would at least help clarify why this method is more sensitive.
 
 \subsection{Small points}
 
 \paragraph*{Pg. 2}
 %Pg. 2: “one might simply weight the PATT estimate by the population compliance rate in order to yield a population average effect of treatment on treated compliers”. I found this confusing, because isn’t the PATT estimate already projected on to those who received treatment (i.e. the compliers). I am not sure this would work, but it isn’t a more appropriate thought experiment to reweight/project the ITT effect to the whole population and then divide by population compliance?
+
+%(also in estimation procedure)
 
 \paragraph*{Pg. 5}
 %Pg. 5 “RCT study designs that apply restrictive exclusion criteria may increase the likelihood that there are unobserved differences...” This sentence was a bit unclear to me. I could could see that the strict inclusion/exclusion violate positivity. But why would strict inclusion/exclusion criteria necessarily make for unobservable differences? In medical trials where the inclusion/exclusion criteria are known , it seems that would be preferable to an unknown, even if weaker, set of criteria. I think that the authors intuition is correct we might be somewhat more concerned, but I’m not sure the point is so straightforward.

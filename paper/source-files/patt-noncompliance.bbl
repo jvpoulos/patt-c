@@ -1,0 +1,150 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Angrist, Imbens, and Rubin}{Angrist
+  et~al.}{1996}]{Angrist1996}
+Angrist, J.~D., G.~W. Imbens, and D.~B. Rubin (1996, June).
+\newblock Identification of causal effects using instrumental variables.
+\newblock {\em Journal of the American Statistical Association\/}~{\em
+  91\/}(434), 444--455.
+
+\bibitem[\protect\citeauthoryear{Baicker, Finkelstein, Song, and
+  Taubman}{Baicker et~al.}{2014}]{baicker2014}
+Baicker, K., A.~Finkelstein, J.~Song, and S.~Taubman (2014).
+\newblock The impact of medicaid on labor market activity and program
+  participation: Evidence from the oregon health insurance experiment.
+\newblock {\em The American Economic Review\/}~{\em 104\/}(5), 322.
+
+\bibitem[\protect\citeauthoryear{Baicker, Taubman, Allen, Bernstein, Gruber,
+  Newhouse, Schneider, Wright, Zaslavsky, and Finkelstein}{Baicker
+  et~al.}{2013}]{baicker2013}
+Baicker, K., S.~L. Taubman, H.~L. Allen, M.~Bernstein, J.~H. Gruber, J.~P.
+  Newhouse, E.~C. Schneider, B.~J. Wright, A.~M. Zaslavsky, and A.~N.
+  Finkelstein (2013).
+\newblock The oregon experiment—effects of medicaid on clinical outcomes.
+\newblock {\em New England Journal of Medicine\/}~{\em 368\/}(18), 1713--1722.
+
+\bibitem[\protect\citeauthoryear{Breiman}{Breiman}{2001}]{breiman2001}
+Breiman, L. (2001).
+\newblock Random forests.
+\newblock {\em Machine Learning\/}~{\em 45\/}(1), 5--32.
+
+\bibitem[\protect\citeauthoryear{Buja, Hastie, and Tibshirani}{Buja
+  et~al.}{1989}]{buja1989linear}
+Buja, A., T.~Hastie, and R.~Tibshirani (1989).
+\newblock Linear smoothers and additive models.
+\newblock {\em The Annals of Statistics\/}, 453--510.
+
+\bibitem[\protect\citeauthoryear{Finkelstein, Taubman, Wright, Bernstein,
+  Gruber, Newhouse, and Allen}{Finkelstein et~al.}{2012}]{finkelstein2012}
+Finkelstein, A., S.~Taubman, B.~Wright, M.~Bernstein, J.~Gruber, J.~P.
+  Newhouse, and H.~Allen (2012).
+\newblock The oregon health insurance experiment: Evidence from the first year.
+\newblock {\em The Quarterly Journal of Economics\/}~{\em 127\/}(3), 1057.
+
+\bibitem[\protect\citeauthoryear{Freedman}{Freedman}{2006}]{freedman2006}
+Freedman, D.~A. (2006).
+\newblock Statistical models for causation what inferential leverage do they
+  provide?
+\newblock {\em Evaluation Review\/}~{\em 30\/}(6), 691--713.
+
+\bibitem[\protect\citeauthoryear{Friedman}{Friedman}{2001}]{friedman2001greedy}
+Friedman, J.~H. (2001).
+\newblock Greedy function approximation: {A} gradient boosting machine.
+\newblock {\em Annals of Statistics\/}, 1189--1232.
+
+\bibitem[\protect\citeauthoryear{Hartman, Grieve, Ramsahai, and Sekhon}{Hartman
+  et~al.}{2015}]{Hartman}
+Hartman, E., R.~Grieve, R.~Ramsahai, and J.~S. Sekhon (2015).
+\newblock From sate to patt: Combining experimental with observational studies
+  to estimate population treatment effects.
+\newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
+  in Society)\/}~{\em 10}, 1111.
+
+\bibitem[\protect\citeauthoryear{Imai, King, and Stuart}{Imai
+  et~al.}{2008}]{ImaKinStu08}
+Imai, K., G.~King, and E.~Stuart (2008).
+\newblock Misunderstandings among experimentalists and observationalists about
+  causal inference.
+\newblock {\em Journal of the Royal Statistical Society, Series A\/}~{\em 171,
+  part 2}, 481{\textendash}502.
+
+\bibitem[\protect\citeauthoryear{Imai, Tingley, and Yamamoto}{Imai
+  et~al.}{2013}]{imai2013experimental}
+Imai, K., D.~Tingley, and T.~Yamamoto (2013).
+\newblock Experimental designs for identifying causal mechanisms.
+\newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
+  in Society)\/}~{\em 176\/}(1), 5--51.
+
+\bibitem[\protect\citeauthoryear{Kolstad and Kowalski}{Kolstad and
+  Kowalski}{2012}]{kolstad2012impact}
+Kolstad, J.~T. and A.~E. Kowalski (2012).
+\newblock The impact of health care reform on hospital and preventive care:
+  evidence from {M}assachusetts.
+\newblock {\em Journal of Public Economics\/}~{\em 96\/}(11-12), 909--929.
+
+\bibitem[\protect\citeauthoryear{Kowalski}{Kowalski}{2016}]{NBERw22363}
+Kowalski, A.~E. (2016, June).
+\newblock Doing more when you're running {LATE}: Applying marginal treatment
+  effect methods to examine treatment effect heterogeneity in experiments.
+\newblock Working Paper 22363, National Bureau of Economic Research.
+
+\bibitem[\protect\citeauthoryear{Miller}{Miller}{2012}]{miller2012effect}
+Miller, S. (2012).
+\newblock The effect of insurance on emergency room visits: an analysis of the
+  2006 {M}assachusetts health reform.
+\newblock {\em Journal of Public Economics\/}~{\em 96\/}(11-12), 893--908.
+
+\bibitem[\protect\citeauthoryear{Parsons, Moriarity, Jonas, Moore, Davis, and
+  Tompkins}{Parsons et~al.}{2014}]{parsons2014design}
+Parsons, V.~L., C.~L. Moriarity, K.~Jonas, T.~F. Moore, K.~E. Davis, and
+  L.~Tompkins (2014).
+\newblock Design and estimation for the {N}ational {H}ealth {I}nterview
+  {S}urvey, 2006--2015.
+\newblock {\em National Center for Health Statistics. Vital and Health
+  Statistics\/}~{\em 2\/}(165), 1--53.
+
+\bibitem[\protect\citeauthoryear{Polley and Van Der~Laan}{Polley and Van
+  Der~Laan}{2010}]{polley2010super}
+Polley, E.~C. and M.~J. Van Der~Laan (2010).
+\newblock Super learner in prediction.
+\newblock Working Paper 266, Division of Biostatistics, University of
+  California, Berkeley.
+
+\bibitem[\protect\citeauthoryear{Rubin}{Rubin}{1990}]{rubin1990}
+Rubin, D.~B. (1990).
+\newblock Comment: Neyman (1923) and causal inference in experiments and
+  observational studies.
+\newblock {\em Statistical Science\/}~{\em 5\/}(4), 472--480.
+
+\bibitem[\protect\citeauthoryear{Stuart, Cole, Bradshaw, and Leaf}{Stuart
+  et~al.}{2011}]{stuart2011use}
+Stuart, E.~A., S.~R. Cole, C.~P. Bradshaw, and P.~J. Leaf (2011).
+\newblock The use of propensity scores to assess the generalizability of
+  results from randomized trials.
+\newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
+  in Society)\/}~{\em 174\/}(2), 369--386.
+
+\bibitem[\protect\citeauthoryear{Taubman, Allen, Wright, Baicker, and
+  Finkelstein}{Taubman et~al.}{2014}]{Taubman}
+Taubman, S., H.~Allen, B.~Wright, K.~Baicker, and A.~Finkelstein (2014,
+  January).
+\newblock Medicaid increases emergency department use: Evidence from oregon's
+  health insurance experiment.
+\newblock {\em Science\/}~{\em 343\/}(6168), 263--268.
+
+\bibitem[\protect\citeauthoryear{Tibshirani, Bien, Friedman, Hastie, Simon,
+  Taylor, and Tibshirani}{Tibshirani et~al.}{2012}]{tibshirani2012strong}
+Tibshirani, R., J.~Bien, J.~Friedman, T.~Hastie, N.~Simon, J.~Taylor, and R.~J.
+  Tibshirani (2012).
+\newblock Strong rules for discarding predictors in lasso-type problems.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)\/}~{\em 74\/}(2), 245--266.
+
+\bibitem[\protect\citeauthoryear{van~der Laan, Polley, and Hubbard}{van~der
+  Laan et~al.}{2007}]{van2007}
+van~der Laan, M.~J., E.~C. Polley, and A.~E. Hubbard (2007).
+\newblock Super learner.
+\newblock {\em Statistical Applications in Genetics and Molecular
+  Biology\/}~{\em 6\/}(1).
+
+\end{thebibliography}

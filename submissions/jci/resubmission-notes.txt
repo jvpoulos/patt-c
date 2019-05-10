@@ -4,17 +4,12 @@
 
 ** Analyses **
 
+check denom of rct.sate
+
+In legends: SATE --> SATE-C
 
 ** Writing **
 
 
-** For next time**
-
-report who is more likely to be compliers (using model predictions)
-
-Who's a complier?
-	The individuals who take up treatment are more likely to be female, on SNAP or TANF, and they have higher ER utilization in the pre-period. (K 30) (Table 3)
-
-	Relative to our study population, compliers are somewhat older, more likely white, in worse health, and in lower socioeconomic status. (F 1078) (A26)
 
 
