@@ -94,7 +94,7 @@ Following R1's guidance, we now call this quantity the sample Complier Average C
 
 R1 points out that what we have referred to as SATE is inconsistent with how we'd usually define SATE. The quantity we're interested in estimating is the sample local average treatment effect among the compliers, which Freedman 2006 shows can be recovered by scaling the ITT effect by the proportion of treated compliers in the RCT. This estimator is equivalent to the instrumental variables estimator for the LATE proposed by AIR 1996.
 
-Following the guidance of R1 and the Editor, we refer to this quantity in the revised manuscript as the Sample Average Treatment Effect on Treated Compliers (SATE-C) and define its estimator in Eq. \ref{tsatec}. 
+Following the guidance of R1 and the Editor, we refer to this quantity in the revised manuscript as the Sample Average Treatment Effect on Treated Compliers (SATE-C) and define its estimator in Eq.~\eqref{tsatec}. 
 
 \subsection{Estimation of PATT}
 
@@ -105,11 +105,10 @@ Following the guidance of R1 and the Editor, we refer to this quantity in the re
 \paragraph*{Pg. 2}
 %Pg. 2: “one might simply weight the PATT estimate by the population compliance rate in order to yield a population average effect of treatment on treated compliers”. I found this confusing, because isn’t the PATT estimate already projected on to those who received treatment (i.e. the compliers). I am not sure this would work, but it isn’t a more appropriate thought experiment to reweight/project the ITT effect to the whole population and then divide by population compliance?
 
-%(also in estimation procedure)
+R1 is correct: a more appropriate thought experiment to our proposed PATT-C is an estimator that reweights the ITT effect to the whole population and then divides by the proportion of treated compliers in the population. We have revised the manuscript accordingly. 
 
 \paragraph*{Pg. 5}
 %Pg. 5 “RCT study designs that apply restrictive exclusion criteria may increase the likelihood that there are unobserved differences...” This sentence was a bit unclear to me. I could could see that the strict inclusion/exclusion violate positivity. But why would strict inclusion/exclusion criteria necessarily make for unobservable differences? In medical trials where the inclusion/exclusion criteria are known , it seems that would be preferable to an unknown, even if weaker, set of criteria. I think that the authors intuition is correct we might be somewhat more concerned, but I’m not sure the point is so straightforward.
-
 
 \paragraph*{Motivation}
 %Pg. 16: I thought the sentence “An important question for policymakers is whether...” was nice motivation that could be emphasized in the intro.
