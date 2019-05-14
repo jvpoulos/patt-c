@@ -6,45 +6,45 @@ Database file #1: refs.bib
 Warning--no number and no volume in buja1989linear
 Warning--no number and no volume in friedman2001greedy
 Warning--page numbers missing in van2007
-You've used 21 entries,
+You've used 23 entries,
             2861 wiz_defined-function locations,
-            763 strings with 9237 characters,
-and the built_in function-call counts, 16461 in all, are:
-= -- 1286
-> -- 1444
+            778 strings with 9534 characters,
+and the built_in function-call counts, 17765 in all, are:
+= -- 1404
+> -- 1522
 < -- 2
-+ -- 452
-- -- 472
-* -- 1673
-:= -- 3033
-add.period$ -- 63
-call.type$ -- 21
-change.case$ -- 177
-chr.to.int$ -- 21
-cite$ -- 24
-duplicate$ -- 371
-empty$ -- 885
-format.name$ -- 532
-if$ -- 3010
++ -- 474
+- -- 502
+* -- 1785
+:= -- 3269
+add.period$ -- 69
+call.type$ -- 23
+change.case$ -- 190
+chr.to.int$ -- 23
+cite$ -- 26
+duplicate$ -- 407
+empty$ -- 971
+format.name$ -- 566
+if$ -- 3248
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 19
-newline$ -- 108
-num.names$ -- 210
-pop$ -- 116
+missing$ -- 21
+newline$ -- 118
+num.names$ -- 230
+pop$ -- 123
 preamble$ -- 1
-purify$ -- 303
+purify$ -- 328
 quote$ -- 0
-skip$ -- 368
+skip$ -- 407
 stack$ -- 0
-substring$ -- 857
-swap$ -- 120
+substring$ -- 941
+swap$ -- 132
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 420
+type$ -- 460
 warning$ -- 3
-while$ -- 190
+while$ -- 214
 width$ -- 0
-write$ -- 277
+write$ -- 303
 (There were 3 warnings)

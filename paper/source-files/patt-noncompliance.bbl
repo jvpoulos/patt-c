@@ -60,6 +60,13 @@ Hartman, E., R.~Grieve, R.~Ramsahai, and J.~S. Sekhon (2015).
 \newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
   in Society)\/}~{\em 10}, 1111.
 
+\bibitem[\protect\citeauthoryear{Hudgens and Halloran}{Hudgens and
+  Halloran}{2008}]{hudgens2008toward}
+Hudgens, M.~G. and M.~E. Halloran (2008).
+\newblock Toward causal inference with interference.
+\newblock {\em Journal of the American Statistical Association\/}~{\em
+  103\/}(482), 832--842.
+
 \bibitem[\protect\citeauthoryear{Imai, King, and Stuart}{Imai
   et~al.}{2008}]{ImaKinStu08}
 Imai, K., G.~King, and E.~Stuart (2008).
@@ -109,6 +116,12 @@ Polley, E.~C. and M.~J. Van Der~Laan (2010).
 \newblock Super learner in prediction.
 \newblock Working Paper 266, Division of Biostatistics, University of
   California, Berkeley.
+
+\bibitem[\protect\citeauthoryear{Rothwell}{Rothwell}{2005}]{rothwell2005external}
+Rothwell, P.~M. (2005).
+\newblock External validity of randomised controlled trials: “to whom do the
+  results of this trial apply?”.
+\newblock {\em The Lancet\/}~{\em 365\/}(9453), 82--93.
 
 \bibitem[\protect\citeauthoryear{Rubin}{Rubin}{1990}]{rubin1990}
 Rubin, D.~B. (1990).
