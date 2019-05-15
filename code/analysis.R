@@ -110,10 +110,10 @@ t.patt <- lapply(y.col, function (i) mean(Y.hat.1[[i]]) - mean(Y.hat.0[[i]]))
 
 # Compute unadjusted PATT
 
-nrt.tr.counterfactual.unadj <- cbind("insurance" = rep(1, length(which(insurance.nhis==1 | insurance.nhis==0))),
-                                     X.nhis[which(insurance.nhis==1| insurance.nhis==0),])
-nrt.ctrl.counterfactual.unadj <- cbind("insurance" = rep(0, length(which(insurance.nhis==1 | insurance.nhis==0))),
-                                       X.nhis[which(insurance.nhis==1 | insurance.nhis==0),])
+nrt.tr.counterfactual.unadj <- cbind("insurance" = rep(1, length(which(insurance.nhis==1))),
+                                     X.nhis[which(insurance.nhis==1),])
+nrt.ctrl.counterfactual.unadj <- cbind("insurance" = rep(0, length(which(insurance.nhis==1))),
+                                       X.nhis[which(insurance.nhis==1),])
 
 Y.hat.1.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col.binary], return(predict(response.mod.binary2[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred),
                                                    return(predict(response.mod.num2[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred)))
