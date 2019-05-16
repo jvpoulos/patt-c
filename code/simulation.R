@@ -30,7 +30,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
   # e6 controls confounding with compliance
 
   # set up storage
-  tpatt <- true_patt <- rct_sate <- rct_satt <- tpatt_unadj <- rep(0, sims)
+  tpatt <- true_patt <- rct_sate <- tpatt_unadj <- rep(0, sims)
   rateC <- rateT <- rateS <- RateConS <- RateConT <- RateConC <- rep(0, sims)
   
   for(i in 1:sims){
@@ -42,7 +42,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     nrtsample <- sample(observsample, samplesize)
     
     # (U, V, R, Q, W1, W2, W3, W4) are multivariate normal. Set parameters
-    a <- c1 <- d <- 1
+    a <- c1 <-c3 <- d <- 1
     c2 <- 2
     f1 <- g2 <- 0.25
     f2 <- g3 <- 0.75
@@ -72,7 +72,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     C <- as.numeric(e3 + h2*W2 + h3*W3 + e6*W4 + Q > 0)
     D <- ifelse(C == 1, Tt, 0) # Treatment received
     
-    Y <- a + b*D + c1*W1 + c2*W2 + d*U
+    Y <- a + b*D + c1*W1 + c2*W2 + c3*W4 + d*U
     dat <- data.frame(Y, Tt, D, S, C, W1, W2, W3) 
     rateC[i] <- mean(C)
     rateS[i] <- mean(S)
@@ -117,12 +117,6 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     # SATE
     rct_sate[i] <- (mean(rct$Y[rct$Tt == 1]) - mean(rct$Y[rct$Tt==0]))/mean(rct$C[rct$Tt==1])
     
-    # SATT-C
-    term1 <- rct_compliers$Y[rct_compliers$D==1]
-    satt_ctrl_counterfactual <- rct_compliers[rct_compliers$D==1,] %>% mutate("D" = 0)
-    term2 <- predict(response_mod, satt_ctrl_counterfactual, n.trees = 100)
-    rct_satt[i] <- mean(term1) - mean(term2) 
-
     # PATT (unadjusted)
     response_mod2 <- gbm(Y~Tt + W1 + W2 + W3, data = rct, distribution = "gaussian") # gbm
     nrt_tr_counterfactual <- cbind(nrt[,c("W1", "W2", "W3")], "Tt" = rep(1, nrow(nrt)))
@@ -134,7 +128,7 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
     tpatt_unadj[i] <- term1 - term2
     
   }
-  res <- cbind(true_patt, tpatt, tpatt_unadj, rct_sate, rct_satt, rateC, rateS, rateT, RateConS, RateConT, RateConC)
+  res <- cbind(true_patt, tpatt, tpatt_unadj, rct_sate, rateC, rateS, rateT, RateConS, RateConT, RateConC)
   return(res)
 }
 
@@ -150,10 +144,10 @@ res <- cbind(rep(1:nrow(e), each = B), res)
 colnames(res)[1] <- "combo"
 mse <- t(sapply(unique(res[,"combo"]), function(x){
                 keep <- which(res[,"combo"] == x)
-                sapply(c("tpatt","tpatt_unadj","rct_sate","rct_satt"), function(cc)mean((res[keep,"true_patt"]-res[keep,cc])^2))
+                sapply(c("tpatt","tpatt_unadj","rct_sate"), function(cc)mean((res[keep,"true_patt"]-res[keep,cc])^2))
                 }))
 mse_dup <- matrix(NA, ncol = 4, nrow = B*nrow(e))
-colnames(mse_dup) <- c("mse_tpatt", "mse_tpatt_unadj", "mse_rct_sate", "mse_rct_satt")
+colnames(mse_dup) <- c("mse_tpatt", "mse_tpatt_unadj", "mse_rct_sate")
 for(i in 1:4){mse_dup[,i] <- rep(mse[,i], each = B)}
 res <- cbind(res, mse_dup)
 res <- as.data.frame(res)

@@ -291,7 +291,7 @@ Assumptions \eqref{si_treat} and \eqref{si_ctrl} are particularly important for 
 
 \subsection{Modeling assumptions}  \label{modeling-assumptions}
 
-In addition to the identification assumptions, we require additional modeling assumptions for the estimation procedure. First, we assume that the $W_i$ that determine sample selection also determine population treatment assignment and complier status. As pointed out in Section \ref{assumptions}, we also require that $W_i$ is complete because if any relevant elements of $W_i$ are not controlled, then there is a backdoor pathway from $T_i$ back to $W_i$ and into $Y_{isd}$. Lastly, we assume that the compliance model is accurate in predicting compliance in the training sample of RCT participants assigned to treatment and also generalizable to RCT participants assigned to control (\ref{compliance-model} and \ref{complier-predict}). Section \ref{ensemble} below describes the method of evaluating the generalizability of the compliance model.
+In addition to the identification assumptions, we require additional modeling assumptions for the estimation procedure. As pointed out in Section \ref{assumptions}, we require that $W_i$ is complete because if any relevant elements of $W_i$ are not controlled, then there is a backdoor pathway from $T_i$ back to $W_i$ and into $Y_{isd}$. \textcolor{red}{Additionally,} we assume that the compliance model is accurate in predicting compliance in the training sample of RCT participants assigned to treatment and also generalizable to RCT participants assigned to control (\ref{compliance-model} and \ref{complier-predict}). Section \ref{ensemble} below describes the method of evaluating the generalizability of the compliance model.
 
 \subsection{Ensemble method}  \label{ensemble}
 
@@ -304,7 +304,7 @@ We choose a variety of candidate algorithms to construct the ensemble, with a pr
 We conduct a simulation study to compare the performance of the \textcolor{red}{PATT-C estimator against an unadjusted population estimator and a complier-adjusted sample estimator. We refer to the unadjusted population estimator as the Population Average Treatment Effect on the Treated (PATT):
 %	
 \begin{equation}\label{tpatt}
-\tau_{\text{PATT}} = \ex\left( Y_{i01} - Y_{i00} \mid S_i=0\right).
+\tau_{\text{PATT}} = \ex\left( Y_{i01} - Y_{i00} \mid S_i=0, D_i=1\right).
 \end{equation}
 %
 Under Assumptions \eqref{consistency}, \eqref{si_treat}, \eqref{si_ctrl}, and \eqref{ER}, Eq.~\eqref{tpatt} estimates the population-average causal effect of taking up treatment, adjusted according to the covariate distribution of population ``compliers.'' In contrast, the \citet{Hartman} population estimator is the ITT estimator reweighted according the to covariate distribution of the population.} Both PATT and PATT-C estimates are obtained by estimating the response surface on all individuals in the RCT and applying \ref{response-predict} of the estimation procedure to the population members.
@@ -322,35 +322,44 @@ Eq.~\eqref{tsatec} is identified under Assumptions \eqref{sutva}, \eqref{monoton
 
 The simulation is designed so that the effect of treatment is heterogeneous and depends on covariates which are different in the RCT and target population. The design satisfies the conditional independence assumptions in Figure~\ref{fig:DAG}.
 
-In the simulation, RCT eligibility, complier status, and treatment assignment in the population depend on multivariate normal covariates $(W^{1}_i, W^{2}_i, W^{3}_i, W^{4}_i)$ with mean $(0.5, 1, -1, -1)$ and covariances $\cov(W^{1}_i, W^{2}_i) = \cov(W^{1}_i, W^{4}_i)= \cov(W^{2}_i, W^{4}_i) = \cov(W^{3}_i, W^{4}_i) = 1$ and $\cov(W^{1}_i, W^{3}_i) = \cov(W^{2}_i, W^{3}_i) = 0.5$.  The first three covariates are observed by the researcher and $W^{4}_i$ is unobserved. 
+In the simulation, RCT eligibility, complier status, and treatment assignment in the population depend on multivariate normal covariates $(W^{1}_i, W^{2}_i, W^{3}_i, W^{4}_i)$ with means $(0.5, 1, -1, -1)$ and covariances $\cov(W^{1}_i, W^{2}_i) = \cov(W^{1}_i, W^{4}_i)= \cov(W^{2}_i, W^{4}_i) = \cov(W^{3}_i, W^{4}_i) = 1$ and $\cov(W^{1}_i, W^{3}_i) = \cov(W^{2}_i, W^{3}_i) = 0.5$.  The first three covariates are observed by the researcher and $W^{4}_i$ is unobserved. \textcolor{red}{$U_i, V_i, R_i$, and $Q_i$ are standard normal error terms. $U_i, V_i, R_i, Q_i$, and $(W^{1}_i, W^{2}_i, W^{3}_i, W^{4}_i)$ are mutually independent.} 
 
 The equation for selection into the RCT is
- \vskip 0.2in
- $$ S_i = \ind(e_2 + g_1W^{1}_i + g_2W^{2}_i + g_3W^{3}_i + e_4W^{4}_i + R > 0),$$
- \vskip 0.2in
-\noindent
-where $R$ is standard normal. The parameter $e_2$ varies the fraction of the population eligible for the RCT and $e_4$ varies the degree of confounding with sample selection. We set the constants $g_1, g_2,$ and $g_3$ to be $0.5,$ $0.25,$ and $0.75$, respectively.
+%	
+\begin{equation*}
+S_i = \ind(e_2 + g_1W^{1}_i + g_2W^{2}_i + g_3W^{3}_i + e_4W^{4}_i + R_i > 0).
+\end{equation*}	
+%
+The parameter $e_2$ varies the fraction of the population eligible for the RCT and $e_4$ varies the degree of confounding with sample selection. We set the constants $g_1, g_2,$ and $g_3$ to be $0.5,$ $0.25,$ and $0.75$, respectively.
 
 Complier status is determined by
-\vskip 0.2in
-$$C_i = \ind(e_3 + h_2W^{2}_i + h_3W^{3}_i + e_5W^{4}_i + Q > 0),$$
-\vskip 0.2in
-\noindent
-where $Q$ is standard normal, $e_3$ varies the fraction of compliers in the population, and $e_5$ varies the degree of confounding with treatment assignment. We set the constants $h_2$ and $h_3$ to $0.5$.
+%	
+\begin{equation*}
+C_i = \ind(e_3 + h_2W^{2}_i + h_3W^{3}_i + e_5W^{4}_i + Q_i > 0),
+\end{equation*}	
+%
+where $e_3$ varies the fraction of compliers in the population, and $e_5$ varies the degree of confounding with treatment assignment. We set the constants $h_2$ and $h_3$ to $0.5$.
 
 For individuals in the population ($S_i=0$), treatment is assigned by
- \vskip 0.2in
-  $$T_i = \ind(e_1 + f_1W^{1}_i + f_2W^{2}_i + e_6W^{4}_i + V > 0),$$
-  \vskip 0.2in
-\noindent
-where $V$ is standard normal. Varying $e_1$ changes the fraction eligible for treatment in the population and $e_6$ varies the degree of confounding with sample selection. We set the constants $f_1$ and $f_2$ to $0.25$ and $0.75$, respectively. For individuals in the RCT ($S_1=1$), treatment assignment is a sample from a Bernoulli distribution with probability $p=0.5$.
-We set treatment received $D_i$ according to $T_i$ and $C_i$: $D_i = T_i$ if $C_i=1$ and $D_i = 0$ if $C_i=0$.
+%	
+\begin{equation*}
+T_i = \ind(e_1 + f_1W^{1}_i + f_2W^{2}_i + e_6W^{4}_i + V_i > 0),
+\end{equation*}	
+%
+where $e_1$ varies the fraction eligible for treatment in the population and $e_6$ varies the degree of confounding with sample selection. We set the constants $f_1$ and $f_2$ to $0.25$ and $0.75$, respectively. For individuals in the RCT ($S_1=1$), treatment assignment \textcolor{red}{$T_i$} is a sample from a Bernoulli distribution with probability $p=0.5$.
 
 Finally, the response is determined by 
-\vskip 0.2in
-$$Y_{isd} = a + bD + c_1W^{1}_i + c_2W^{2}_i + dU.$$
-\vskip 0.2in
-We assume that the treatment effect $b$ is heterogeneous depending on $W^{1}_i$: $b = 1$ if $W^{1}_i > 0.75$ and $b=-1$ if $W^{1}_i \leq 0.75$.  We set $a, c_1,$ and $d$ to $1$ and $c_2$ to $2$. $U$ is standard normal and $U, V, R, Q, (W^{1}_i, W^{2}_i, W^{3}_i, W^{4}_i)$ are mutually independent.
+%	
+\begin{align*}
+Y_{isd} &= a + bD_i + c_1W^{1}_i + c_2W^{2}_i + \textcolor{red}{c_3W^{4}} +dU_i, \textrm{ where} \\
+b &= \left\{
+			\begin{array}{rr}
+        1, & \text{if } W^{1}_i > 0.75\\
+		-1, & \text{if } W^{1}_i \leq 0.75\\
+			\end{array}\right.
+\end{align*}	
+%
+The treatment effect $b$ is heterogeneous. We set $a, c_1, \textcolor{red}{c_3,}$ and $d$ to $1$ and $c_2$ to $2$. 
  
 We generate a population of 30,000 individuals and randomly sample 5,000. Those among the 5,000 who are eligible for the RCT ($S_i=1$) are selected. Similarly, we sample 5,000 individuals from the population and select those who are not eligible for the RCT ($S_i=0$): these are the observational study participants.\footnote{This set-up mimics the reality that a population census is usually impossible.}
 
@@ -413,7 +422,7 @@ The final two columns of Table~\ref{rct-nrt-compare} compares RCT participants s
 
 Strong ignorability assumptions may also be violated due to the fact that the OHIE applied a more stringent exclusion criteria compared to the NHIS sample. While the RCT and population sample both screened for individuals below the FPL, only the RCT required those enrolled to recertify their eligibility status every six months.
 
-\textcolor{red}{Within-household interference is ruled out in this RCT because treatment is randomized at the household level. Interference between households in a neighborhood threatens the no-interference assumption if, for example, the Medicaid coverage of individuals in treated households affects the health care use of individuals in households assigned to control \citep{hudgens2008toward}.}
+\textcolor{red}{Assumption \ref{sutva} assumes no interference between households in the context of the OHIE since randomization occurs at the household level. Within-household interference is not possible in this RCT because household members share the same treatment status. Interference between households threatens the no-interference assumption in the unlikely case that the Medicaid coverage of individuals in treated households affects the health care use of individuals in households assigned to control.} 
 
 Assumption \eqref{compl} is violated if assignment to treatment influences the compliance status of individuals with the same covariates. The compliance ensemble can accurately classify compliance status for 77\% of treated RCT participants with only the covariates --- and not treatment assignment --- as model inputs.\footnote{The compliance ensemble is evaluated in terms of 10--fold cross--validated MSE. The distribution of MSE for the ensemble and its candidate algorithms are provided in Table \ref{compliance-ensemble}.}  This gives evidence in favor of the conditional independence assumption.
 
