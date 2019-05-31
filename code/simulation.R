@@ -9,7 +9,6 @@
 ### D depends on C and Tt
 ### U, V, R, Q are N(0,1); U, V, R, Q, (W1, W2, W3) are mutually independent
 
-
 library(MASS)
 library(gbm)
 library(rpart)
@@ -21,7 +20,7 @@ library(dplyr)
 ncores <- 14 # stampede2 has 28
 registerDoParallel(ncores)
 
-sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1){
+sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1, popn=30000, samplen=5000){
   # e1 controls number in the population who are eligible for treatment
   # e2 controls number eligible to be in RCT
   # e3 controls compliance
@@ -35,8 +34,8 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
   
   for(i in 1:sims){
     # Pick target sample size
-    popsize <- 30000
-    samplesize <- 5000
+    popsize <- popn
+    samplesize <- samplen
     rctsample <- sample(1:popsize, samplesize)
     observsample <- (1:popsize)[!(1:popsize %in% rctsample)]
     nrtsample <- sample(observsample, samplesize)
@@ -135,20 +134,25 @@ sim_estimates <- function(sims = 10, e1= -1, e2 = 0.5, e3 = 1, e4=1, e5=1, e6=1)
 e <- rnorm(5)
 e <- expand.grid(e,e,e,e,e,e)
 B <- 10
+
 res <- foreach(i = 1:nrow(e)) %dopar% {
   cat(i)
   return(sim_estimates(B,e[i,1],e[i,2],e[i,3],e[i,4],e[i,5],e[i,6]))
 }
+
 res <- do.call(rbind, res)
 res <- cbind(rep(1:nrow(e), each = B), res)
 colnames(res)[1] <- "combo"
+
 mse <- t(sapply(unique(res[,"combo"]), function(x){
                 keep <- which(res[,"combo"] == x)
                 sapply(c("tpatt","tpatt_unadj","rct_sate"), function(cc)mean((res[keep,"true_patt"]-res[keep,cc])^2))
                 }))
-mse_dup <- matrix(NA, ncol = 4, nrow = B*nrow(e))
+
+mse_dup <- matrix(NA, ncol = 3, nrow = B*nrow(e))
 colnames(mse_dup) <- c("mse_tpatt", "mse_tpatt_unadj", "mse_rct_sate")
-for(i in 1:4){mse_dup[,i] <- rep(mse[,i], each = B)}
+for(i in 1:ncol(mse_dup)){mse_dup[,i] <- rep(mse[,i], each = B)}
 res <- cbind(res, mse_dup)
 res <- as.data.frame(res)
+
 save(res, file = "results/simulation_res.RData")
