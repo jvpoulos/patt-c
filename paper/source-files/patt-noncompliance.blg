@@ -5,27 +5,28 @@ The style file: chicago.bst
 Database file #1: refs.bib
 Warning--no number and no volume in buja1989linear
 Warning--no number and no volume in friedman2001greedy
+Warning--no number and no volume in imbens1997bayesian
 Warning--page numbers missing in van2007
 You've used 23 entries,
             2861 wiz_defined-function locations,
-            778 strings with 9534 characters,
-and the built_in function-call counts, 17765 in all, are:
+            776 strings with 9548 characters,
+and the built_in function-call counts, 17758 in all, are:
 = -- 1404
 > -- 1522
 < -- 2
 + -- 474
 - -- 502
-* -- 1785
+* -- 1780
 := -- 3269
 add.period$ -- 69
 call.type$ -- 23
 change.case$ -- 190
 chr.to.int$ -- 23
-cite$ -- 26
-duplicate$ -- 407
-empty$ -- 971
+cite$ -- 27
+duplicate$ -- 406
+empty$ -- 970
 format.name$ -- 566
-if$ -- 3248
+if$ -- 3247
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 21
@@ -38,13 +39,13 @@ quote$ -- 0
 skip$ -- 407
 stack$ -- 0
 substring$ -- 941
-swap$ -- 132
+swap$ -- 131
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 460
-warning$ -- 3
+warning$ -- 4
 while$ -- 214
 width$ -- 0
 write$ -- 303
-(There were 3 warnings)
+(There were 4 warnings)

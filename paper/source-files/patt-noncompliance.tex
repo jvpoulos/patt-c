@@ -309,11 +309,11 @@ We conduct a simulation study to compare the performance of the \textcolor{red}{
 %
 Under Assumptions \eqref{consistency}, \eqref{si_treat}, \eqref{si_ctrl}, and \eqref{ER}, Eq.~\eqref{tpatt} estimates the population-average causal effect of taking up treatment, adjusted according to the covariate distribution of population ``compliers.'' In contrast, the \citet{Hartman} population estimator is the ITT estimator reweighted according the to covariate distribution of the population.} Both PATT and PATT-C estimates are obtained by estimating the response surface on all individuals in the RCT and applying \ref{response-predict} of the estimation procedure to the population members.
 
-\textcolor{red}{
-We compare the population estimators to what we refer to as the Sample Average Treatment Effect on Treated Compliers (SATE-C), which is the ITT effect divided by the share of treated compliers in the RCT:
+\textcolor{red}{ %yau2001inference
+We compare the population estimators the sample Complier Average Causal Effect (CACE) \citep{imbens1997bayesian}, which is the ITT effect divided by the share of treated compliers in the RCT:
 %	
 \begin{equation}\label{tsatec}
-\tau_{\text{SATE-C}} = \ex\left( Y_{i11} - Y_{i10} \mid S_i=1\right) / \pr(T_i = D_i = 1 \mid S_i=1).
+\tau_{\text{CACE}} = \ex\left( Y_{i11} - Y_{i10} \mid S_i=1\right) / \pr(T_i = D_i = 1 \mid S_i=1).
 \end{equation}	
 %
 Eq.~\eqref{tsatec} is identified under Assumptions \eqref{sutva}, \eqref{monotonicity}, and \eqref{ER}. \citet{freedman2006} points out that the instrumental variables estimator of the average causal effect for compliers proposed by \citet{Angrist1996} is a generalization of Eq.~\eqref{tsatec}.}
@@ -369,26 +369,26 @@ In the assigned-treatment RCT group $(S_i = 1, T_i = 1)$, we train a gradient bo
 
 \subsection{Simulation results}\label{sim-results}
 
-We vary each of the parameters $e_1, e_2$, $e_3$, $e_4$, $e_5$, and $e_6$ along a grid of five random standard normal values in order to generate different combinations of rates of compliance, treatment eligibility, RCT eligibility in the population, and confounding. For each possible combination of the six parameters, we run the simulation ten times and compute the average root mean squared error (RMSE) of PATT-C, PATT, and the SATE-C. All other parameters are held constant. 
+We vary each of the parameters $e_1$, $e_2$, $e_3$, $e_4$, $e_5$, and $e_6$ along a grid of five random standard normal values in order to generate different combinations of rates of compliance, treatment eligibility, RCT eligibility in the population, and confounding. For each possible combination of the six parameters, we run the simulation 10 times and compute the average root mean squared error (RMSE) of PATT-C, PATT, and the CACE. All other parameters are held constant. 
 
 Figure~\ref{fig:rmse_ratec_rates} shows the relationship between the percent of compliers in the whole population, the percentage of people in the population eligible to participate in the RCT, and the RMSE of the PATT and PATT-C estimators. The PATT estimator performs badly when the compliance rate is low, whereas the PATT-C estimator is comparatively insensitive to changes in the compliance rate. A similar pattern emerges when the compliance rate varies with the population treatment rate (Figure~\ref{fig:rmse_ratec_ratet}).
 
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_ratec_rates.png}
-		\caption{Simulated RMSE, binned by compliance rate and percent eligible for the RCT. Darker tiles correspond to higher errors and white tiles correspond to missing simulated data.\label{fig:rmse_ratec_rates}}
+		\caption{Simulated RMSE, binned by compliance rate and percent eligible for the RCT.\label{fig:rmse_ratec_rates}}
 %		\caption{\label{fig:rmse_ratec_rates} here}
 	\end{center}
 \end{figure}
 
-Figure~\ref{fig:rmse_boxplots_rateC} compares the RMSE of PATT and PATT-C with the SATE-C at varying levels of compliance in the total population. PATT-C is relatively invariant to changes in the compliance rate and outperforms both PATT and SATE-C in terms of minimizing RMSE when the compliance rate is below 70\%. For high levels of compliance, the SATE-C \textcolor{red}{performs comparably to the PATT or PATT-C estimators}.  
+Figure~\ref{fig:rmse_boxplots_rateC} compares the RMSE of PATT and PATT-C with the CACE at varying levels of compliance in the total population. PATT-C is relatively invariant to changes in the compliance rate and outperforms both PATT and CACE in terms of minimizing RMSE when the compliance rate is below 70\%. For high levels of compliance, the CACE \textcolor{red}{performs comparably to the PATT or PATT-C estimators}.  
 
-Figures~\ref{fig:rmse_boxplots_RateConC}, \ref{fig:rmse_boxplots_RateConT}, and \ref{fig:rmse_boxplots_RateConS} explore how the degrees of confounding in the mechanisms that determine sample selection, treatment assignment, and compliance affect estimation error. PATT-C tends to be invariant to increases in the degree of confounding, whereas PATT is sensitive to confounding in the sample selection mechanism. The SATE-C estimates are generally more variable than the population estimates due to the sample estimator's inability to account for differences in pretreatment covariates between the RCT sample and target population. 
+Figures~\ref{fig:rmse_boxplots_RateConC}, \ref{fig:rmse_boxplots_RateConT}, and \ref{fig:rmse_boxplots_RateConS} explore how the degrees of confounding in the mechanisms that determine sample selection, treatment assignment, and compliance affect estimation error. PATT-C tends to be invariant to increases in the degree of confounding, whereas PATT is sensitive to confounding in the sample selection mechanism. The CACE estimates are generally more variable than the population estimates due to the sample estimator's inability to account for differences in pretreatment covariates between the RCT sample and target population. 
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width = 1\textwidth]{rmse_boxplots_rateC.png}
-\caption{Simulated RMSE of PATT-C, PATT, and SATE-C, according to compliance rates in the total population.\label{fig:rmse_boxplots_rateC}}
+\caption{Simulated RMSE of PATT-C, PATT, and CACE, according to compliance rates in the total population.\label{fig:rmse_boxplots_rateC}}
 %\caption{\label{fig:rmse_boxplots_rateC} here}
 \end{center}
 \end{figure}
@@ -439,7 +439,7 @@ Table \ref{placebo} reports the results of placebo tests, comparing the mean out
 \citet{Angrist1996} show that the bias due to violations of Assumption \eqref{monotonicity} is equivalent to the difference of average causal effects of treatment received for compliers and defiers, multiplied by the relative proportion of defiers, 
 $\pr(i\text{ is a defier}) / (\pr(i\text{ is a complier]}) - \pr(i\text{ is a defier})).$
 
-Table \ref{ohie-status} reports the distribution of participants in the OHIE by status of treatment assignment and treatment received. Assumption \eqref{monotonicity} does not hold due to the presence of defiers; i.e., participants who were assigned to control and enrolled in Medicaid during the study period. About 6.7\% of the RCT sample were assigned to control but were enrolled in Medicaid ($T_i < D_i$) and 65.5\% of the sample complied with treatment assignment ($D_i = T_i$), which results in a bias multiplier of 0.11. Suppose that the difference of average causal effects of Medicaid received on ER use for compliers and defiers is 1.2\%. The resulting bias is only 0.1\%, which would not meaningfully alter the interpretation of the SATE-C or PATT-C estimates reported below. 
+Table \ref{ohie-status} reports the distribution of participants in the OHIE by status of treatment assignment and treatment received. Assumption \eqref{monotonicity} does not hold due to the presence of defiers; i.e., participants who were assigned to control and enrolled in Medicaid during the study period. About 6.7\% of the RCT sample were assigned to control but were enrolled in Medicaid ($T_i < D_i$) and 65.5\% of the sample complied with treatment assignment ($D_i = T_i$), which results in a bias multiplier of 0.11. Suppose that the difference of average causal effects of Medicaid received on ER use for compliers and defiers is 1.2\%. The resulting bias is only 0.1\%, which would not meaningfully alter the interpretation of the CACE or PATT-C estimates reported below. 
  
 \subsection{Empirical results}\label{results}
 
@@ -485,7 +485,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_ratec_ratet.png}
-		\caption{Simulated RMSE, binned by compliance rate and treatment rate. \label{fig:rmse_ratec_ratet}}
+		\caption{Simulated RMSE, binned by compliance rate and treatment rate. White tiles correspond to missing simulated data. \label{fig:rmse_ratec_ratet}}
 %		\caption{\label{fig:rmse_ratec_ratet} here}
 	\end{center}
 \end{figure}
@@ -493,7 +493,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConC.png}
-		\caption{Simulated RMSE of PATT-C, PATT, and SATE-C, according to degree of confounding in compliance.\label{fig:rmse_boxplots_RateConC}}
+		\caption{Simulated RMSE of PATT-C, PATT, and CACE, according to degree of confounding in compliance.\label{fig:rmse_boxplots_RateConC}}
 	%	\caption{\label{fig:rmse_boxplots_RateConC} here}
 	\end{center}
 \end{figure}
@@ -501,7 +501,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConT.png}
-		\caption{Simulated RMSE of PATT-C, PATT, and SATE-C, according to degree of confounding in treatment assignment.\label{fig:rmse_boxplots_RateConT}}
+		\caption{Simulated RMSE of PATT-C, PATT, and CACE, according to degree of confounding in treatment assignment.\label{fig:rmse_boxplots_RateConT}}
 	%		\caption{\label{fig:rmse_boxplots_RateConT} here}
 	\end{center}
 \end{figure}
@@ -509,7 +509,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 1\textwidth]{rmse_boxplots_RateConS.png}
-		\caption{Simulated RMSE of PATT-C, PATT, and SATE-C, according to degree of confounding in sample selection.\label{fig:rmse_boxplots_RateConS}}
+		\caption{Simulated RMSE of PATT-C, PATT, and CACE, according to degree of confounding in sample selection.\label{fig:rmse_boxplots_RateConS}}
 	%		\caption{\label{fig:rmse_boxplots_RateConS} here}
 	\end{center}
 \end{figure}
@@ -616,7 +616,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 		\backslashbox{Estimator}{Outcome} 				& Any ER visit 	& $\#$ ER visits   & $\#$ outpatient visits      \\ \midrule
 		PATT-C                                           & 0.0001 [0.0001, 0.0001]   & 0.0005 [0.0002, 0.0008]	& 0.002 [0.002, 0.002] \\
 		PATT                                             & 0.0006 [0.0005, 0.0007]   & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
-		SATE-C                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.05, 0.06]	& -0.02 [-0.19, 0.14]  \\ \bottomrule
+		CACE                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.05, 0.06]	& -0.02 [-0.19, 0.14]  \\ \bottomrule
 	\end{tabular}\\
 	\footnotesize{Notes: Estimates in brackets represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.}
 \end{table}

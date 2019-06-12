@@ -4,56 +4,80 @@
 load(paste0(repo.directory , "results/simulation_res.RData"))
 library(ggplot2)
 library(gridExtra)
+library(ggpubr)
+library(reshape2)
+library(dplyr)
+
 color_extremes <- c("yellow", "red")
 
-### compare compliance rate and treatment rate
-p1 <- ggplot(res, aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) + 
-  geom_tile(aes(fill = sqrt(mse_tpatt)),     colour = "yellow")+ scale_fill_gradientn(colours = color_extremes,na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "PATT-C")+ 
-  guides(fill = guide_colorbar(title = "RMSE")) + 
-  theme(plot.title = element_text(hjust = 0.5))
+Range01 <- function(x, ...){(x - min(x, ...)) / (max(x, ...) - min(x, ...))}
 
-p2 <- ggplot(res, aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) +
-  geom_tile(aes(fill = sqrt(mse_tpatt_unadj)),     colour = "yellow")+ scale_fill_gradientn(colours = color_extremes,na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "PATT")+ 
-  guides(fill = guide_colorbar(title = "RMSE")) + 
-  theme(plot.title = element_text(hjust = 0.5))
+### compare compliance rate and treatment rate across estimators
 
-ggsave(paste0(repo.directory , "plots/rmse_ratec_ratet.png"), grid.arrange(p1,p2),
+res.long <-  melt(res[c("rateC","rateS","rateT",      
+                         "mse_tpatt","mse_tpatt_unadj","mse_rct_sate")], id.vars = c("rateC","rateS","rateT"))
+
+res.long$value <- Range01(sqrt(res.long$value), na.rm=TRUE)
+  
+p1 <- ggplot(res.long[res.long$variable=="mse_tpatt",], aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) + 
+  geom_tile(aes(fill = value), colour = "yellow") + scale_fill_gradientn(colours = color_extremes,na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "PATT-C")+ 
+  guides(fill = guide_colorbar(title = "RMSE (norm.)")) + 
+  theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
+
+p2 <- ggplot(res.long[res.long$variable=="mse_tpatt_unadj",], aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) +
+  geom_tile(aes(fill = value), colour = "yellow") + scale_fill_gradientn(colours = color_extremes,na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "PATT")+ 
+  guides(fill = guide_colorbar(title = "RMSE (norm.)")) + 
+  theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
+
+p3 <- ggplot(res.long[res.long$variable=="mse_rct_sate",], aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) +
+  geom_tile(aes(fill = value), colour = "yellow")+ scale_fill_gradientn(colours = color_extremes,na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "CACE")+ 
+  guides(fill = guide_colorbar(title = "RMSE (norm.)")) + 
+  theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
+
+legend <- get_legend(p3)
+
+ggsave(paste0(repo.directory , "plots/rmse_ratec_ratet.png"), 
+       ggarrange(p1, p2, p3, as_ggplot(legend), ncol=2, nrow=2, common.legend = TRUE, legend="none"),
        width=11, height=8.5)
 
 ### compare compliance rate and RCT eligibility rate
-p1 <- ggplot(res, aes(as.factor(round(rateC,1)), as.factor(round(rateS,1)))) + 
-  geom_tile(aes(fill = sqrt(mse_tpatt)),     colour = "yellow")+ 
-  scale_fill_gradientn(colours = color_extremes, na.value = "white") + 
-  labs(x = "Compliance rate", y = "% Eligible for RCT", title = "PATT-C") + 
-  guides(fill = guide_colorbar(title = "RMSE")) +
+
+p1 <- ggplot(res.long[res.long$variable=="mse_tpatt",], aes(as.factor(round(rateC,1)), as.factor(round(rateS,1)))) + 
+  geom_tile(aes(fill = value), colour = "yellow") + scale_fill_gradientn(colours = color_extremes,na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "PATT-C")+ 
+  guides(fill = guide_colorbar(title = "RMSE (norm.)")) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
 
-p2 <- ggplot(res, aes(as.factor(round(rateC,1)), as.factor(round(rateS,1)))) + 
-  geom_tile(aes(fill = sqrt(mse_tpatt_unadj)),     colour = "yellow")+ 
-  scale_fill_gradientn(colours = color_extremes, na.value = "white") + 
-  labs(x = "Compliance rate", y = "% Eligible for RCT", title = "PATT") + 
-  guides(fill = guide_colorbar(title = "RMSE")) +
+p2 <- ggplot(res.long[res.long$variable=="mse_tpatt_unadj",], aes(as.factor(round(rateC,1)), as.factor(round(rateS,1)))) +
+  geom_tile(aes(fill = value), colour = "yellow") + scale_fill_gradientn(colours = color_extremes,na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "PATT")+ 
+  guides(fill = guide_colorbar(title = "RMSE (norm.)")) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
 
-ggsave(paste0(repo.directory , "plots/rmse_ratec_rates.png"), grid.arrange(p1,p2),
+p3 <- ggplot(res.long[res.long$variable=="mse_rct_sate",], aes(as.factor(round(rateC,1)), as.factor(round(rateS,1)))) +
+  geom_tile(aes(fill = value), colour = "yellow")+ scale_fill_gradientn(colours = color_extremes,na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "CACE")+ 
+  guides(fill = guide_colorbar(title = "RMSE (norm.)")) + 
+  theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
+
+legend <- get_legend(p3)
+
+ggsave(paste0(repo.directory , "plots/rmse_ratec_rates.png"), 
+       ggarrange(p1, p2, p3, as_ggplot(legend), ncol=2, nrow=2, common.legend = TRUE, legend="none"),
        width=11, height=8.5)
 
-library(reshape2); library(dplyr)
-res2 <- data.frame(rep(res$rateC, 3), c(res$mse_tpatt, res$mse_tpatt_unadj, res$mse_rct_sate), rep(c("PATT-C", "PATT", "SATE"), each = nrow(res)));
+res2 <- data.frame(rep(res$rateC, 3), c(res$mse_tpatt, res$mse_tpatt_unadj, res$mse_rct_sate), rep(c("PATT-C", "PATT", "CACE"), each = nrow(res)));
 colnames(res2) <- c("rateC", "mse", "Estimator")
-levels(res2$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "SATE" = 3)
+levels(res2$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "CACE" = 3)
 
-res3 <- data.frame(rep(res$RateConS, 3), c(res$mse_tpatt, res$mse_tpatt_unadj, res$mse_rct_sate), rep(c("PATT-C", "PATT", "SATE"), each = nrow(res)));
+res3 <- data.frame(rep(res$RateConS, 3), c(res$mse_tpatt, res$mse_tpatt_unadj, res$mse_rct_sate), rep(c("PATT-C", "PATT", "CACE"), each = nrow(res)));
 colnames(res3) <- c("RateConS", "mse", "Estimator")
-levels(res3$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "SATE" = 3)
+levels(res3$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "CACE" = 3)
 
-res4 <- data.frame(rep(res$RateConT, 3), c(res$mse_tpatt, res$mse_tpatt_unadj, res$mse_rct_sate), rep(c("PATT-C", "PATT", "SATE"), each = nrow(res)));
+res4 <- data.frame(rep(res$RateConT, 3), c(res$mse_tpatt, res$mse_tpatt_unadj, res$mse_rct_sate), rep(c("PATT-C", "PATT", "CACE"), each = nrow(res)));
 colnames(res4) <- c("RateConT", "mse", "Estimator")
-levels(res4$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "SATE" = 3)
+levels(res4$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "CACE" = 3)
 
-res5 <- data.frame(rep(res$RateConC, 3), c(res$mse_tpatt, res$mse_tpatt_unadj, res$mse_rct_sate), rep(c("PATT-C", "PATT", "SATE"), each = nrow(res)));
+res5 <- data.frame(rep(res$RateConC, 3), c(res$mse_tpatt, res$mse_tpatt_unadj, res$mse_rct_sate), rep(c("PATT-C", "PATT", "CACE"), each = nrow(res)));
 colnames(res5) <- c("RateConC", "mse", "Estimator")
-levels(res5$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "SATE" = 3)
+levels(res5$Estimator) <- list("PATT-C" = 1, "PATT" = 2, "CACE" = 3)
 
 ### Look at just compliance rate
 p1 <- ggplot(res2, aes(x = as.factor(round(rateC,1)), y = sqrt(mse))) + 
@@ -82,7 +106,7 @@ ggsave(paste0(repo.directory , "plots/rmse_boxplots_RateConT.png"), p1,
        width=11, height=8.5)
 
 ## rate of confounding with compliance 
-p1 <- ggplot(subset(res5,RateConC<0.45), aes(x = as.factor(round(RateConC,1)), y = sqrt(mse))) + 
+p1 <- ggplot(res5, aes(x = as.factor(round(RateConC,1)), y = sqrt(mse))) + 
   geom_boxplot(aes(color = Estimator)) +labs(x = "Confounding in compliance", y = "RMSE", title = "RMSE of estimators when varying degree of confounding in compliance") + 
   scale_color_brewer(palette="Set1")+
   theme(plot.title = element_text(hjust = 0.5)) + ylim(c(0,4))

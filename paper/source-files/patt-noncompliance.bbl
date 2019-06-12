@@ -60,13 +60,6 @@ Hartman, E., R.~Grieve, R.~Ramsahai, and J.~S. Sekhon (2015).
 \newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
   in Society)\/}~{\em 10}, 1111.
 
-\bibitem[\protect\citeauthoryear{Hudgens and Halloran}{Hudgens and
-  Halloran}{2008}]{hudgens2008toward}
-Hudgens, M.~G. and M.~E. Halloran (2008).
-\newblock Toward causal inference with interference.
-\newblock {\em Journal of the American Statistical Association\/}~{\em
-  103\/}(482), 832--842.
-
 \bibitem[\protect\citeauthoryear{Imai, King, and Stuart}{Imai
   et~al.}{2008}]{ImaKinStu08}
 Imai, K., G.~King, and E.~Stuart (2008).
@@ -81,6 +74,13 @@ Imai, K., D.~Tingley, and T.~Yamamoto (2013).
 \newblock Experimental designs for identifying causal mechanisms.
 \newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
   in Society)\/}~{\em 176\/}(1), 5--51.
+
+\bibitem[\protect\citeauthoryear{Imbens and Rubin}{Imbens and
+  Rubin}{1997}]{imbens1997bayesian}
+Imbens, G.~W. and D.~B. Rubin (1997).
+\newblock Bayesian inference for causal effects in randomized experiments with
+  noncompliance.
+\newblock {\em The Annals of Statistics\/}, 305--327.
 
 \bibitem[\protect\citeauthoryear{Kolstad and Kowalski}{Kolstad and
   Kowalski}{2012}]{kolstad2012impact}
