@@ -1,4 +1,4 @@
-repo.directory <- "~/Dropbox/github/patt-noncompliance/"
+repo.directory <- "/media/jason/Dropbox/github/patt-noncompliance/"
 
 # Simulation 
 
