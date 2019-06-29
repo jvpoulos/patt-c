@@ -18,17 +18,17 @@ res.long <-  melt(res[c("rateC","rateS","rateT",
 rmse.limits <- range(sqrt(res.long$value), na.rm=TRUE)
 
 p1 <- ggplot(res.long[res.long$variable=="mse_tpatt",], aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) + 
-  geom_tile(aes(fill = sqrt(value)), colour = "yellow") + scale_fill_gradientn(colours = color_extremes, limits=rmse.limits, na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "PATT-C")+ 
+  geom_tile(aes(fill = sqrt(value)), colour = "yellow") + scale_fill_gradientn(colours = color_extremes, limits=round(rmse.limits), na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "PATT-C")+ 
   guides(fill = guide_colorbar(title = "RMSE")) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
 
 p2 <- ggplot(res.long[res.long$variable=="mse_tpatt_unadj",], aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) +
-  geom_tile(aes(fill = sqrt(value)), colour = "yellow") + scale_fill_gradientn(colours = color_extremes, limits=rmse.limits, na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "PATT")+ 
+  geom_tile(aes(fill = sqrt(value)), colour = "yellow") + scale_fill_gradientn(colours = color_extremes, limits=round(rmse.limits), na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "PATT")+ 
   guides(fill = guide_colorbar(title = "RMSE")) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
 
 p3 <- ggplot(res.long[res.long$variable=="mse_rct_sate",], aes(as.factor(round(rateC,1)), as.factor(round(rateT,1)))) +
-  geom_tile(aes(fill = sqrt(value)), colour = "yellow")+ scale_fill_gradientn(colours = color_extremes, limits=rmse.limits, na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "CACE")+ 
+  geom_tile(aes(fill = sqrt(value)), colour = "yellow")+ scale_fill_gradientn(colours = color_extremes, limits=round(rmse.limits), na.value = "white") + labs(x = "Compliance rate", y = "Treatment rate", title = "CACE")+ 
   guides(fill = guide_colorbar(title = "RMSE")) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white")) + theme(legend.position="right")
 
@@ -41,17 +41,17 @@ ggsave(paste0(repo.directory , "plots/rmse_ratec_ratet.png"),
 ### compare compliance rate and RCT eligibility rate
 
 p1 <- ggplot(res.long[res.long$variable=="mse_tpatt",], aes(as.factor(round(rateC,1)), as.factor(round(rateS,1)))) + 
-  geom_tile(aes(fill = sqrt(value)), colour = "yellow") + scale_fill_gradientn(colours = color_extremes, limits=rmse.limits, na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "PATT-C")+ 
+  geom_tile(aes(fill = sqrt(value)), colour = "yellow") + scale_fill_gradientn(colours = color_extremes, limits=round(rmse.limits), na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "PATT-C")+ 
   guides(fill = guide_colorbar(title = "RMSE")) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
 
 p2 <- ggplot(res.long[res.long$variable=="mse_tpatt_unadj",], aes(as.factor(round(rateC,1)), as.factor(round(rateS,1)))) +
-  geom_tile(aes(fill = sqrt(value)), colour = "yellow") + scale_fill_gradientn(colours = color_extremes, limits=rmse.limits, na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "PATT")+ 
+  geom_tile(aes(fill = sqrt(value)), colour = "yellow") + scale_fill_gradientn(colours = color_extremes, limits=round(rmse.limits), na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "PATT")+ 
   guides(fill = guide_colorbar(title = "RMSE")) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white"))
 
 p3 <- ggplot(res.long[res.long$variable=="mse_rct_sate",], aes(as.factor(round(rateC,1)), as.factor(round(rateS,1)))) +
-  geom_tile(aes(fill = sqrt(value)), colour = "yellow")+ scale_fill_gradientn(colours = color_extremes, limits=rmse.limits, na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "CACE")+ 
+  geom_tile(aes(fill = sqrt(value)), colour = "yellow")+ scale_fill_gradientn(colours = color_extremes, limits=round(rmse.limits), na.value = "white") + labs(x = "Compliance rate", y = "% Eligible for RCT", title = "CACE")+ 
   guides(fill = guide_colorbar(title = "RMSE")) + 
   theme(plot.title = element_text(hjust = 0.5)) + theme(panel.background=element_rect(fill="white", colour="white")) + theme(legend.position="right")
 
