@@ -23,6 +23,13 @@ Baicker, K., S.~L. Taubman, H.~L. Allen, M.~Bernstein, J.~H. Gruber, J.~P.
 \newblock The oregon experiment—effects of medicaid on clinical outcomes.
 \newblock {\em New England Journal of Medicine\/}~{\em 368\/}(18), 1713--1722.
 
+\bibitem[\protect\citeauthoryear{Balke and Pearl}{Balke and
+  Pearl}{1997}]{balke1997bounds}
+Balke, A. and J.~Pearl (1997).
+\newblock Bounds on treatment effects from studies with imperfect compliance.
+\newblock {\em Journal of the American Statistical Association\/}~{\em
+  92\/}(439), 1171--1176.
+
 \bibitem[\protect\citeauthoryear{Breiman}{Breiman}{2001}]{breiman2001}
 Breiman, L. (2001).
 \newblock Random forests.
@@ -41,6 +48,12 @@ Finkelstein, A., S.~Taubman, B.~Wright, M.~Bernstein, J.~Gruber, J.~P.
 \newblock The oregon health insurance experiment: Evidence from the first year.
 \newblock {\em The Quarterly Journal of Economics\/}~{\em 127\/}(3), 1057.
 
+\bibitem[\protect\citeauthoryear{Frangakis and Rubin}{Frangakis and
+  Rubin}{2002}]{frangakis2002principal}
+Frangakis, C.~E. and D.~B. Rubin (2002).
+\newblock Principal stratification in causal inference.
+\newblock {\em Biometrics\/}~{\em 58\/}(1), 21--29.
+
 \bibitem[\protect\citeauthoryear{Freedman}{Freedman}{2006}]{freedman2006}
 Freedman, D.~A. (2006).
 \newblock Statistical models for causation what inferential leverage do they
@@ -51,6 +64,14 @@ Freedman, D.~A. (2006).
 Friedman, J.~H. (2001).
 \newblock Greedy function approximation: {A} gradient boosting machine.
 \newblock {\em Annals of Statistics\/}, 1189--1232.
+
+\bibitem[\protect\citeauthoryear{Frumento, Mealli, Pacini, and Rubin}{Frumento
+  et~al.}{2012}]{frumento2012evaluating}
+Frumento, P., F.~Mealli, B.~Pacini, and D.~B. Rubin (2012).
+\newblock Evaluating the effect of training on wages in the presence of
+  noncompliance, nonemployment, and missing outcome data.
+\newblock {\em Journal of the American Statistical Association\/}~{\em
+  107\/}(498), 450--466.
 
 \bibitem[\protect\citeauthoryear{Hartman, Grieve, Ramsahai, and Sekhon}{Hartman
   et~al.}{2015}]{Hartman}
@@ -74,6 +95,12 @@ Imai, K., D.~Tingley, and T.~Yamamoto (2013).
 \newblock Experimental designs for identifying causal mechanisms.
 \newblock {\em Journal of the Royal Statistical Society: Series A (Statistics
   in Society)\/}~{\em 176\/}(1), 5--51.
+
+\bibitem[\protect\citeauthoryear{Imbens and Angrist}{Imbens and
+  Angrist}{1994}]{imbens1994identification}
+Imbens, G.~W. and J.~D. Angrist (1994).
+\newblock Identification and estimation of local average treatment effects.
+\newblock {\em Econometrica\/}~{\em 62\/}(2), 467--475.
 
 \bibitem[\protect\citeauthoryear{Imbens and Rubin}{Imbens and
   Rubin}{1997}]{imbens1997bayesian}
@@ -159,5 +186,14 @@ van~der Laan, M.~J., E.~C. Polley, and A.~E. Hubbard (2007).
 \newblock Super learner.
 \newblock {\em Statistical Applications in Genetics and Molecular
   Biology\/}~{\em 6\/}(1).
+
+\bibitem[\protect\citeauthoryear{Yau and Little}{Yau and
+  Little}{2001}]{yau2001inference}
+Yau, L.~H. and R.~J. Little (2001).
+\newblock Inference for the complier-average causal effect from longitudinal
+  data subject to noncompliance and missing data, with application to a job
+  training assessment for the unemployed.
+\newblock {\em Journal of the American Statistical Association\/}~{\em
+  96\/}(456), 1232--1244.
 
 \end{thebibliography}

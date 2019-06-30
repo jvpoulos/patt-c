@@ -82,7 +82,7 @@
       <file>jci-revision-memo-second.bcf</file>
     </requires>
     <requires type="editable">
-      <file>refs.bib</file>
+      <file>../../../paper/source-files/refs.bib</file>
     </requires>
   </external>
 </requests>

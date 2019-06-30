@@ -1,4 +1,3 @@
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[hidelinks,12pt,letterpaper]{article}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,6 +43,13 @@
 % Table of contents
 \renewcommand*\contentsname{Revision memo:\\ ``Estimating population average treatment effects from experiments with noncompliance"\\ (DGJCI.2018.0011)}
 
+% Chicago 15 ed. author-date
+\usepackage[utf8]{inputenc}
+%\usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage[authordate,backend=biber,natbib]{biblatex-chicago}
+\addbibresource{../../../paper/source-files/refs.bib}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -61,20 +67,32 @@
 \subsection{Definition of SATE}
 %1) I agree with the reviewer that what you call SATE should be referred to as the sample local average treatment effect among the compliers.
 
-Following R1's guidance, we now call this quantity the sample Complier Average Causal Effect (CACE) (see \ref{SATE-def} below). 
+Following R1's guidance, and conforming to naming conventions in the recent literature on causal inference with noncompliance \citep{yau2001inference,frumento2012evaluating}, we now call this quantity the sample Complier Average Causal Effect (CACE). 
 
 \subsection{DAG}
 %2) The DAG in Figure 1 appears to encode ignorability assumptions that are not needed for Assumptions 1-5 to hold. For example, W alone blocks all the back-door paths from D to Y, implying that the average causal effect of D on Y can be identified by just conditioning on W (i.e. you can ignore RCT vs. observational and compliance status). This clearly does not make sense. I would therefore encourage you to replace it with another DAG that is as close as possible to a maximal DAG that still satisfies Assumptions 1-5. Specifically, can you add "confounding arcs" that are accommodated by Assumptions 1-5?
 
+% replace with DAG that has all relevant arrows
+
+
 \subsection{No defier assumption}
 %3) Page 6: The no defier assumption itself does not ensure one-sided crossover, since it still accommodates both never-takers and always-takers. On the other hand, the assumed missingness structure for C appears to presume one-sided compliance. So Assumption 6 should be either strengthened to the actual one-sided noncompliance assumption, or alternatively you could state the setup implicitly assumes one-sided noncompliance, which implies no defier, and Drop A6.
+
+% Reword A6 to assume one-sided noncompliance (see Freedman 2006)
 
 \subsection{Assumption 7}
 %4) Assumption 7 appears misstated, since the third subscript of Y refers to the actual treatment (D) rather than assigned treatment (T). Under the framework of Angrist et al. Y_{i11} would be undefined for never-takers. I would suggest dropping A7 and simply state that the notation for the potential outcomes (i.e. the fact that it does not have T in the subscript) implicitly assumes the exclusion restriction.
 
+% exclusion restriction baked into the notation
+% we don't cite Assumption 7 (ER in our proof)
+
 \subsection{Conceptualizing PATT-C}
 
 %5) I am having hard time conceptualizing "compliers" outside the context of an RCT, since whether someone complies to the treatment assignment crucially depends on the nature of the assignment. Specifically, how should one conceptualize PATT-C? Is the conditioning set simply "those in the population who receive the treatment" as stated on the bottom of page 6, or should it rather be "those in the population who would receive the treatment if they were in the RCT and assigned to the treatment"? The treated in the population did not take the treatment as a result of the experimental treatment assignment---they voluntarily chose to take the treatment without encouragement---so the difference is substantively meaningful. Or is it the case that the assumed ignorability conditions obviate the difference? Please clarify in Section 2.2 when you define PATT-C.
+
+% those in the population who receive the treatment assuming that T affects people in the same way, btwn. the RCT and popuation
+
+% Assumption 2 makes the two statements the same
 
 \subsection{Theorem 1}
 %6) Theorem 1 does not show that PATT-C is nonparametrically identifiable from observed data, because the second term is counterfactual, i.e. it equals the average potential outcome under control in the population among those who actually received treatment in the population. Therefore Theorem 1 itself does not seem to justify the estimation procedure proposed in the following section. Specifically, S.3 and S.4 appear to imply that you are estimating E[Y_{00}| S=0, D=1, W] by E[Y| S=1, D=0, W]. You should show explicitly that these two quantities are equal, and incorporate that in the theorem.
@@ -85,20 +103,30 @@ Following R1's guidance, we now call this quantity the sample Complier Average C
 \subsection{Same $W$}
 %8) Section 3.1: "First, we assume that the W that determine sample selection..." -- is this already implied by the fact that Assumptions 2-4 all condition in the same W?
 
+% Delete sentence: First, we assume that the $W_i$ that determine sample selection also determine population treatment assignment and complier status. 
+
 \subsection{Formal definition of PATT}
 %9) You refer to a "PATT estimate" in multiple places in the paper and also use it in the simulation analysis, but you only define it informally in footnote 8. I would like to see a more formal, explicit definition in the main text. In doing this, please incorporate the reviewer's comments on the estimation of PATT.
 
 \section{Reviewer 1 (R1)'s comments}
 
 \subsection{Definition of SATE} \label{SATE-def}
+%The authors define SATE in their simulations as “the ITT effect estimated from the RCT sample adjusted by the sample compliance rate” (pg. 11 for example) This is contrary to how we’d usually define SATE and the complier average treatment effect (whatever acronym would be most appropriate in this particular example). The usual SATE estimator would be: E [ Y i 1 − Y i 0 | S i = 1 ] But the authors are estimating the sample CACE, which is: E [ Y i 1 − Y i 0 | S i = 1, C i = 1 ]. I think that the authors are correct that the sample CACE as it is the sample analog to the population parameter they are studying, but it is very confusing to see it described as the SATE. Clarification would help, or perhaps a different acronym.
 
-R1 points out that what we have referred to as SATE is inconsistent with how we'd usually define SATE. The quantity we're interested in estimating is the sample local average treatment effect among the compliers, which Freedman 2006 shows can be recovered by scaling the ITT effect by the proportion of treated compliers in the RCT. This estimator is equivalent to the instrumental variables estimator for the LATE proposed by AIR 1996.
+R1 points out that what we have referred to as SATE is inconsistent with how we'd usually define SATE. The quantity we're interested in estimating is the sample local average treatment effect among the compliers. This quantity is commonly referred to as the LATE in the econometrics literature \citep[e.g.,][]{Angrist1996} (AIR). \citet{freedman2006} shows that the instrumental variables estimator for the LATE proposed by AIR is equivalent to scaling the ITT effect by the proportion of treated compliers in the RCT.
 
-Following the guidance of R1 and the Editor, we refer to this quantity in the revised manuscript as the Sample Average Treatment Effect on Treated Compliers (SATE-C) and define its estimator in Eq.~\eqref{tsatec}. 
+Following the guidance of R1, we refer to this quantity in the revised manuscript as the Complier Average Causal Effect (CACE) and define it in Eq.~\eqref{tcace}. Referring to this quantity as the CACE also conforms to recent naming conventions in the literature concerning program evaluation in the presence of noncompliance \citep{yau2001inference,frumento2012evaluating}.
 
 \subsection{Estimation of PATT}
 
 %I am still somewhat confused about the PATT estimator the authors use–as I understand it, they are estimating Y1 and Y0 in the RCT (based on actual treatment received) and then projecting this on to the population units to received treatment. This seems like it would require additional assumptions above the ones outlined in most of the extant literature that rely on reweighting methods. Usually these methods leverage the exchangeability in the randomized trial before projecting (more or less relying on similar estimates in small subgroups or strata), but here the authors implicitly adding an ignorability assumption within the experiment in order to assume they’ve properly (non-parametrically) modeled Y1 and Y0 in the face of non-compliance. In the RCT, receipt of treatment is driven by the C i equation, but in the population it is driven by the T i equation (and maybe also C i ). It is unclear to me, then, if the PATT estimator is per- forming poorly because of failure of the ignorability assumption in the sample, modeling assumptions, or the confounding? I think making the additional necessary assumption clear would at least help clarify why this method is more sensitive.
+
+%Exchangability in the RCT
+%normally estimate ate as a function of covariates in the RCT first and then project to population
+% We're estimating Yi1, Yi0, as a function of covariates
+% We only want it for compliers, and don't know who the compliers are in the population
+
+%it is performing more poorly because it isn't adjusted for compliance
 
 \subsection{Small points}
 
@@ -107,12 +135,18 @@ Following the guidance of R1 and the Editor, we refer to this quantity in the re
 
 R1 is correct: a more appropriate thought experiment to our proposed PATT-C is an estimator that reweights the ITT effect to the whole population and then divides by the proportion of treated compliers in the population. We have revised the manuscript accordingly. 
 
+% Problem is that we don't know compliance rate in the population
+
 \paragraph*{Exclusion criteria and strong ignorability}
 %Pg. 5 “RCT study designs that apply restrictive exclusion criteria may increase the likelihood that there are unobserved differences...” This sentence was a bit unclear to me. I could could see that the strict inclusion/exclusion violate positivity. But why would strict inclusion/exclusion criteria necessarily make for unobservable differences? In medical trials where the inclusion/exclusion criteria are known , it seems that would be preferable to an unknown, even if weaker, set of criteria. I think that the authors intuition is correct we might be somewhat more concerned, but I’m not sure the point is so straightforward.
 
-The strong ignorability assumptions would be violated if the known exclusion criteria are correlated with unobserved factors that determine potential outcomes. High exclusion would therefore increase the likelihood that there are unobserved differences between the RCT and target population.  
+The strong ignorability assumptions would be violated if the known exclusion criteria are correlated with unobserved factors that also determine potential outcomes. High exclusion would therefore increase the likelihood that there are unobserved differences between the RCT and target population.  
 
 We have revised the manuscript to make this point more straightforward and to provide an example. We also note that bias resulting from violations of ignorability assumptions would be detected in the placebo tests. Our placebo test results show no bias in estimates of the complier-average population effects. 
+
+%** NEW EXAMPLE: If propensity to recertify is correlated with unobserved variables
+% We don't have a covariate on recertification
+%Strong ignorability assumptions may also be violated due to the fact that the OHIE applied a more stringent exclusion criteria compared to the NHIS sample. While the RCT and population sample both screened for individuals below the FPL, only the RCT required those enrolled to recertify their eligibility status every six months.
 
 \paragraph*{RCT policy motivation}
 %Pg. 16: I thought the sentence “An important question for policymakers is whether...” was nice motivation that could be emphasized in the intro.
@@ -122,10 +156,29 @@ We've added a line  in the introduction to emphasize the policy motivation for t
 \paragraph*{HH-level treatment}
 %Pg. 18: The authors state that interference is less likely in this RCT because of HH level treatment–how is this addressed in the analysis, and in particular, what does it mean for the definition of the population?
 
+% Within vs. between-hh interference
+% population: individuals grouped within households
+
+% cluster SEs at the household-level
+
+% don't introduce new notation
+
 \paragraph*{Typos}
 %Pg. 5: footnote 3 has “Assumption 3 and 3”
 %Pg. 14: Typo: “as closely than”
 We fixed the two typos helpfully pointed out by R1. 
 
+\section{Other revisions}
+
+\subsection{Simulation}
+We found that the confounding variable $W^{4}_i$ was missing in the response equation in both the code and the write-up of the simulation design in Section \ref{sim}. 
+
+In the current manuscript, we have included $W^{4}_i$ and constant $c_3$ (set to 1) in the response equation in the code and write-up and re-ran the simulation. The new compliance heatmaps (Figures~\ref{fig:rmse_ratec_rates} and \ref{fig:rmse_ratec_ratet}) share a common gradient scale to ensure comparability between the PATT-C, PATT, and CACE estimators. The heatmaps show the PATT-C yields lower estimation error than its unadjusted counterpart when the population compliance rate is relatively low (i.e., 80\% or less). The new bar plot comparing the RMSE of estimators when varying the population compliance rate (Figure~\ref{fig:rmse_boxplots_rateC}) shows, as expected, the estimation error of the estimators is inversely related to the population compliance rate. PATT-C outperforms its unadjusted counterpart when the compliance rate is relatively low (i.e., 80\% and lower). 
+
+
+% compare results
+
+%Bibliography
+\printbibliography
 
 \end{document}
