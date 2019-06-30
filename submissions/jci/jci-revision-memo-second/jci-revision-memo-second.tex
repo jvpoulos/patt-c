@@ -142,11 +142,7 @@ R1 is correct: a more appropriate thought experiment to our proposed PATT-C is a
 
 The strong ignorability assumptions would be violated if the known exclusion criteria are correlated with unobserved factors that also determine potential outcomes. High exclusion would therefore increase the likelihood that there are unobserved differences between the RCT and target population.  
 
-We have revised the manuscript to make this point more straightforward and to provide an example. We also note that bias resulting from violations of ignorability assumptions would be detected in the placebo tests. Our placebo test results show no bias in estimates of the complier-average population effects. 
-
-%** NEW EXAMPLE: If propensity to recertify is correlated with unobserved variables
-% We don't have a covariate on recertification
-%Strong ignorability assumptions may also be violated due to the fact that the OHIE applied a more stringent exclusion criteria compared to the NHIS sample. While the RCT and population sample both screened for individuals below the FPL, only the RCT required those enrolled to recertify their eligibility status every six months.
+We have revised the manuscript to make this point more straightforward and to provide an example from our RCT application. We also note that bias resulting from violations of ignorability assumptions would be detected in the placebo tests. Our placebo test results show no bias in estimates of the complier-average population effects. 
 
 \paragraph*{RCT policy motivation}
 %Pg. 16: I thought the sentence “An important question for policymakers is whether...” was nice motivation that could be emphasized in the intro.
@@ -175,8 +171,6 @@ We found that the confounding variable $W^{4}_i$ was missing in the response equ
 
 In the current manuscript, we have included $W^{4}_i$ and constant $c_3$ (set to 1) in the response equation in the code and write-up and re-ran the simulation. The new compliance heatmaps (Figures~\ref{fig:rmse_ratec_rates} and \ref{fig:rmse_ratec_ratet}) share a common gradient scale to ensure comparability between the PATT-C, PATT, and CACE estimators. The heatmaps show the PATT-C yields lower estimation error than its unadjusted counterpart when the population compliance rate is relatively low (i.e., 80\% or less). The new bar plot comparing the RMSE of estimators when varying the population compliance rate (Figure~\ref{fig:rmse_boxplots_rateC}) shows, as expected, the estimation error of the estimators is inversely related to the population compliance rate. PATT-C outperforms its unadjusted counterpart when the compliance rate is relatively low (i.e., 80\% and lower). 
 
-
-% compare results
 
 %Bibliography
 \printbibliography
