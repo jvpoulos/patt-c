@@ -108,6 +108,8 @@ Following R1's guidance, and conforming to naming conventions in the recent lite
 \subsection{Formal definition of PATT}
 %9) You refer to a "PATT estimate" in multiple places in the paper and also use it in the simulation analysis, but you only define it informally in footnote 8. I would like to see a more formal, explicit definition in the main text. In doing this, please incorporate the reviewer's comments on the estimation of PATT.
 
+In Section \ref{sim}, we formally define the PATT estimator (Eq.~\eqref{tpatt})
+
 \section{Reviewer 1 (R1)'s comments}
 
 \subsection{Definition of SATE} \label{SATE-def}
@@ -121,21 +123,20 @@ Following the guidance of R1, we refer to this quantity in the revised manuscrip
 
 %I am still somewhat confused about the PATT estimator the authors use–as I understand it, they are estimating Y1 and Y0 in the RCT (based on actual treatment received) and then projecting this on to the population units to received treatment. This seems like it would require additional assumptions above the ones outlined in most of the extant literature that rely on reweighting methods. Usually these methods leverage the exchangeability in the randomized trial before projecting (more or less relying on similar estimates in small subgroups or strata), but here the authors implicitly adding an ignorability assumption within the experiment in order to assume they’ve properly (non-parametrically) modeled Y1 and Y0 in the face of non-compliance. In the RCT, receipt of treatment is driven by the C i equation, but in the population it is driven by the T i equation (and maybe also C i ). It is unclear to me, then, if the PATT estimator is per- forming poorly because of failure of the ignorability assumption in the sample, modeling assumptions, or the confounding? I think making the additional necessary assumption clear would at least help clarify why this method is more sensitive.
 
-%Exchangability in the RCT
-%normally estimate ate as a function of covariates in the RCT first and then project to population
-% We're estimating Yi1, Yi0, as a function of covariates
-% We only want it for compliers, and don't know who the compliers are in the population
+R1 asks for clarification on the assumptions needed to identify the unadjusted population (PATT) estimator and for more discussion of the estimator's performance in the simulations.  
 
-%it is performing more poorly because it isn't adjusted for compliance
+In Section \ref{sim} of the revised manuscript, we formally define the PATT estimator (Eq.~\eqref{tpatt}). When estimating PATT, we are estimating the response curve for all RCT members, conditional on their covariates and actual treatment received. We then use the response model to estimate the outcomes of population members who received treatment, given their covariates. 
+
+The prevailing approach \citep[e.g.,][]{Hartman} is to estimate the ITT effect as a function of covariates in the RCT first and then project to the population. Our approach differs because, when correcting for noncompliance (PATT-C), we only want the response curve for RCT compliers and we cannot identify who is a ``complier'' in the RCT control group. Complier treated and complier controls aren't exchangeable by design, since we need to assume we know the complier model. As R1 notes, we need to assume in estimating either PATT or PATT-C that the response surface is the same for compliers in the RCT and population members who received treatment.  If the strong ignorability assumptions do not hold, then the potential outcomes $Y_{i10}$ and $Y_{i11}$ for population members who received treatment cannot be estimated using the response model.
+
+In the simulations, PATT is performing worse compared to the PATT-C because it isn't adjusted for compliance.
 
 \subsection{Small points}
 
 \paragraph*{Alternative complier-adjusted population estimator}
 %Pg. 2: “one might simply weight the PATT estimate by the population compliance rate in order to yield a population average effect of treatment on treated compliers”. I found this confusing, because isn’t the PATT estimate already projected on to those who received treatment (i.e. the compliers). I am not sure this would work, but it isn’t a more appropriate thought experiment to reweight/project the ITT effect to the whole population and then divide by population compliance?
 
-R1 is correct: a more appropriate thought experiment to our proposed PATT-C is an estimator that reweights the ITT effect to the whole population and then divides by the proportion of treated compliers in the population. We have revised the manuscript accordingly. 
-
-% Problem is that we don't know compliance rate in the population
+R1 is correct: a more appropriate thought experiment to our proposed PATT-C is an estimator that reweights the ITT effect to the whole population and then divides by the proportion of treated compliers in the population. The problem is that we don't know the compliance rate in the population. Our approach of explicitly modeling compliance allows us to identify the likely compliers in the RCT control group, whose outcomes we model in \ref{response-model} of the estimation procedure. We revised the Introduction to include the more appropriate thought experiment and discuss the rationale for our approach. 
 
 \paragraph*{Exclusion criteria and strong ignorability}
 %Pg. 5 “RCT study designs that apply restrictive exclusion criteria may increase the likelihood that there are unobserved differences...” This sentence was a bit unclear to me. I could could see that the strict inclusion/exclusion violate positivity. But why would strict inclusion/exclusion criteria necessarily make for unobservable differences? In medical trials where the inclusion/exclusion criteria are known , it seems that would be preferable to an unknown, even if weaker, set of criteria. I think that the authors intuition is correct we might be somewhat more concerned, but I’m not sure the point is so straightforward.

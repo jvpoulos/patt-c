@@ -143,6 +143,55 @@
       \field{pages}{450\bibrangedash 466}
       \range{pages}{17}
     \endentry
+    \entry{Hartman}{article}{}
+      \name{author}{4}{}{%
+        {{uniquename=0,uniquepart=base,hash=a17a3cf43f990c88df7fc3b5db193a04}{%
+           family={Hartman},
+           familyi={H\bibinitperiod},
+           given={Erin},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=4f57a39b95ec37d7103109f71b9c6cbd}{%
+           family={Grieve},
+           familyi={G\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=713003525404d9bc275b8b6d90493ee4}{%
+           family={Ramsahai},
+           familyi={R\bibinitperiod},
+           given={Roland},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{uniquename=0,uniquepart=base,hash=f1dc8b9aca88537a0b58fcfd4a563c5f}{%
+           family={Sekhon},
+           familyi={S\bibinitperiod},
+           given={Jasjeet\bibnamedelima S},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Citeseer}%
+      }
+      \strng{namehash}{cbcc5c658ecb00a8ae636e88bcd83315}
+      \strng{fullhash}{f8b431390498db0a27f14904eb6e0cac}
+      \strng{bibnamehash}{f8b431390498db0a27f14904eb6e0cac}
+      \strng{authorbibnamehash}{f8b431390498db0a27f14904eb6e0cac}
+      \strng{authornamehash}{cbcc5c658ecb00a8ae636e88bcd83315}
+      \strng{authorfullhash}{f8b431390498db0a27f14904eb6e0cac}
+      \field{sortinit}{H}
+      \field{sortinithash}{6db6145dae8dc9e1271a8d556090b50a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the Royal Statistical Society: Series A (Statistics in Society)}
+      \field{title}{From SATE to PATT: Combining experimental with observational studies to estimate population treatment effects}
+      \field{volume}{10}
+      \field{year}{2015}
+      \field{pages}{1111}
+      \range{pages}{1}
+    \endentry
     \entry{yau2001inference}{article}{}
       \name{author}{2}{}{%
         {{uniquename=0,uniquepart=base,hash=5d704c619902b10796998843b6132033}{%

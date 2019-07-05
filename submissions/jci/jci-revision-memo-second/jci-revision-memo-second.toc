@@ -24,10 +24,10 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1}Definition of SATE}{1}{subsection.2.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}Estimation of PATT}{2}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {2.2}Estimation of PATT}{1}{subsection.2.2}% 
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3}Small points}{2}{subsection.2.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Other revisions}{2}{section.3}% 
+\contentsline {section}{\numberline {3}Other revisions}{3}{section.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Simulation}{2}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.1}Simulation}{3}{subsection.3.1}% 

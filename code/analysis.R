@@ -1,7 +1,3 @@
-## Estimate conditional expectation of responses in RCT 
-## Then, use response model to estimate population members' outcomes given their covariates.
-## These estimates will be used to estimate the PATT.
-
 load(paste0(repo.directory,"data/prepare-analysis.RData")) # result of prepare-analysis.R
 
 # Create dfs containing common features for RCT and observational study
