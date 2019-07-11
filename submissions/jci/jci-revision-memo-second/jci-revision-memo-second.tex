@@ -153,12 +153,7 @@ We've added a line  in the introduction to emphasize the policy motivation for t
 \paragraph*{HH-level treatment}
 %Pg. 18: The authors state that interference is less likely in this RCT because of HH level treatment–how is this addressed in the analysis, and in particular, what does it mean for the definition of the population?
 
-% Within vs. between-hh interference
-% population: individuals grouped within households
-
-% cluster SEs at the household-level
-
-% don't introduce new notation
+We have clarified when introducing the RCT data in Section \ref{application} that the response and complier models include household size as a covariate because lottery selection was random conditional on household size. R1 is correct that because treatment occurred at the household level, we should define the population in the empirical application as individuals grouped within households. Accordingly, in the revised manuscript we cluster standard errors at the household level. 
 
 \paragraph*{Typos}
 %Pg. 5: footnote 3 has “Assumption 3 and 3”
@@ -171,6 +166,10 @@ We fixed the two typos helpfully pointed out by R1.
 We found that the confounding variable $W^{4}_i$ was missing in the response equation in both the code and the write-up of the simulation design in Section \ref{sim}. 
 
 In the current manuscript, we have included $W^{4}_i$ and constant $c_3$ (set to 1) in the response equation in the code and write-up and re-ran the simulation. The new compliance heatmaps (Figures~\ref{fig:rmse_ratec_rates} and \ref{fig:rmse_ratec_ratet}) share a common gradient scale to ensure comparability between the PATT-C, PATT, and CACE estimators. The heatmaps show the PATT-C yields lower estimation error than its unadjusted counterpart when the population compliance rate is relatively low (i.e., 80\% or less). The new bar plot comparing the RMSE of estimators when varying the population compliance rate (Figure~\ref{fig:rmse_boxplots_rateC}) shows, as expected, the estimation error of the estimators is inversely related to the population compliance rate. PATT-C outperforms its unadjusted counterpart when the compliance rate is relatively low (i.e., 80\% and lower). 
+
+\subsection{Empirical application}
+
+% incl. indicator variable for survey wave + interaction with hh size dummies
 
 
 %Bibliography

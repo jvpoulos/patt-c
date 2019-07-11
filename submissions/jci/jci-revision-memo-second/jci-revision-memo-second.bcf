@@ -3609,7 +3609,6 @@
     <bcf:citekey order="4">freedman2006</bcf:citekey>
     <bcf:citekey order="5">yau2001inference</bcf:citekey>
     <bcf:citekey order="5">frumento2012evaluating</bcf:citekey>
-    <bcf:citekey order="6">Hartman</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="cms">
