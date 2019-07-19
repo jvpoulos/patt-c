@@ -7,22 +7,6 @@ Angrist, J.~D., G.~W. Imbens, and D.~B. Rubin (1996, June).
 \newblock {\em Journal of the American Statistical Association\/}~{\em
   91\/}(434), 444--455.
 
-\bibitem[\protect\citeauthoryear{Baicker, Finkelstein, Song, and
-  Taubman}{Baicker et~al.}{2014}]{baicker2014}
-Baicker, K., A.~Finkelstein, J.~Song, and S.~Taubman (2014).
-\newblock The impact of medicaid on labor market activity and program
-  participation: Evidence from the oregon health insurance experiment.
-\newblock {\em The American Economic Review\/}~{\em 104\/}(5), 322.
-
-\bibitem[\protect\citeauthoryear{Baicker, Taubman, Allen, Bernstein, Gruber,
-  Newhouse, Schneider, Wright, Zaslavsky, and Finkelstein}{Baicker
-  et~al.}{2013}]{baicker2013}
-Baicker, K., S.~L. Taubman, H.~L. Allen, M.~Bernstein, J.~H. Gruber, J.~P.
-  Newhouse, E.~C. Schneider, B.~J. Wright, A.~M. Zaslavsky, and A.~N.
-  Finkelstein (2013).
-\newblock The oregon experiment—effects of medicaid on clinical outcomes.
-\newblock {\em New England Journal of Medicine\/}~{\em 368\/}(18), 1713--1722.
-
 \bibitem[\protect\citeauthoryear{Balke and Pearl}{Balke and
   Pearl}{1997}]{balke1997bounds}
 Balke, A. and J.~Pearl (1997).
@@ -186,6 +170,13 @@ van~der Laan, M.~J., E.~C. Polley, and A.~E. Hubbard (2007).
 \newblock Super learner.
 \newblock {\em Statistical Applications in Genetics and Molecular
   Biology\/}~{\em 6\/}(1).
+
+\bibitem[\protect\citeauthoryear{Westfall, Young, et~al.}{Westfall
+  et~al.}{1993}]{westfall1993resampling}
+Westfall, P.~H., S.~S. Young, et~al. (1993).
+\newblock {\em Resampling-based multiple testing: Examples and methods for
+  p-value adjustment}, Volume 279.
+\newblock John Wiley \& Sons.
 
 \bibitem[\protect\citeauthoryear{Yau and Little}{Yau and
   Little}{2001}]{yau2001inference}

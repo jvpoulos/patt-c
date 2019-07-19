@@ -2,32 +2,46 @@ load(paste0(repo.directory,"data/prepare-analysis.RData")) # result of prepare-a
 
 # Create dfs containing common features for RCT and observational study
 X.ohie <- na.omit(data.frame(n.hh,  # need to omit rows containing any NA
+                             n.children,
                              gender, 
                              age.19to49,
                              age.50to64,
                              white,
                              black,
+                             asian,
+                             aian,
+                             race.other,
                              hisp,
                              diabetes,
                              asthma,
                              bp,
+                             copd,
                              heart,
                              education,
-                             income)) 
+                             income,
+                             partner,
+                             employed)) 
 
 X.nhis <-   na.omit(data.frame(n.hh.nhis, # need to omit rows containing any NA
+                             n.children.nhis,
                              gender.nhis, 
                              "age.19to49"=age.19to49.nhis,
                              "age.50to64"=age.50to64.nhis,
                              "white"=white.nhis,
                              "black"=black.nhis,
+                             "asian"=asian.nhis,
+                             "aian"=aian.nhis,
+                             "other"=race.other.nhis,
                              "hisp"=hisp.nhis,
                              "diabetes"=diabetes.nhis,
                              "asthma"=asthma.nhis,
                              "bp"=bp.nhis,
+                             "copd"=copd.nhis,
                              "heart"=heart.nhis,
                              education.nhis,
-                             income.nhis))
+                             income.nhis,
+                             "partner"=partner.nhis,
+                             "employed"=employed.nhis))
 
 # Create vectors for treatment and compliance 
 treatment.ohie <- treatment[as.numeric(rownames(X.ohie))]
@@ -36,14 +50,11 @@ insurance.ohie <- insurance[as.numeric(rownames(X.ohie))]
 insurance.nhis <- medicaid[as.numeric(rownames(X.nhis))]
 
 # Create dfs for outcomes 
-Y.ohie <- na.omit(data.frame("any.visit"=any.visit,
-                             "num.visit"=num.visit,# need to omit rows containing any NA
-                    "any.out"=any.out,
+Y.ohie <- na.omit(data.frame("num.visit"=num.visit,# need to omit rows containing any NA
                    "num.out"=num.out))
 
-Y.nhis <- na.omit(data.frame("any.visit"=nhis.any.visit,
-                             "num.visit"=nhis.num.visit,# need to omit rows containing any NA
-                     "any.out"=nhis.any.out,
+Y.nhis <- na.omit(data.frame("num.visit"=nhis.num.visit,# need to omit rows containing any NA
+                     "num.hosp"=nhis.num.hosp,
                      "num.out"=nhis.num.out))
 
 ## Train compliance model on RCT treated. Use model to predict P(insurance == 1|covariates) on controls. 
@@ -101,7 +112,7 @@ Y.hat.1 <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.
 Y.hat.0 <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col.binary], return(predict(response.mod.binary[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred),
                                              return(predict(response.mod.num[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)))
 
-# Compute PATT estimator
+# Compute PATT-C estimator
 t.patt <- lapply(y.col, function (i) mean(Y.hat.1[[i]]) - mean(Y.hat.0[[i]]))
 
 # Compute unadjusted PATT
