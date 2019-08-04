@@ -89,10 +89,6 @@ nhis.weights <- foreach(i=years, .combine=c) %do% {
 # nhis wave (matrix of 1s)
 wave.nhis <- matrix(1,nrow=length(nhis.weights), ncol=ncol(wave))
 
-wave.nhis.interact <- foreach(i=seq_len(ncol(n.hh.nhis)), .combine='cbind') %do% {
-  wave.nhis*n.hh.nhis[,i]
-}
-
 ## OHIE: create vectors for health care use outcomes  (used in Finkelstein et al. (2012))
 # (Twelve Month Mail Survey)
 
@@ -144,6 +140,11 @@ n.hh.nhis <- foreach(i=years, .combine=c) %do% {
 n.hh.nhis <- factor(n.hh.nhis) 
 levels(n.hh.nhis) <- colnames(n.hh)
 n.hh.nhis <- dummify(n.hh.nhis, keep.na=TRUE)
+
+# Wave X no. people in HH interaction
+wave.nhis.interact <- foreach(i=seq_len(ncol(n.hh.nhis)), .combine='cbind') %do% {
+  wave.nhis*n.hh.nhis[,i]
+}
 
 # Gender
 gender <- dummify(ohie$female_0m,keep.na=TRUE)
