@@ -1,8 +1,7 @@
 ## Imports NHIS and OHIE datasets and creates outcome vectors and common covariates for the analysis 
 
-# Libraries
+# Libraries # need plyr
 library(weights) # install cluster -> HMisc -> weights
-library(plyr)
 library(foreach)
 
 years <- c(2008:2017)
@@ -41,7 +40,7 @@ invisible(foreach(i=years) %do% {
                                       nhis[[as.character(i)]]$notcov==1) # not covered
 })
 
-## OHIE: create vectors for treatment, # of HH members, compliance status, household ID, and survey weights
+## OHIE: create vectors for treatment, # of HH members, compliance status, household ID, survey weights, and survey wave
 
 # Treatment assignment
 treatment <- ifelse(ohie$treatment=="Selected",1,0)
@@ -61,9 +60,15 @@ ohie.hhid <- ohie$household_id
 ohie.weights <- ohie$weight_12m
 
 # 12 month survey wave
-ohie.wave <- dummify(ohie$wave_survey12m,keep.na=TRUE)
+wave <- dummify(ohie$wave_survey12m,keep.na=TRUE)
 
-## NHIS: compliance analogue, household ID, survey weights
+# Wave X hh size interaction
+
+wave.interact <- foreach(i=seq_len(ncol(n.hh)), .combine='cbind') %do% {
+  wave*n.hh[,i]
+}
+
+## NHIS: compliance analogue, household ID, survey weights, and survey wave
 
 # Medicaid recode  
 medicaid <- foreach(i=years, .combine=c) %do% {
@@ -79,6 +84,13 @@ nhis.hh.id <- foreach(i=years, .combine=c) %do% {
 # survey weights
 nhis.weights <- foreach(i=years, .combine=c) %do% {
   nhis[[as.character(i)]]$wtfa_hh
+}
+
+# nhis wave (matrix of 1s)
+wave.nhis <- matrix(1,nrow=length(nhis.weights), ncol=ncol(wave))
+
+wave.nhis.interact <- foreach(i=seq_len(ncol(n.hh.nhis)), .combine='cbind') %do% {
+  wave.nhis*n.hh.nhis[,i]
 }
 
 ## OHIE: create vectors for health care use outcomes  (used in Finkelstein et al. (2012))

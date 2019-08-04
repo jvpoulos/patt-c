@@ -6,6 +6,7 @@ library(ggplot2)
 library(gridExtra)
 library(ggpubr)
 library(reshape2)
+library(plyr) # load plyr first
 library(dplyr)
 
 color_extremes <- c("yellow", "red")

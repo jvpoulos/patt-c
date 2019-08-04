@@ -31,4 +31,4 @@ names(nhis) <- c("2008","2009","2010","2011","2012","2013","2014","2015","2016",
 
 # Clean up workspace
 rm(nhisMerge)
-saveRDS(nhis, repo.directory,"data/prepare-NHIS.RData")
+saveRDS(nhis, paste0(repo.directory,"data/prepare-NHIS.RData"))

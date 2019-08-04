@@ -20,7 +20,9 @@ X.ohie <- na.omit(data.frame(n.hh,  # need to omit rows containing any NA
                              education,
                              income,
                              partner,
-                             employed)) 
+                             employed,
+                             wave,
+                             wave.interact)) 
 
 X.nhis <-   na.omit(data.frame(n.hh.nhis, # need to omit rows containing any NA
                              n.children.nhis,
@@ -41,7 +43,9 @@ X.nhis <-   na.omit(data.frame(n.hh.nhis, # need to omit rows containing any NA
                              education.nhis,
                              income.nhis,
                              "partner"=partner.nhis,
-                             "employed"=employed.nhis))
+                             "employed"=employed.nhis,
+                             wave.nhis,
+                             wave.nhis.interact))
 
 # Create vectors for treatment and compliance 
 treatment.ohie <- treatment[as.numeric(rownames(X.ohie))]
