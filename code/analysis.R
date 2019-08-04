@@ -100,16 +100,16 @@ if(run.model){
 load(paste0(repo.directory,"results/response-mod.rda")) 
 load(paste0(repo.directory,"results/response-mod-patt.rda")) 
 
-# Use response model to estimate potential outcomes for population "compliers" on medicaid # USE NHIS WEIGHTS HERE
+# Use response model to estimate potential outcomes for population "compliers" on medicaid 
 nrt.tr.counterfactual <- cbind("insurance" = rep(1, length(which(insurance.nhis==1))),
                                X.nhis[which(insurance.nhis==1),])
 nrt.ctrl.counterfactual <- cbind("insurance" = rep(0, length(which(insurance.nhis==1))),
                                  X.nhis[which(insurance.nhis==1),])
 
 Y.hat.1 <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod[[i]], nrt.tr.counterfactual, onlySL = T)$pred), 
-                                             return(predict(response.mod.num[[i]], nrt.tr.counterfactual, onlySL = T)$pred))) # extract SL predictions
+                                             return(predict(response.mod[[i]], nrt.tr.counterfactual, onlySL = T)$pred))) # extract SL predictions
 Y.hat.0 <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred),
-                                             return(predict(response.mod.num[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)))
+                                             return(predict(response.mod[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)))
 
 # Compute PATT-C estimator
 t.patt <- lapply(y.col, function (i) mean(Y.hat.1[[i]]) - mean(Y.hat.0[[i]]))
@@ -122,9 +122,9 @@ nrt.ctrl.counterfactual.unadj <- cbind("insurance" = rep(0, length(which(insuran
                                        X.nhis[which(insurance.nhis==1),])
 
 Y.hat.1.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod.patt[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred),
-                                                   return(predict(response.mod.num2[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred)))
+                                                   return(predict(response.mod.patt[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred)))
 Y.hat.0.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod.patt[[i]], nrt.ctrl.counterfactual.unadj, onlySL = T)$pred),
-                                                   return(predict(response.mod.num2[[i]], nrt.ctrl.counterfactual.unadj, onlySL = T)$pred)))
+                                                   return(predict(response.mod.patt[[i]], nrt.ctrl.counterfactual.unadj, onlySL = T)$pred)))
 
 t.patt.unadj <- lapply(y.col, function (i) mean(Y.hat.1.unadj[[i]]) - mean(Y.hat.0.unadj[[i]]))
 
