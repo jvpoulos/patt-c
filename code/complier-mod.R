@@ -11,7 +11,9 @@ set.seed(42)
 complier.mod <- SuperLearner(Y=insurance.ohie[treatment.ohie==1], 
                              X=X.ohie[treatment.ohie == 1,], 
                              SL.library=SL.library.class,
-                             family="binomial")
+                             family="binomial",
+                             id=ohie.hhid,# force observations in the same cluster to be in the same validation fold
+                             obsWeights = ohie.weights) # observation weights
 
 summary(complier.mod)
 
