@@ -76,12 +76,13 @@ rct.compliers <- data.frame("treatment"=treatment.ohie,
                             "insurance"=insurance.ohie,
                             "C.pscore"=as.numeric(C.pscore$pred), # SL predictions in first column
                             "C.hat"=ifelse(as.numeric(C.pscore[[1]])>0.5,1,0),
-                            "complier"=0)
+                            "complier"=0,
+                            "weights"=ohie.weights)
 rct.compliers$complier[rct.compliers$treatment==1 & rct.compliers$insurance==1] <- 1 # true compliers in the treatment group
 rct.compliers$complier[rct.compliers$treatment==0 & rct.compliers$C.hat==1] <- 1 # predicted compliers from the control group
  
 # Fit a regression to the compliers in the RCT
-y.col <- ncol(Y.ohie)
+y.col <- seq_along(Y.ohie)
 
 Y.ohie.response <- Y.ohie[which(rct.compliers$complier==1),]
 X.ohie.response <- data.frame("insurance"=insurance.ohie[which(rct.compliers$complier==1)],
@@ -112,26 +113,23 @@ Y.hat.0 <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.
                                              return(predict(response.mod[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)))
 
 # Compute PATT-C estimator
-t.patt <- lapply(y.col, function (i) mean(Y.hat.1[[i]]) - mean(Y.hat.0[[i]]))
+t.patt <- lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
+                   weighted.mean(Y.hat.0[[i]], w=nhis.weights[which(insurance.nhis==1)])) # weight by NHIS survey weights
 
 # Compute unadjusted PATT
 
-nrt.tr.counterfactual.unadj <- cbind("insurance" = rep(1, length(which(insurance.nhis==1))),
-                                     X.nhis[which(insurance.nhis==1),])
-nrt.ctrl.counterfactual.unadj <- cbind("insurance" = rep(0, length(which(insurance.nhis==1))),
-                                       X.nhis[which(insurance.nhis==1),])
+Y.hat.1.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod.patt[[i]], nrt.tr.counterfactual, onlySL = T)$pred),
+                                                   return(predict(response.mod.patt[[i]], nrt.tr.counterfactual, onlySL = T)$pred)))
+Y.hat.0.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod.patt[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred),
+                                                   return(predict(response.mod.patt[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)))
 
-Y.hat.1.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod.patt[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred),
-                                                   return(predict(response.mod.patt[[i]], nrt.tr.counterfactual.unadj, onlySL = T)$pred)))
-Y.hat.0.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod.patt[[i]], nrt.ctrl.counterfactual.unadj, onlySL = T)$pred),
-                                                   return(predict(response.mod.patt[[i]], nrt.ctrl.counterfactual.unadj, onlySL = T)$pred)))
-
-t.patt.unadj <- lapply(y.col, function (i) mean(Y.hat.1.unadj[[i]]) - mean(Y.hat.0.unadj[[i]]))
+t.patt.unadj <- lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
+                         weighted.mean(Y.hat.0.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]))
 
 # Compute SATE
-rct.sate <- lapply(y.col, function (i) (mean(Y.ohie[[i]][which(treatment.ohie==1)]) - # Num. is ITT effect
-                                             mean(Y.ohie[[i]][which(treatment.ohie==0)])) 
-                   /mean(rct.compliers$complier[which(treatment.ohie==1)])) # Denom. is true RCT compliance rate
+rct.sate <- lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)], w=ohie.weights[which(treatment.ohie == 1)]) - # Num. is ITT effect
+                                             weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)], w=ohie.weights[which(treatment.ohie == 0)])) 
+                   /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)], w=rct.compliers$weights[which(treatment.ohie == 1)])) # Denom. is true RCT compliance rate
 
 # Save workspace
 save.image(paste0(repo.directory,"data/analysis.RData")) 

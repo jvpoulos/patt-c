@@ -59,6 +59,8 @@ ohie.hhid <- ohie$household_id
 # 12 month survey weights
 ohie.weights <- ohie$weight_12m
 
+ohie.weights[is.na(ohie.weights)] <- 0 # replace NA weights with 0
+
 # 12 month survey wave
 wave <- dummify(ohie$wave_survey12m,keep.na=TRUE)
 
