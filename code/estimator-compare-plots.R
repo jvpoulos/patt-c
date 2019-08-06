@@ -12,23 +12,25 @@ B <- 1000
 # PATT-C
 t.patt.boot <- replicate(B, {
   samp <- sample(1:length(Y.hat.1[[1]]), length(Y.hat.1[[1]]), replace=T)  
-  lapply(y.col, function (i) mean(Y.hat.1[[i]][samp]) - mean(Y.hat.0[[i]][samp]))
+  lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]][samp], w=nhis.weights[which(insurance.nhis[samp]==1)]) -
+           weighted.mean(Y.hat.0[[i]][samp], w=nhis.weights[which(insurance.nhis[samp]==1)]))
 })
 t.patt.ci <- lapply(y.col, function(i) quantile(unlist(t.patt.boot[i,]),probs = c(0.025, 0.975)))
 
 # PATT
 t.patt.unadj.boot <- replicate(B, {
   samp <- sample(1:length(Y.hat.1.unadj[[1]]), length(Y.hat.1.unadj[[1]]), replace=T)  
-  lapply(y.col, function (i) mean(Y.hat.1.unadj[[i]][samp]) - mean(Y.hat.0.unadj[[i]][samp]))
+  lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]][samp], w=nhis.weights[which(insurance.nhis[samp]==1)]) - 
+           weighted.mean(Y.hat.0.unadj[[i]][samp]), w=nhis.weights[which(insurance.nhis[samp]==1)])
 })
 t.patt.unadj.ci <- lapply(y.col, function(i) quantile(unlist(t.patt.unadj.boot[i,]),probs = c(0.025, 0.975)))
 
 # SATE
 t.sate.boot <- replicate(B,{
   samp <- sample(1:length(treatment.ohie), length(treatment.ohie), replace=T)  
-  lapply(y.col, function (i) (mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==1)]) - # Num. is ITT effect
-                                mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==0)])) 
-         /mean(rct.compliers$complier[samp][which(treatment.ohie[samp]==1)]))
+  lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==1)], w=ohie.weights[which(treatment.ohie[samp] == 1)]) - # Num. is ITT effect
+                                weighted.mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==0)], w=ohie.weights[which(treatment.ohie[samp] == 0)])) 
+         /weighted.mean(rct.compliers$complier[samp][which(treatment.ohie[samp]==1)], w=rct.compliers$weights[samp][which(treatment.ohie == 1)]))
 })
 t.sate.ci <- lapply(y.col, function(i) quantile(unlist(t.sate.boot[i,]),probs = c(0.025, 0.975)))
 
@@ -69,29 +71,27 @@ het.effects <- function(covs, boot = FALSE){
     X.nhis_unadjboot <- X.nhis[which(insurance.nhis==1 | insurance.nhis==0),]
   }
   
-  
-  
   # Calculate differences in potential outcomes for population treated compliers
   nrt.pred <- lapply(y.col, function (i) data.frame("tau"=Y.hat.1[[i]]-Y.hat.0[[i]], 
                                                     X.nhis_boot))
   
   # Estimate PATT for each covariate group
   
-  patt.het <- lapply(y.col, function (i) lapply(covs, function(x) mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==1]) - 
-                                                  mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==0]))) # heterogenous treatment effect on population treated compliers
+  patt.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==1]) - 
+                                                  weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==0]))) # heterogenous treatment effect on population treated compliers
   
   # For comparison, calculate differences in potential outcomes for population treated 
   nrt.pred.unadj <- lapply(y.col, function (i) data.frame("tau"=Y.hat.1.unadj[[i]]-Y.hat.0.unadj[[i]],
                                                           X.nhis_unadjboot))
   
   # Estimate unadjusted PATT for each covariate group
-  patt.unadj.het <- lapply(y.col, function (i) lapply(covs, function(x) mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==1]) - 
-                                                        mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==0])))  
+  patt.unadj.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==1]) - 
+                                                        weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==0])))  
   
   # Estimate SATE for each covariate group
-  sate.het <- lapply(y.col, function (i) lapply(covs, function(x) (mean(Y.ohie[[i]][which(treatment.ohie==1)][X.ohie.response[x]==1]) - 
-                                                                     mean(Y.ohie[[i]][which(treatment.ohie==0)][X.ohie.response[x]==1])) 
-                                                /mean(rct.compliers$complier[which(treatment.ohie==1)][X.ohie.response[x]==1]))) # heterogenous treatment effect on sample treated compliers
+  sate.het <- lapply(y.col, function (i) lapply(covs, function(x) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)][X.ohie.response[x]==1]) - 
+                                                                     weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)][X.ohie.response[x]==1])) 
+                                                /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)][X.ohie.response[x]==1]))) # heterogenous treatment effect on sample treated compliers
   
   return(list(patt.het, patt.unadj.het, sate.het))
 }

@@ -78,6 +78,7 @@ rct.compliers <- data.frame("treatment"=treatment.ohie,
                             "C.hat"=ifelse(as.numeric(C.pscore[[1]])>0.5,1,0),
                             "complier"=0,
                             "weights"=ohie.weights)
+
 rct.compliers$complier[rct.compliers$treatment==1 & rct.compliers$insurance==1] <- 1 # true compliers in the treatment group
 rct.compliers$complier[rct.compliers$treatment==0 & rct.compliers$C.hat==1] <- 1 # predicted compliers from the control group
  
