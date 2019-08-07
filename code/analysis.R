@@ -127,8 +127,8 @@ Y.hat.0.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.oh
 t.patt.unadj <- lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
                          weighted.mean(Y.hat.0.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]))
 
-# Compute SATE
-rct.sate <- lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)], w=ohie.weights[which(treatment.ohie == 1)]) - # Num. is ITT effect
+# Compute CACE
+rct.cace <- lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)], w=ohie.weights[which(treatment.ohie == 1)]) - # Num. is ITT effect
                                              weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)], w=ohie.weights[which(treatment.ohie == 0)])) 
                    /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)], w=rct.compliers$weights[which(treatment.ohie == 1)])) # Denom. is true RCT compliance rate
 

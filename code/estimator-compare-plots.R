@@ -25,14 +25,14 @@ t.patt.unadj.boot <- replicate(B, {
 })
 t.patt.unadj.ci <- lapply(y.col, function(i) quantile(unlist(t.patt.unadj.boot[i,]),probs = c(0.025, 0.975)))
 
-# SATE
-t.sate.boot <- replicate(B,{
+# CACE
+t.cace.boot <- replicate(B,{
   samp <- sample(1:length(treatment.ohie), length(treatment.ohie), replace=T)  
   lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==1)], w=ohie.weights[which(treatment.ohie[samp] == 1)]) - # Num. is ITT effect
                                 weighted.mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==0)], w=ohie.weights[which(treatment.ohie[samp] == 0)])) 
          /weighted.mean(rct.compliers$complier[samp][which(treatment.ohie[samp]==1)], w=rct.compliers$weights[samp][which(treatment.ohie == 1)]))
 })
-t.sate.ci <- lapply(y.col, function(i) quantile(unlist(t.sate.boot[i,]),probs = c(0.025, 0.975)))
+t.cace.ci <- lapply(y.col, function(i) quantile(unlist(t.cace.boot[i,]),probs = c(0.025, 0.975)))
 
 # print results for table 
 t.patt
@@ -41,8 +41,8 @@ t.patt.ci
 t.patt.unadj
 t.patt.unadj.ci
 
-rct.sate
-t.sate.ci
+rct.cace
+t.cace.ci
 
 ### Function to get heterogeneous treatment effect estimates, using true data and bootstrapped data (set boot = TRUE)
 
@@ -88,12 +88,12 @@ het.effects <- function(covs, boot = FALSE){
   patt.unadj.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==1]) - 
                                                         weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==0])))  
   
-  # Estimate SATE for each covariate group
-  sate.het <- lapply(y.col, function (i) lapply(covs, function(x) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)][X.ohie.response[x]==1]) - 
+  # Estimate CACE for each covariate group
+  cace.het <- lapply(y.col, function (i) lapply(covs, function(x) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)][X.ohie.response[x]==1]) - 
                                                                      weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)][X.ohie.response[x]==1])) 
                                                 /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)][X.ohie.response[x]==1]))) # heterogenous treatment effect on sample treated compliers
   
-  return(list(patt.het, patt.unadj.het, sate.het))
+  return(list(patt.het, patt.unadj.het, cace.het))
 }
 
 
@@ -103,7 +103,7 @@ covs <- colnames(X.nhis)[5:21] # choose features to est. het effects
 true_effect <- het.effects(covs) # a list where true_effect[[1]] is patt.het, true_effect[[2]] is patt.unadj.het, etc
 patt.het <- true_effect[[1]]
 patt.unadj.het <- true_effect[[2]]
-sate.het <- true_effect[[3]]
+cace.het <- true_effect[[3]]
 
 B <- 1000
 boot_effect <- replicate(B, het.effects(covs,boot=TRUE))
@@ -112,20 +112,20 @@ boot_effect <- replicate(B, het.effects(covs,boot=TRUE))
 
 patt.het.boot.ci <- lapply(1:length(true_effect[[1]][[1]]), function(k) lapply(y.col, function(i) quantile(sapply(1:B, function(b) boot_effect[1,][[b]][[i]][[k]]), probs = c(0.025, 0.975), na.rm=T)))
 patt.unadj.het.boot.ci <- lapply(1:length(true_effect[[1]][[1]]), function(k) lapply(y.col, function(i) quantile(sapply(1:B, function(b) boot_effect[2,][[b]][[i]][[k]]), probs = c(0.025, 0.975), na.rm=T)))
-sate.het.boot.ci <- lapply(1:length(true_effect[[1]][[1]]), function(k) lapply(y.col, function(i) quantile(sapply(1:B, function(b) boot_effect[3,][[b]][[i]][[k]]), probs = c(0.025, 0.975), na.rm=T)))
+cace.het.boot.ci <- lapply(1:length(true_effect[[1]][[1]]), function(k) lapply(y.col, function(i) quantile(sapply(1:B, function(b) boot_effect[3,][[b]][[i]][[k]]), probs = c(0.025, 0.975), na.rm=T)))
 conf.int <- lapply(y.col, function(i){
   ci.lower <- c(t.patt.ci[[i]][1], sapply(patt.het.boot.ci, "[[", i)[1,],  #### Put in 0 in place of "overall" confidence bounds for now
                 t.patt.unadj.ci[[i]][1], sapply(patt.unadj.het.boot.ci, "[[", i)[1,],
-                t.sate.ci[[i]][1], sapply(sate.het.boot.ci, "[[", i)[1,])
+                t.cace.ci[[i]][1], sapply(cace.het.boot.ci, "[[", i)[1,])
   ci.upper <- c(t.patt.ci[[i]][2], sapply(patt.het.boot.ci, "[[", i)[2,],
                 t.patt.unadj.ci[[i]][2], sapply(patt.unadj.het.boot.ci, "[[", i)[2,],
-                t.sate.ci[[i]][2], sapply(sate.het.boot.ci, "[[", i)[2,])
+                t.cace.ci[[i]][2], sapply(cace.het.boot.ci, "[[", i)[2,])
   cbind(ci.lower, ci.upper)
 })
 
-# Find middle of bootstrap CIs for sate
+# Find middle of bootstrap CIs for cace
 
-sate.het.m <- lapply(y.col, function (i) (sapply(sate.het.boot.ci, "[[", i)[1,]+sapply(sate.het.boot.ci, "[[", i)[2,])/2)
+cace.het.m <- lapply(y.col, function (i) (sapply(cace.het.boot.ci, "[[", i)[1,]+sapply(cace.het.boot.ci, "[[", i)[2,])/2)
 
 # Create data for plot
 Overall  <- c("Overall")
@@ -142,17 +142,17 @@ cov.names <- c(Overall,Sex,Age,Race.ethn,Health.stat,Education,Income)
 het.plot <- lapply(y.col, function (i) data.frame(x=factor(c(rep(cov.names,3)), levels=rev(cov.names)), 
                                                   y = c(t.patt[[i]],unlist(patt.het[[i]]),
                                                         t.patt.unadj[[i]],unlist(patt.unadj.het[[i]]),
-                                                        rct.sate[[i]],unlist(sate.het.m[i])), 
+                                                        rct.cace[[i]],unlist(cace.het.m[i])), 
                                                   Group = factor(rep(c(cov.groups[1],rep(cov.groups[2],length(Sex)),rep(cov.groups[3],length(Age)),
                                                                        rep(cov.groups[4],length(Race.ethn)),rep(cov.groups[5],length(Health.stat)),
                                                                        rep(cov.groups[6],length(Education)),rep(cov.groups[7],length(Income))),3), levels=cov.groups),
                                                   Estimator= factor(c(rep("PATT-C",length(covs)+1),
                                                                       rep("PATT",length(covs)+1),
-                                                                      rep("SATE",length(covs)+1))), 
+                                                                      rep("CACE",length(covs)+1))), 
                                                   ci.lower = conf.int[[i]][,1],
                                                   ci.upper = conf.int[[i]][,2]))
 for(i in y.col){
-  het.plot[[i]] <- subset( het.plot[[i]], Estimator!="SATE") #rm sate
+  het.plot[[i]] <- subset( het.plot[[i]], Estimator!="CACE") #rm cace
   het.plot[[i]]$Estimator <- factor(het.plot[[i]]$Estimator, levels = c("PATT-C","PATT"))
   offset <- c("   ") 
   het.plot[[i]]$x <- paste(offset,het.plot[[i]]$x) # make offset in x var name

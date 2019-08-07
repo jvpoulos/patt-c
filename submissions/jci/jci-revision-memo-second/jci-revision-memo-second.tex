@@ -173,7 +173,6 @@ For consistency with the empirical analysis in \citet{finkelstein2012}, we make 
 
 \begin{itemize}
 	\item Divide the health care use responses in the NHIS survey (12 month look-back) by two in order to make them comparable with the OHIE survey outcomes (6 month look-back). Exclude binary response (``Any ER visit") to ensure comparability. 
-	\item Report family-wise $p$-value (along with the per-comparison $p$-values) to adjust for multiple comparisons in Tables \ref{placebo} and \ref{compliance-compare}
 	\item Include as covariates in the complier and response models indicator variables for survey wave (and their interactions with household size indicators) because the proportion of treated participants varies across the response survey waves.
 	\item Include as pretreatment demographic controls:
 	\begin{itemize}
@@ -183,9 +182,17 @@ For consistency with the empirical analysis in \citet{finkelstein2012}, we make 
 		\item Currently living with partner or spouse
 		\item Currently employed or self-employed
 	\end{itemize}
-	\item Weight descriptive statistics and treatment effect using survey weights. The OHIE survey weights account for the probability of being sampled and survey procedures. The NHIS survey weights adjust for the probability of selection and non-response. 
+	\item Weight descriptive statistics using survey weights. The OHIE survey weights account for the probability of being sampled and survey procedures. The NHIS survey weights adjust for the probability of selection and non-response. Survey weights are also used for modeling and treatment effect estimation as follows:
+		\begin{itemize}
+		\item OHIE weights used to weight observations in compliance and response models and for weighted difference-in-means calculation of CACE (Eq.~\eqref{tcace})
+		\item NHIS weights used to for weighted difference-in-means calculation of PATT-C (Eq.~\eqref{tpattc}) and PATT (Eq.~\eqref{tpatt})
+	\end{itemize}
+	\item Report family-wise $p$-value (along with the per-comparison $p$-values) to adjust for multiple comparisons in Tables \ref{placebo} and \ref{compliance-compare}
+	\item Since treatment is assigned at the household level, we cluster standard errors on the household. Moreover, when cross-validating the compliance and response models, we force units in the same household to be in the same validation fold. 
+	
 \end{itemize}
 
+\clearpage
 %Bibliography
 \printbibliography
 

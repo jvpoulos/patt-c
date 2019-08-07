@@ -1,7 +1,7 @@
 \title{Estimating population average treatment effects from experiments with noncompliance\thanks{The authors thank Jon McAuliffe and Jas Sekhon and his research group at UC Berkeley for valuable comments. Poulos acknowledges support from the National Science Foundation Graduate Research Fellowship [grant number DGE 1106400]. This work used the Extreme Science and Engineering Discovery Environment (XSEDE) supercomputer Stampede2 at the Texas Advanced Computing Center (TACC) through allocation SES180010.}
 }
 \author{Kellie Ottoboni\thanks{Department of Statistics, University of California, Berkeley. email: \href{mailto:kellieotto@berkeley.edu}{\nolinkurl{kellieotto@berkeley.edu}}.} \hspace{10mm}
-Jason Poulos\thanks{\emph{Corresponding author:} Department of Political Science, University of California, Berkeley. email: \href{mailto:poulos@berkeley.edu}{\nolinkurl{poulos@berkeley.edu}}.} 
+Jason Poulos\thanks{\emph{Corresponding author:} \textcolor{red}{Department of Statistical Science, Duke University, and Statistical and Applied Mathematical Sciences Institute. email: \href{mailto:jpoulos@samsi.info}{\nolinkurl{jpoulos@samsi.info}}.} }
 \vspace{15mm}} 
 
 \date{\today}
@@ -232,13 +232,13 @@ Y_{i11} = Y_{i10}, \qquad \forall \, i.
 
 \subsection{PATT-C}
 
-The estimand of interest is the Population Average Treatment Effect on Treated Compliers (PATT-C):
+PATT-C is interpreted as the complier-average causal effect estimated on the RCT sample extrapolated to what we would have observed in the population if treatment received $D_i$ is the same. \textcolor{red}{It is written as follows:}
 %
 \begin{equation}\label{tpattc}
 \tau_{\text{PATT-C}} = \ex\left( Y_{i01} - Y_{i00} \mid S_i=0, D_i=1\right).
 \end{equation}
 %
-PATT-C is interpreted as the complier-average causal effect estimated on the RCT sample extrapolated to what we would have observed in the population if treatment received $D_i$ is the same. The following theorem relates the treatment effect in the RCT to the treatment effect in the population. 
+The following theorem relates the treatment effect in the RCT to the treatment effect in the population. 
 
 \vskip 0.2in
 \begin{theorem}\label{thm1}
