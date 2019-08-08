@@ -77,25 +77,24 @@ het.effects <- function(covs, boot = FALSE){
   
   # Estimate PATT for each covariate group
   
-  patt.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==1]) - 
-                                                  weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==0]))) # heterogenous treatment effect on population treated compliers
+  patt.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==1],  w=nhis.weights[which(insurance.nhis[x]==1)]) - 
+                                                  weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==0], w=nhis.weights[which(insurance.nhis[x]==0)]))) # heterogenous treatment effect on population treated compliers
   
   # For comparison, calculate differences in potential outcomes for population treated 
   nrt.pred.unadj <- lapply(y.col, function (i) data.frame("tau"=Y.hat.1.unadj[[i]]-Y.hat.0.unadj[[i]],
                                                           X.nhis_unadjboot))
   
   # Estimate unadjusted PATT for each covariate group
-  patt.unadj.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==1]) - 
-                                                        weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==0])))  
+  patt.unadj.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==1], w=nhis.weights[which(insurance.nhis[x]==1)]) - 
+                                                        weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==0], w=nhis.weights[which(insurance.nhis[x]==0)])))  
   
   # Estimate CACE for each covariate group
-  cace.het <- lapply(y.col, function (i) lapply(covs, function(x) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)][X.ohie.response[x]==1]) - 
-                                                                     weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)][X.ohie.response[x]==1])) 
-                                                /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)][X.ohie.response[x]==1]))) # heterogenous treatment effect on sample treated compliers
+  cace.het <- lapply(y.col, function (i) lapply(covs, function(x) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)][X.ohie.response[x]==1], w=ohie.weights[which(treatment.ohie == 1)][X.ohie.response[x]==1]) - 
+                                                                     weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)][X.ohie.response[x]==1], w=ohie.weights[which(treatment.ohie == 0)][X.ohie.response[x]==1])) 
+                                                /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)][X.ohie.response[x]==1], w=ohie.weights[which(treatment.ohie == 1)][X.ohie.response[x]==1]))) # heterogenous treatment effect on sample treated compliers
   
   return(list(patt.het, patt.unadj.het, cace.het))
 }
-
 
 ### Estimate the heterogeneous effects
 covs <- colnames(X.nhis)[5:21] # choose features to est. het effects
@@ -212,10 +211,8 @@ het.plot.all <- lapply(y.col, function (i)
     ylab("Treatment effect") +
     xlab("")) #switch because of the coord_flip() above 
 
-any.visit.plot <- het.plot.all[[1]] + ggtitle("Any ER visit")
 num.visit.plot <- het.plot.all[[2]] + ggtitle("# ER visits")
 num.out.plot <- het.plot.all[[4]] + ggtitle("# outpatient visits") 
                                               
-ggsave(paste0(repo.directory, "plots/any-visit-plot.png"), any.visit.plot)
 ggsave(paste0(repo.directory, "plots/num-visit-plot.png"), num.visit.plot)
 ggsave(paste0(repo.directory, "plots/num-out-plot.png"), num.out.plot) 

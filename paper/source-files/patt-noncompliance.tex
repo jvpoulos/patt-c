@@ -429,7 +429,7 @@ In order for $\tau_{\text{PATT-C}}$ to be identified, Assumptions \eqref{consist
 
 We cannot directly test Assumptions \eqref{si_treat} and \eqref{si_ctrl}, which state that potential outcomes for treatment and control are independent of sample assignment for individuals with the same covariates and assignment to treatment. The assumptions are only met if every possible confounder associated with the response and the sample assignment is accounted for. In estimating the response surface, we use all demographic, socioeconomic, and pre-existing health condition data that were common in the OHIE and NHIS data. Potentially important unobserved confounders include the number of hospital and outpatient visits in the previous year, proximity to health services, and enrollment in other federal programs. 
 
-The final two columns of Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with population members on Medicaid. Compared to the RCT compliers, the \textcolor{red}{population members who received treatment} are predominantly female, younger, more racially and ethnically diverse, less educated, and live in higher income households. Diagnoses of diabetes, asthma, high blood pressure, and heart disease are more common among the population on Medicaid then the RCT treated. \textcolor{red}{These summary statistics and the analyses that follow use survey weights to account for the probability of being sampled and survey procedures.}
+The final two columns of Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with population members on Medicaid. Compared to the RCT compliers, the \textcolor{red}{population members who received treatment} are predominantly female, younger, more racially and ethnically diverse, less educated, and live in higher income households. Diagnoses of diabetes, asthma, high blood pressure, and heart disease are more common among the population on Medicaid then the RCT treated. \textcolor{red}{These summary statistics and the analyses that follow use survey weights to account for the probability of being sampled and non-response.}
 
 Strong ignorability assumptions may also be violated due to the fact that the OHIE applied a more stringent exclusion criteria compared to the NHIS sample. While the RCT and population sample both screened for individuals below the FPL,  \textcolor{red}{only the RCT required those enrolled to recertify their household income eligibility during the study period. Strong ignorability would not hold if the failure to recertify is correlated with unobserved variables.} 
 
@@ -580,22 +580,22 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 		\hspace{3mm} $>\$25$k & 0 & 0.0 & 373 & 6.1 & 575 & 9.2   \\
 		\hline
 		\hline
-		\textbf{Binary response} &  $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ \\ 
-		\hspace{3mm}Any ER visit &  1,377 & 25.4 & 1,301 & 25.1 & 1,659 & 26.5  \\  
-		%\hspace{3mm}Any outpatient visit & 3,265 & 60.2 & 3,081 & 59.3 & 4,093 & 65.4 \\
-		\hline
-		\textbf{Continuous response} &  $\mathbf{\bar{x}}$ & $\mathbf{sd}$& $\mathbf{\bar{x}}$ & $\mathbf{sd}$ & $\mathbf{\bar{x}}$ & $\mathbf{sd}$ \\  
+%		\textbf{Binary response} &  $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ \\ 
+%		\hspace{3mm}Any ER visit &  1,377 & 25.4 & 1,301 & 25.1 & 1,659 & 26.5  \\  
+%		%\hspace{3mm}Any outpatient visit & 3,265 & 60.2 & 3,081 & 59.3 & 4,093 & 65.4 \\
+%		\hline
+		\textbf{Responses} &  $\mathbf{\bar{x}}$ & $\mathbf{sd}$& $\mathbf{\bar{x}}$ & $\mathbf{sd}$ & $\mathbf{\bar{x}}$ & $\mathbf{sd}$ \\  
 		\hspace{3mm}$\#$ ER visits &  0.44 & 0.95 & 0.44 & 0.99 & 0.48 & 1.0  \\  
 		\hspace{3mm}$\#$ outpatient visits & 1.9 & 3.01 & 1.9 & 2.8 & 2.08 & 2.3 \\
 		\hline
 		\hline
 	\end{longtable}
 \noindent
+\footnotesize{Notes: weighted using OHIE and NHIS survey weights.}
 \end{singlespace}
 \restoregeometry
 
 \begin{table}[h]
-	\begin{center}
 	\caption{Distribution of OHIE participants by status of treatment assignment ($T_i$) and treatment received ($D_i$).\label{ohie-status}} 
 	\begin{tabular}{@{}lccc@{}}
 		\toprule
@@ -603,24 +603,22 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 		$T_i = 0$ & 10,010    & 1,556     & 11,566 \\
 		$T_i = 1$ & 6,446     & 5,193     & 11,639 \\
 		n         & 16,456    & 6,749     & 23,205 \\ \bottomrule
-	\end{tabular}
-	\end{center}
+	\end{tabular}\\ \\
+	\footnotesize{Notes: weighted using OHIE survey weights.}
 \end{table}
 
 \begin{table}[h]
-	\begin{center}
 		\caption{Placebo test results comparing the mean outcomes of RCT compliers and adjusted \textcolor{red}{population members who received treatment}.\label{placebo}} 
-	\begin{tabular}{@{}lcccc@{}}
+	\begin{tabular}{@{}lccccc@{}}
 		\toprule
-		Outcome                & RCT complier & Adjusted population & Difference & $p$-value \\
-				               &  mean 		  & mean 					  & 		   &  \\		
+		Outcome                & RCT complier & Adjusted population & Difference & Per-comparison & Family-wise\\
+				               &  mean 		  & mean 					  & 		   & $p$-value & $p$-value\\		
 		 \midrule
-		Any ER visit           & 0.25              & 0.25                           & 0.0001     & 0.97    \\
-		$\#$ ER vists          & 0.45              & 0.45                           & 0.002      & 0.85    \\
-		$\#$ outpatient visits & 1.90              & 1.94                           & -0.03      & 0.26    \\ \bottomrule
-	\end{tabular}
-\end{center}
-\footnotesize{Notes: $p$-values for difference-in-means calculated from two-sided t-test.}
+	%	Any ER visit           & 0.25              & 0.25                           & 0.0001     & 0.97   & \\
+		$\#$ ER vists          & 0.45              & 0.45                           & 0.002      & 0.85   & \\
+		$\#$ outpatient visits & 1.90              & 1.94                           & -0.03      & 0.26   & \\ \bottomrule
+	\end{tabular}\\ \\
+\footnotesize{Notes: survey-weighted difference-in-means $p$-values calculated from two-sided t-test. Family-wise $p$-value calculated across the two different measures of health care utilization.}
 \end{table}
 
 \begin{table}[h]

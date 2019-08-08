@@ -182,10 +182,11 @@ For consistency with the empirical analysis in \citet{finkelstein2012}, we make 
 		\item Currently living with partner or spouse
 		\item Currently employed or self-employed
 	\end{itemize}
-	\item Weight descriptive statistics using survey weights. The OHIE survey weights account for the probability of being sampled and survey procedures. The NHIS survey weights adjust for the probability of selection and non-response. Survey weights are also used for modeling and treatment effect estimation as follows:
+	\item Weight descriptive statistics using survey weights. The OHIE survey weights account for the probability of being sampled and non-response. Survey weights are also used for modeling and treatment effect estimation as follows:
 		\begin{itemize}
 		\item OHIE weights used to weight observations in compliance and response models and for weighted difference-in-means calculation of CACE (Eq.~\eqref{tcace})
 		\item NHIS weights used to for weighted difference-in-means calculation of PATT-C (Eq.~\eqref{tpattc}) and PATT (Eq.~\eqref{tpatt})
+		\item OHIE and NHIS weights for weighted difference-in-means in placebo tests (Table \ref{placebo})
 	\end{itemize}
 	\item Report family-wise $p$-value (along with the per-comparison $p$-values) to adjust for multiple comparisons in Tables \ref{placebo} and \ref{compliance-compare}
 	\item Since treatment is assigned at the household level, we cluster standard errors on the household. Moreover, when cross-validating the compliance and response models, we force units in the same household to be in the same validation fold. 

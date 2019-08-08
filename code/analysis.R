@@ -108,10 +108,8 @@ nrt.tr.counterfactual <- cbind("insurance" = rep(1, length(which(insurance.nhis=
 nrt.ctrl.counterfactual <- cbind("insurance" = rep(0, length(which(insurance.nhis==1))),
                                  X.nhis[which(insurance.nhis==1),])
 
-Y.hat.1 <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod[[i]], nrt.tr.counterfactual, onlySL = T)$pred), 
-                                             return(predict(response.mod[[i]], nrt.tr.counterfactual, onlySL = T)$pred))) # extract SL predictions
-Y.hat.0 <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred),
-                                             return(predict(response.mod[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)))
+Y.hat.1 <- lapply(colnames(Y.ohie), function (i) predict(response.mod[[i]], nrt.tr.counterfactual, onlySL = T)$pred) # extract SL predictions
+Y.hat.0 <- lapply(colnames(Y.ohie), function (i) predict(response.mod[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)
 
 # Compute PATT-C estimator
 t.patt <- lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
@@ -119,10 +117,8 @@ t.patt <- lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]], w=nhis.weights[
 
 # Compute unadjusted PATT
 
-Y.hat.1.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod.patt[[i]], nrt.tr.counterfactual, onlySL = T)$pred),
-                                                   return(predict(response.mod.patt[[i]], nrt.tr.counterfactual, onlySL = T)$pred)))
-Y.hat.0.unadj <- lapply(colnames(Y.ohie), function (i) ifelse(i%in%colnames(Y.ohie)[y.col], return(predict(response.mod.patt[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred),
-                                                   return(predict(response.mod.patt[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)))
+Y.hat.1.unadj <- lapply(colnames(Y.ohie), function (i) predict(response.mod.patt[[i]], nrt.tr.counterfactual, onlySL = T)$pred)
+Y.hat.0.unadj <- lapply(colnames(Y.ohie), function (i) predict(response.mod.patt[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)
 
 t.patt.unadj <- lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
                          weighted.mean(Y.hat.0.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]))
