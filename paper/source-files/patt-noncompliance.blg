@@ -7,45 +7,45 @@ Warning--no number and no volume in buja1989linear
 Warning--no number and no volume in friedman2001greedy
 Warning--no number and no volume in imbens1997bayesian
 Warning--page numbers missing in van2007
-You've used 27 entries,
+You've used 26 entries,
             2861 wiz_defined-function locations,
-            800 strings with 10048 characters,
-and the built_in function-call counts, 20064 in all, are:
-= -- 1644
-> -- 1611
-< -- 3
-+ -- 492
-- -- 540
-* -- 1950
-:= -- 3668
-add.period$ -- 81
-call.type$ -- 27
-change.case$ -- 209
-chr.to.int$ -- 27
-cite$ -- 31
-duplicate$ -- 478
-empty$ -- 1142
-format.name$ -- 620
-if$ -- 3684
+            794 strings with 9874 characters,
+and the built_in function-call counts, 19413 in all, are:
+= -- 1600
+> -- 1550
+< -- 2
++ -- 474
+- -- 522
+* -- 1889
+:= -- 3542
+add.period$ -- 78
+call.type$ -- 26
+change.case$ -- 203
+chr.to.int$ -- 26
+cite$ -- 30
+duplicate$ -- 460
+empty$ -- 1106
+format.name$ -- 598
+if$ -- 3564
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 26
-newline$ -- 138
-num.names$ -- 270
-pop$ -- 134
+missing$ -- 24
+newline$ -- 133
+num.names$ -- 260
+pop$ -- 127
 preamble$ -- 1
-purify$ -- 372
+purify$ -- 359
 quote$ -- 0
-skip$ -- 498
+skip$ -- 478
 stack$ -- 0
-substring$ -- 1108
-swap$ -- 155
-text.length$ -- 3
+substring$ -- 1088
+swap$ -- 149
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 530
+type$ -- 520
 warning$ -- 4
-while$ -- 261
+while$ -- 255
 width$ -- 0
-write$ -- 356
+write$ -- 342
 (There were 4 warnings)

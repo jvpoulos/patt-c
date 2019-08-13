@@ -79,7 +79,7 @@ medicaid <- foreach(i=years, .combine=c) %do% {
 }
 
 # household ID
-nhis.hh.id <- foreach(i=years, .combine=c) %do% {
+nhis.hhid <- foreach(i=years, .combine=c) %do% {
   nhis[[as.character(i)]]$hhx
 }
 

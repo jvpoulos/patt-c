@@ -443,7 +443,7 @@ The exclusion restriction assumption \eqref{ER} ensures treatment assignment aff
 
 Similar to the procedure proposed by \citep{Hartman}, we conduct placebo tests to check whether the average outcomes differ between the RCT compliers on Medicaid and the adjusted \textcolor{red}{population members who received Medicaid}.\footnote{Note that a placebo test for Assumption \eqref{compl} is not possible because we never observe whether RCT controls would actually take-up treatment if assigned.} If the placebo tests detect a significant difference between the mean outcomes of these groups, it would indicate that either Assumption \eqref{consistency} (for $d=1$), or Assumptions \eqref{si_treat} and \eqref{si_ctrl} are violated. 
 
-Table \ref{placebo} reports the results of placebo tests, comparing the mean outcomes of RCT compliers against the mean outcomes of adjusted \textcolor{red}{population members who received treatment}. The former quantity is calculated from the observed RCT sample and the latter quantity is the mean counterfactual $Y_{i11}$ estimated from \ref{response-predict} of the estimation procedure. \textcolor{red}{In addition to per-comparison $p$-values, we report family-wise $p$-values to adjust for multiple comparisons.\footnote{In the context of the placebo tests, the family-wise $p$-value is the probability of rejecting the null hypothesis of no difference between mean outcomes on a given outcome under the family of null hypotheses on any outcome in the domain of health care utilization. We calculate family-wise $p$-values based on 10,000 bootstrap iterations of \possessivecite{westfall1993resampling} step-down procedure.}}
+Table \ref{placebo} reports the results of placebo tests, comparing the mean outcomes of RCT compliers against the mean outcomes of adjusted \textcolor{red}{population members who received treatment}. The former quantity is calculated from the observed RCT sample and the latter quantity is the mean counterfactual $Y_{i11}$ estimated from \ref{response-predict} of the estimation procedure.
 
 Tests of equivalence between the two groups indicate that the differences across each outcome are not statistically significant. These results imply that the PATT-C estimator is not biased by differences in how Medicaid is delivered or health outcomes are measured between the RCT and population, or by differences in sample or population members' unobserved characteristics. 
 
@@ -536,7 +536,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 		& $n=4,519$ &  & $n=6,100$ &  & $n=6,261$ &  \\  
 		\hline   
 		\hline   
-		\textbf{Covariate} &  $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ \\ 
+		\textbf{Covariate} &  N & $\mathbf{\%}$ & N & $\mathbf{\%}$ & N & $\mathbf{\%}$ \\ 
 		\hline
 		\textit{Sex:} &  & & &  &  & \\ 
 		
@@ -584,14 +584,14 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 %		\hspace{3mm}Any ER visit &  1,377 & 25.4 & 1,301 & 25.1 & 1,659 & 26.5  \\  
 %		%\hspace{3mm}Any outpatient visit & 3,265 & 60.2 & 3,081 & 59.3 & 4,093 & 65.4 \\
 %		\hline
-		\textbf{Responses} &  $\mathbf{\bar{x}}$ & $\mathbf{sd}$& $\mathbf{\bar{x}}$ & $\mathbf{sd}$ & $\mathbf{\bar{x}}$ & $\mathbf{sd}$ \\  
+		\textbf{Responses} &  Mean & S.d. & Mean & S.d. & Mean & S.d. \\  
 		\hspace{3mm}$\#$ ER visits &  0.44 & 0.95 & 0.44 & 0.99 & 0.48 & 1.0  \\  
 		\hspace{3mm}$\#$ outpatient visits & 1.9 & 3.01 & 1.9 & 2.8 & 2.08 & 2.3 \\
 		\hline
 		\hline
 	\end{longtable}
 \noindent
-\footnotesize{Notes: weighted using OHIE and NHIS survey weights.}
+\footnotesize{Notes: weighted using OHIE (first two columns) or NHIS (last column )survey weights.}
 \end{singlespace}
 \restoregeometry
 
@@ -609,16 +609,16 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 
 \begin{table}[h]
 		\caption{Placebo test results comparing the mean outcomes of RCT compliers and adjusted \textcolor{red}{population members who received treatment}.\label{placebo}} 
-	\begin{tabular}{@{}lccccc@{}}
+	\begin{tabular}{@{}lcccc@{}}
 		\toprule
-		Outcome                & RCT complier & Adjusted population & Difference & Per-comparison & Family-wise\\
-				               &  mean 		  & mean 					  & 		   & $p$-value & $p$-value\\		
+		Outcome                & RCT complier & Adjusted population & Difference & Per-comparison \\
+				               &  mean 		  & mean 					  & 		   & $p$-value \\		
 		 \midrule
-	%	Any ER visit           & 0.25              & 0.25                           & 0.0001     & 0.97   & \\
-		$\#$ ER vists          & 0.45              & 0.45                           & 0.002      & 0.85   & \\
-		$\#$ outpatient visits & 1.90              & 1.94                           & -0.03      & 0.26   & \\ \bottomrule
+	%	Any ER visit           & 0.25              & 0.25                           & 0.0001     & 0.97  \\
+		$\#$ ER vists          & 0.45              & 0.45                           & 0.002      & 0.85   \\
+		$\#$ outpatient visits & 1.90              & 1.94                           & -0.03      & 0.26   \\ \bottomrule
 	\end{tabular}\\ \\
-\footnotesize{Notes: survey-weighted difference-in-means $p$-values calculated from two-sided t-test. Family-wise $p$-value calculated across the two different measures of health care utilization.}
+\footnotesize{Notes: survey-weighted difference-in-means $p$-values calculated from two-sided t-test.}
 \end{table}
 
 \begin{table}[h]

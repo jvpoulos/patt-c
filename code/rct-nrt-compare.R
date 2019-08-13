@@ -1,6 +1,6 @@
 library(reporttools)
 
-# Create table similar to Table 1 of Hartman et al. 
+# Table A1 
 rct.nrt.tab <- rbind(cbind(study="OHIE",
                            X.ohie.response,
                            Y.ohie.response[c("num.visit","num.out")],
@@ -18,6 +18,13 @@ tableContinuous(vars = rct.nrt.tab[colnames(rct.nrt.tab)%in%c("num.visit", "num.
              weights = rct.nrt.tab$survey.weights, # survey weights
              group = rct.nrt.tab$group, 
              prec = 3,
-             cumsum=FALSE,
-             lab = "rct-nrt-compare",
-             cap="Pretreatment covariates and responses for the OHIE and for NHIS respondents who received Medicaid.") # RCT vs. NRT compliers
+             cumsum=FALSE) # RCT vs. NRT compliers
+
+# Table A2 
+
+tableContinuous(vars = rct.compliers$treatment, 
+                weights = rct.compliers$weights, # survey weights
+                group = rct.compliers$insurance, 
+                stats= "n",
+                prec = 0,
+                cumsum=TRUE)

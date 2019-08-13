@@ -1,4 +1,4 @@
-# Create plots for each outcome variable comparing SATT vs. PATT overall and by covariate 
+# Create plots for each outcome variable comparing PATT-C, PATT, and CACE, overall and by covariate 
 
 # Load R workspace
 load(paste0(repo.directory,"data/analysis.RData"))
@@ -34,7 +34,7 @@ t.cace.boot <- replicate(B,{
 })
 t.cace.ci <- lapply(y.col, function(i) quantile(unlist(t.cace.boot[i,]),probs = c(0.025, 0.975)))
 
-# print results for table 
+# print results for Table A4
 t.patt
 t.patt.ci
 

@@ -112,8 +112,9 @@ Y.hat.1 <- lapply(colnames(Y.ohie), function (i) predict(response.mod[[i]], nrt.
 Y.hat.0 <- lapply(colnames(Y.ohie), function (i) predict(response.mod[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)
 
 # Compute PATT-C estimator
+
 t.patt <- lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
-                   weighted.mean(Y.hat.0[[i]], w=nhis.weights[which(insurance.nhis==1)])) # weight by NHIS survey weights
+                    weighted.mean(Y.hat.0[[i]], w=nhis.weights[which(insurance.nhis==1)])) # weight by NHIS survey weights
 
 # Compute unadjusted PATT
 
