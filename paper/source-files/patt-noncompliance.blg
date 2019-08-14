@@ -9,24 +9,24 @@ Warning--no number and no volume in imbens1997bayesian
 Warning--page numbers missing in van2007
 You've used 26 entries,
             2861 wiz_defined-function locations,
-            794 strings with 9874 characters,
-and the built_in function-call counts, 19413 in all, are:
+            794 strings with 9890 characters,
+and the built_in function-call counts, 19421 in all, are:
 = -- 1600
 > -- 1550
 < -- 2
 + -- 474
 - -- 522
-* -- 1889
+* -- 1893
 := -- 3542
 add.period$ -- 78
 call.type$ -- 26
 change.case$ -- 203
 chr.to.int$ -- 26
 cite$ -- 30
-duplicate$ -- 460
-empty$ -- 1106
+duplicate$ -- 461
+empty$ -- 1107
 format.name$ -- 598
-if$ -- 3564
+if$ -- 3565
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 24
@@ -39,7 +39,7 @@ quote$ -- 0
 skip$ -- 478
 stack$ -- 0
 substring$ -- 1088
-swap$ -- 149
+swap$ -- 150
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0

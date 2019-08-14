@@ -17,6 +17,8 @@ source(paste0(repo.directory,"code/prepare-nhis.R")) #  script merges person, sa
 source(paste0(repo.directory,"code/prepare-analysis.R")) # loads data/prepare-ohie.Rdata and data/prepare-nhis.RData
                                                           # --> data/prepare-analysis.RData
 
+source(paste0(repo.directory,"code/wtc.R")) # weighted t-test with cluster-bootstrapped SEs
+
 source(paste0(repo.directory,"code/analysis.R"))
 source(paste0(repo.directory,"code/rct-nrt-compare.R")) # Tables A1 and A2
 source(paste0(repo.directory,"code/estimator-compare-plots.R")) # plot treatment effect estimates

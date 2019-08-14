@@ -415,7 +415,7 @@ In 2008, \textcolor{red}{a group of uninsured low-income adults participated in 
 
 Participants in selected households \textcolor{red}{were enrolled in Medicaid} if they returned an enrollment application within 45 days of receipt. \textcolor{red}{Only 30\% of participants in selected households successfully enrolled. The low compliance rate is primarily due to failure to return an application or demonstrate income below the FPL. Compliance is measured using a binary variable indicating whether the participant was enrolled in any Medicaid program during the study period.}
 
-\textcolor{red}{We include as covariates in our response and complier models (\ref{compliance-model} and \ref{response-model}, respectively) pretreatment information on participant age, race, gender, education, marital status, number of children in the household, employment status, health status, and household income. We also include indicator variables on household size because lottery selection was random conditional on the number of household members. Because treatment occurs at the household level, all analyses cluster standard errors at the household level.} 
+\textcolor{red}{We include as covariates in our response and complier models (\ref{compliance-model} and \ref{response-model}, respectively) pretreatment information on participant age, race, gender, education, marital status, number of children in the household, employment status, health status, and household income. We also include indicator variables on household size because lottery selection was random conditional on the number of household members. All analyses in the current application cluster-adjust standard errors at the household level because treatment occurs at the household level. The analyses also use survey weights to adjust for the probability of being sampled and non-response.} 
 
 The response data originate from a mail survey \textcolor{red}{containing questions about health insurance and health care use that elicited responses from 23,741 OHIE participants.\footnote{Following \citet{finkelstein2012}, indicator variables for survey wave and interactions with household size indicators are also included as covariates in the response and complier models because the proportion of treated participants varies across the survey waves.} The response variables measure health care use in terms of the number of ER and primary care (i.e., outpatient) visits in the past six months}. 
 
@@ -425,11 +425,11 @@ We acquire data on the target population from the National Health Interview Stud
 
 \subsection{Verifying assumptions} \label{verifying}
 
-In order for $\tau_{\text{PATT-C}}$ to be identified, Assumptions \eqref{consistency} -- \eqref{ER} must be met. Assumption \eqref{consistency} ensures that potential outcomes for participants in the target population would be identical to their outcomes in the RCT if they had been randomly assigned their observed treatment. In the empirical application, Medicaid coverage for uninsured individuals was applied in the same manner in the RCT as it is in the population.  Differences in potential outcomes due to sample selection might arise, however, if there are differences in the mail surveys used to elicit health care use responses between the RCT and the nonrandomized study. 
+In order for $\tau_{\text{PATT-C}}$ to be identified, Assumptions \eqref{consistency} -- \eqref{ER} must be met. Assumption \eqref{consistency} ensures that potential outcomes for participants in the target population would be identical to their outcomes in the RCT if they had been randomly assigned their observed treatment. In the empirical application, Medicaid coverage for uninsured individuals was applied in the same manner in the RCT as it is in the population. Differences in potential outcomes due to sample selection might arise, however, if there are differences in the mail surveys used to elicit health care use responses between the RCT and the nonrandomized study. 
 
 We cannot directly test Assumptions \eqref{si_treat} and \eqref{si_ctrl}, which state that potential outcomes for treatment and control are independent of sample assignment for individuals with the same covariates and assignment to treatment. The assumptions are only met if every possible confounder associated with the response and the sample assignment is accounted for. In estimating the response surface, we use all demographic, socioeconomic, and pre-existing health condition data that were common in the OHIE and NHIS data. Potentially important unobserved confounders include the number of hospital and outpatient visits in the previous year, proximity to health services, and enrollment in other federal programs. 
 
-The final two columns of Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with population members on Medicaid. Compared to the RCT compliers, the \textcolor{red}{population members who received treatment} are predominantly female, younger, more racially and ethnically diverse, less educated, and live in higher income households. Diagnoses of diabetes, asthma, high blood pressure, and heart disease are more common among the population on Medicaid then the RCT treated. \textcolor{red}{These summary statistics and the analyses that follow use survey weights to account for the probability of being sampled and non-response.}
+The final two columns of Table~\ref{rct-nrt-compare} compares RCT participants selected for Medicaid with population members on Medicaid. Compared to the RCT compliers, the \textcolor{red}{population members who received treatment} are predominantly female, younger, more racially and ethnically diverse, less educated, and live in higher income households. Diagnoses of diabetes, asthma, high blood pressure, and heart disease are more common among the population on Medicaid then the RCT treated.
 
 Strong ignorability assumptions may also be violated due to the fact that the OHIE applied a more stringent exclusion criteria compared to the NHIS sample. While the RCT and population sample both screened for individuals below the FPL,  \textcolor{red}{only the RCT required those enrolled to recertify their household income eligibility during the study period. Strong ignorability would not hold if the failure to recertify is correlated with unobserved variables.} 
 
@@ -443,7 +443,7 @@ The exclusion restriction assumption \eqref{ER} ensures treatment assignment aff
 
 Similar to the procedure proposed by \citep{Hartman}, we conduct placebo tests to check whether the average outcomes differ between the RCT compliers on Medicaid and the adjusted \textcolor{red}{population members who received Medicaid}.\footnote{Note that a placebo test for Assumption \eqref{compl} is not possible because we never observe whether RCT controls would actually take-up treatment if assigned.} If the placebo tests detect a significant difference between the mean outcomes of these groups, it would indicate that either Assumption \eqref{consistency} (for $d=1$), or Assumptions \eqref{si_treat} and \eqref{si_ctrl} are violated. 
 
-Table \ref{placebo} reports the results of placebo tests, comparing the mean outcomes of RCT compliers against the mean outcomes of adjusted \textcolor{red}{population members who received treatment}. The former quantity is calculated from the observed RCT sample and the latter quantity is the mean counterfactual $Y_{i11}$ estimated from \ref{response-predict} of the estimation procedure.
+Table \ref{placebo} reports the results of placebo tests \textcolor{red}{for the weighted difference-in-mean outcomes of RCT compliers and adjusted population members who received treatment. The mean outcome of RCT compliers is calculated from the observed RCT sample and is weighted by OHIE survey weights. The adjusted population mean is the counterfactual $Y_{i11}$ estimated from \ref{response-predict} of the estimation procedure, and weighted by NHIS survey weights.}
 
 Tests of equivalence between the two groups indicate that the differences across each outcome are not statistically significant. These results imply that the PATT-C estimator is not biased by differences in how Medicaid is delivered or health outcomes are measured between the RCT and population, or by differences in sample or population members' unobserved characteristics. 
 
@@ -456,11 +456,11 @@ Table \ref{ohie-status} reports the distribution of participants in the OHIE by 
  
 \subsection{Empirical results}\label{results}
 
-We compare PATT-C and PATT estimates for ER and outpatient use. We obtain estimates for the overall group of participants and subgroups according to sex, age, race, health status, education, and household income. Subgroup treatment effects are estimated by taking differences across response surfaces for a given covariate subgroup, and response surfaces are estimated with the ensemble mean predictions. We use treatment received, number of household members, and the subgroup covariates as features in the response models. We generate 95\% confidence intervals for these estimates using 1,000 bootstrap samples. 
+We compare PATT-C, PATT, \textcolor{red}{and CACE} estimates for ER and outpatient use. We obtain estimates for the overall group of participants and subgroups according to \textcolor{red}{pretreatment characteristics}. Subgroup treatment effects are estimated by taking differences across response surfaces for a given \textcolor{red}{binary covariate}, and response surfaces are estimated with the ensemble mean predictions. We use treatment received, number of household members, and the \textcolor{red}{pretreatment covariates} as features in the response models.
 
 Table \ref{compliance-compare} presents the PATT-C estimates, which indicate that Medicaid coverage has a positive, but considerably smaller effect on the number of ER and outpatient visits. For comparison, \citet{finkelstein2012} reports population estimates of the effect of Medicaid coverage on the number of ER and out-patient visits using 2004--2009 NHIS data on adults aged 19--64 below 100 percent of the federal poverty line ($n=15,528$). \citet{finkelstein2012} estimates Medicaid coverage significantly increases the number of ER visits by 0.08 [0.05, 0.12] and increases the number of outpatient visits by 1.45 [1.33, 1.57]. 
 
-Figures \ref{fig:any-visit-plot}, \ref{fig:num-visit-plot}, and \ref{fig:num-out-plot} examine heterogeneous treatment effect estimates on ER and outpatient use in the population. While this study is the first to our knowledge to estimate heterogeniety in treatment effects for the target population, \citet{Taubman} and \citet{NBERw22363} perform subgroup analyses on the RCT sample. Similar to the PATT-C estimates, \possessivecite{Taubman} subgroup analyses indicate that increases in ER use due to Medicaid are significantly larger for younger individuals and those with high school-level education.\footnote{\citet{NBERw22363} perform subgroup analyses on OHIE sample data and find larger increases in ER use as a result of Medicaid for men, English speakers, and individuals enrolled in a food stamp program prior to the lottery.}
+Figures \ref{fig:num-visit-plot} and \ref{fig:num-out-plot} examine heterogeneous treatment effect estimates on ER and outpatient use in the population. While this study is the first to our knowledge to estimate heterogeniety in treatment effects for the target population, \citet{Taubman} and \citet{NBERw22363} perform subgroup analyses on the RCT sample. Similar to the PATT-C estimates, \possessivecite{Taubman} subgroup analyses indicate that increases in ER use due to Medicaid are significantly larger for younger individuals and those with high school-level education.\footnote{\citet{NBERw22363} perform subgroup analyses on OHIE sample data and find larger increases in ER use as a result of Medicaid for men, English speakers, and individuals enrolled in a food stamp program prior to the lottery.}
 
 \section{Discussion} \label{discussion}
 
@@ -580,10 +580,6 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 		\hspace{3mm} $>\$25$k & 0 & 0.0 & 373 & 6.1 & 575 & 9.2   \\
 		\hline
 		\hline
-%		\textbf{Binary response} &  $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ & $\mathbf{n}$ & $\mathbf{\%}$ \\ 
-%		\hspace{3mm}Any ER visit &  1,377 & 25.4 & 1,301 & 25.1 & 1,659 & 26.5  \\  
-%		%\hspace{3mm}Any outpatient visit & 3,265 & 60.2 & 3,081 & 59.3 & 4,093 & 65.4 \\
-%		\hline
 		\textbf{Responses} &  Mean & S.d. & Mean & S.d. & Mean & S.d. \\  
 		\hspace{3mm}$\#$ ER visits &  0.44 & 0.95 & 0.44 & 0.99 & 0.48 & 1.0  \\  
 		\hspace{3mm}$\#$ outpatient visits & 1.9 & 3.01 & 1.9 & 2.8 & 2.08 & 2.3 \\
@@ -591,7 +587,7 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 		\hline
 	\end{longtable}
 \noindent
-\footnotesize{Notes: weighted using OHIE (first two columns) or NHIS (last column )survey weights.}
+\footnotesize{Notes: weighted using OHIE or NHIS survey weights.}
 \end{singlespace}
 \restoregeometry
 
@@ -608,44 +604,35 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \end{table}
 
 \begin{table}[h]
-		\caption{Placebo test results comparing the mean outcomes of RCT compliers and adjusted \textcolor{red}{population members who received treatment}.\label{placebo}} 
+		\caption{Placebo test: difference-in-mean outcomes of RCT compliers and adjusted population members who received treatment.\label{placebo}} 
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
 		Outcome                & RCT complier & Adjusted population & Difference & Per-comparison \\
 				               &  mean 		  & mean 					  & 		   & $p$-value \\		
 		 \midrule
-	%	Any ER visit           & 0.25              & 0.25                           & 0.0001     & 0.97  \\
 		$\#$ ER vists          & 0.45              & 0.45                           & 0.002      & 0.85   \\
 		$\#$ outpatient visits & 1.90              & 1.94                           & -0.03      & 0.26   \\ \bottomrule
 	\end{tabular}\\ \\
-\footnotesize{Notes: survey-weighted difference-in-means $p$-values calculated from two-sided t-test.}
+\footnotesize{Notes: $p$-values estimated using standard errors from 1,000 cluster bootstrap samples.}
 \end{table}
 
 \begin{table}[h]
 	\caption{Comparison of population and sample estimates.\label{compliance-compare}} 
-	\begin{tabular}{@{}llll@{}}
+	\begin{tabular}{@{}lcc@{}}
 		\toprule
-		\backslashbox{Estimator}{Outcome} 				& Any ER visit 	& $\#$ ER visits   & $\#$ outpatient visits      \\ \midrule
-		PATT-C                                           & 0.0001 [0.0001, 0.0001]   & 0.0005 [0.0002, 0.0008]	& 0.002 [0.002, 0.002] \\
-		PATT                                             & 0.0006 [0.0005, 0.0007]   & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
-		CACE                                             & -0.001 [-0.02, 0.02]   & 0.005 [-0.05, 0.06]	& -0.02 [-0.19, 0.14]  \\ \bottomrule
-	\end{tabular}\\
-	\footnotesize{Notes: Estimates in brackets represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.}
+		\backslashbox{Estimator}{Outcome} 				& $\#$ ER visits   & $\#$ outpatient visits      \\ 
+		\midrule
+		PATT-C                                          & 0.0005 [0.0002, 0.0008]	& 0.002 [0.002, 0.002] \\
+		PATT                                            & -0.004 [-0.005, -0.004]	& 0.02 [0.02, 0.02]  \\
+		CACE                                            & 0.005 [-0.05, 0.06]	& -0.02 [-0.19, 0.14]  \\ \bottomrule
+	\end{tabular}\\ \\
+\footnotesize{Notes: survey-weighted difference-in-means and cluster-adjusted bootstrapped standard errors (in parentheses).}
 \end{table}
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[width = 0.9\textwidth]{any-visit-plot.png}
-		\caption{Heterogeneity in sample and population treatment effect estimates: any ER visit. Horizontal lines represent 95\% bootstrap confidence intervals constructed with 1,000 bootstrap samples.\label{fig:any-visit-plot}}
-		%	\caption{\label{fig:any-visit-plot} here}
-	\end{center}
-\end{figure}
-
-
-\begin{figure}[htbp]
-	\begin{center}
 		\includegraphics[width = 0.9\textwidth]{num-visit-plot.png}
-		\caption{Heterogeneity in population treatment effect estimates: $\#$ ER visits.\label{fig:num-visit-plot}}
+		\caption{Heterogeneity in population treatment effect estimates: $\#$ ER visits. \emph{Notes:} Horizontal lines represent 95\% bootstrap confidence intervals estimated from cluster-adjusted bootstrapped standard errors.\label{fig:num-visit-plot}}
 		%	\caption{\label{fig:num-visit-plot} here}
 	\end{center}
 \end{figure}
@@ -653,50 +640,30 @@ Explicitly modeling compliance allows us to decompose population estimates by su
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width = 0.9\textwidth]{num-out-plot.png}
-		\caption{Heterogeneity in population treatment effect estimates: $\#$ outpatient visits.\label{fig:num-out-plot}}
+		\caption{Heterogeneity in population treatment effect estimates: $\#$ outpatient visits. See notes to Fig. \ref{fig:num-visit-plot}.\label{fig:num-out-plot}}
 		%	\caption{\label{fig:num-out-plot} here}
 	\end{center}
 \end{figure}
 
-% complier-mod
 \begin{table}[h]
-\begin{center}
 \caption{Distribution of MSE for compliance ensemble.\label{compliance-ensemble}} 
 \begin{tabular}{lcccc}
   \hline
  Algorithm & Mean & SE & Min. & Max. \\ 
   \hline
-        \rowcolor{Gray}
 Super learner (\texttt{SuperLearner}) & 0.22  & 0.001 & 0.21 & 0.23 \\
+\hline
 %Discrete SL & 0.22  & 0.001 & 0.21 & 0.23 \\
 Lasso regression (\texttt{glmnet})  & 0.22  & 0.001 & 0.21 & 0.23 \\
 Random forests (\texttt{randomForest}) & 0.27  & 0.002 & 0.25 & 0.29 \\
 Ridge regression (\texttt{glmnet}) & 0.22  & 0.001 & 0.21 & 0.23 \\
    \hline
-\end{tabular} 
-\end{center}
+\end{tabular} \\ \\
 \footnotesize{Notes: MSE is 10-fold cross-validated error for super learner ensemble and candidate algorithms. \textsf{R} package used for implementing each algorithm in parentheses.}
 \end{table}
 
-\pagebreak
-
 \begin{table}[h]
 \caption{Error and weights for candidate algorithms in response ensemble for RCT compliers.\label{reponse-ensemble}}  
-  \begin{tabularx}{\linewidth}{l*{3}{Y}}
-    \toprule
-    \multicolumn{3}{l}{\textbf{Any ER visit}} \\
-    \midrule
- Algorithm &  MSE & Weight \\ 
-  \hline
-Lasso regression (\texttt{glmnet})  & 0.18 & 1 \\ 
-Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
-Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.24 & 0 \\ 
-Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.19 & 0 \\ 
-Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.19 & 0 \\ 
-Regularized logistic regression, $\alpha=0.75$ (\texttt{glmnet})  & 0.19 & 0 \\ 
-Ridge regression (\texttt{glmnet})  & 0.18 & 0 \\ 
-   \hline
-  \end{tabularx}
   \begin{tabularx}{\linewidth}{l*{3}{Y}}
     \toprule
     \multicolumn{3}{l}{\textbf{$\#$ ER visits}} \\
@@ -712,8 +679,6 @@ Regularized linear regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.95 & 0 \\
 Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.95 & 0 \\ 
 Regularized linear regression, $\alpha=0.75$ (\texttt{glmnet})  & 0.95 & 0 \\ 
 Ridge regression (\texttt{glmnet})  & 0.18 & 0 \\ 
-   \hline
-    \bottomrule
   \end{tabularx}
   \begin{tabularx}{\linewidth}{l*{3}{Y}}
 	\toprule
@@ -732,7 +697,7 @@ Ridge regression (\texttt{glmnet})  & 0.18 & 0 \\
 	Ridge regression (\texttt{glmnet})  & 8.38 & 0 \\ 
 	\hline
 	\bottomrule
-\end{tabularx}
+\end{tabularx}\\ \\
 \footnotesize{Notes: cross-validated error and weights used for each algorithm in super learner ensemble. \textit{MSE} is the ten-fold cross-validated mean squared error for each algorithm. \textit{Weight} is the coefficient for the Super Learner, which is estimated using non-negative least squares based on the Lawson-Hanson algorithm. \textsf{R} package used for implementing each algorithm in parentheses. $\# preds.$ is the number of predictors randomly sampled as candidates in each decision tree in random forests algorithm. $\alpha$ is a parameter that mixes L1 and L2 norms. $\text{degree}$ is the smoothing term for smoothing splines.}
 \end{table}
 
@@ -740,20 +705,6 @@ Ridge regression (\texttt{glmnet})  & 0.18 & 0 \\
 
 \begin{table}[ht]
 \caption{Error and weights for candidate algorithms in response ensemble for all RCT participants.\label{reponse-ensemble-unadj}}  
-  \begin{tabularx}{\linewidth}{l*{3}{Y}}
-	\toprule
-	\multicolumn{3}{l}{\textbf{Any ER visit}} \\
-	\midrule
-	Algorithm &  MSE & Weight \\ 
-	\hline
-	Lasso regression (\texttt{glmnet})  & 0.18 & 0.96 \\ 
-	Random forests, $\# preds. = 1$ (\texttt{randomForest}) & 0.25 & 0 \\ 
-	Random forests, $\# preds. = 10$ (\texttt{randomForest}) & 0.24 & 0.04 \\ 
-	Regularized logistic regression, $\alpha=0.25$ (\texttt{glmnet})  & 0.18 & 0 \\ 
-	Regularized logistic regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.18 & 0 \\ 
-	Regularized logistic regression, $\alpha=0.75$ (\texttt{glmnet})  & 0.18 & 0 \\ 
-	\hline
-\end{tabularx}
 \begin{tabularx}{\linewidth}{l*{3}{Y}}
 	\toprule
 	\multicolumn{3}{l}{\textbf{$\#$ ER visits}} \\
@@ -769,8 +720,6 @@ Ridge regression (\texttt{glmnet})  & 0.18 & 0 \\
 	Regularized linear regression, $\alpha=0.5$ (\texttt{glmnet})  & 0.93 & 0 \\ 
 	Regularized linear regression, $\alpha=0.75$ (\texttt{glmnet})  & 0.93 & 0 \\ 
 	Ridge regression (\texttt{glmnet})  & 0.93 & 0 \\ 
-	\hline
-	\bottomrule
 \end{tabularx}
 \begin{tabularx}{\linewidth}{l*{3}{Y}}
 	\toprule
@@ -789,7 +738,7 @@ Ridge regression (\texttt{glmnet})  & 0.18 & 0 \\
 	Ridge regression (\texttt{glmnet})  & 8.41 & 0 \\ 
 	\hline
 	\bottomrule
-\end{tabularx}
+\end{tabularx} \\ \\
 \footnotesize{See notes to Fig.\ref{reponse-ensemble}.}
 \end{table}
 

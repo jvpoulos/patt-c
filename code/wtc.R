@@ -1,6 +1,6 @@
 WtC <- function (x, y = 0, weight = NULL, weighty = NULL, cluster = NULL, clustery = NULL, samedata = TRUE, 
           alternative = "two.tailed", mean1 = TRUE, bootse = TRUE, 
-          bootp = TRUE, bootn = 1000, drops = "pairwise") {
+          bootp = FALSE, bootn = 1000, drops = "pairwise") {
   ## from wtd.t.test package weights version 1.0
   if (is.null(weight)) {
     weight <- rep(1, length(x))
@@ -40,13 +40,11 @@ WtC <- function (x, y = 0, weight = NULL, weighty = NULL, cluster = NULL, cluste
       weighty <- weighty/mean(weighty, na.rm = TRUE)
   }
   
-  #n <- sum(weight[!is.na(x)], na.rm = TRUE)
   n <- length(unique(cluster))
-  #mx <- wtd.mean(x, weight, na.rm = TRUE)
   m.bar <- sum(tapply(weight, cluster, FUN=sum, na.rm = TRUE))/n
-  mx <- sum(tapply(x, cluster, FUN=mean, na.rm = TRUE)*tapply(weight, cluster, FUN=sum, na.rm = TRUE))/sum(tapply(weight, cluster, FUN=sum, na.rm = TRUE))
-  #vx <- wtd.var(x, weight, na.rm = TRUE)
-  vx <- (sum(tapply(weight, cluster, FUN=sum, na.rm = TRUE)*tapply(x, cluster, FUN=mean, na.rm = TRUE)**2)/m.bar - n*wtd.mean(x, weight, na.rm = TRUE)**2)/(n-1)
+  x.bar <- tapply(x, cluster, FUN=mean, na.rm = TRUE)
+  mx <- sum(x.bar*tapply(weight, cluster, FUN=sum, na.rm = TRUE))/sum(tapply(weight, cluster, FUN=sum, na.rm = TRUE))
+  vx <- (sum(tapply(weight, cluster, FUN=sum, na.rm = TRUE)*x.bar**2)/m.bar - n*wtd.mean(x, weight, na.rm = TRUE)**2)/(n-1)
   if (length(y) == 1) {
     dif <- mx - y
     sx <- sqrt(vx)
@@ -83,38 +81,27 @@ WtC <- function (x, y = 0, weight = NULL, weighty = NULL, cluster = NULL, cluste
   }
   if (length(y) > 1) {
 
-    # n2 <- sum(weighty[!is.na(y)], na.rm = TRUE)
     n2 <- length(unique(clustery))
     m.bar2 <- sum(tapply(weighty, clustery, FUN=sum, na.rm = TRUE))/n2
-    #my <- wtd.mean(y, weighty, na.rm = TRUE)
-    #my <- sum()
-    my <- sum(tapply(y, clustery, FUN=mean, na.rm = TRUE)*tapply(weighty, clustery, FUN=sum, na.rm = TRUE))/sum(tapply(weighty, clustery, FUN=sum, na.rm = TRUE))
-    #vy <- wtd.var(y, weighty, na.rm = TRUE)
-    vy <- (sum(tapply(weighty, clustery, FUN=sum, na.rm = TRUE)*tapply(y, clustery, FUN=mean, na.rm = TRUE)**2)/m.bar2 - n2*wtd.mean(y, weighty, na.rm = TRUE)**2)/(n2-1)
+    y.bar <- tapply(y, clustery, FUN=mean, na.rm = TRUE)
+    my <- sum(y.bar*tapply(weighty, clustery, FUN=sum, na.rm = TRUE))/sum(tapply(weighty, clustery, FUN=sum, na.rm = TRUE))
+    vy <- (sum(tapply(weighty, clustery, FUN=sum, na.rm = TRUE)*y.bar**2)/m.bar2 - n2*wtd.mean(y, weighty, na.rm = TRUE)**2)/(n2-1)
       
     dif <- mx - my
     sxy <- sqrt((vx/n) + (vy/n2))
     if (bootse == TRUE) {
 
-      # samps1 <- lapply(1:bootn, function(g) sample(1:length(x),
-      #                                              round(sum(weight, na.rm = TRUE), 0), replace = TRUE,
-      #                                              prob = weight))
       samps1 <- lapply(1:bootn, function(g) sample(unique(cluster), 
                                                    size=length(unique(cluster)), replace = TRUE, 
                                                    prob = tapply(weight, cluster, FUN=sum, na.rm = TRUE)))
-      
-      # samps2 <- lapply(1:bootn, function(g) sample(1:length(y), 
-      #                                              round(sum(weighty, na.rm = TRUE), 0), replace = TRUE, 
-      #                                              prob = weighty))
       
       samps2 <- lapply(1:bootn, function(g) sample(unique(clustery), 
                                                    size=length(unique(clustery)), replace = TRUE, 
                                                    prob = tapply(weighty, clustery, FUN=sum, na.rm = TRUE)))
       
-      sepests1 <- sapply(samps1, function(q) mean(x[q], 
-                                                  na.rm = TRUE))
-      sepests2 <- sapply(samps2, function(q) mean(y[q], 
-                                                  na.rm = TRUE))
+      sepests1 <- sapply(1:length(samps1), function(q) x.bar[names(x.bar)%in%samps1[[q]]])
+      sepests2 <- sapply(1:length(samps2), function(q) y.bar[names(y.bar)%in%samps2[[q]]])
+      
       sxy <- sqrt(var(sepests1 - sepests2, na.rm = TRUE))
     }
     df <- (((vx/n) + (vy/n2))^2)/((((vx/n)^2)/(n - 1)) + 

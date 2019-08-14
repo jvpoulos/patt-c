@@ -129,5 +129,12 @@ rct.cace <- lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][which(treatmen
                                              weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)], w=ohie.weights[which(treatment.ohie == 0)])) 
                    /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)], w=rct.compliers$weights[which(treatment.ohie == 1)])) # Denom. is true RCT compliance rate
 
+# Print results for Table A4
+t.patt
+
+t.patt.unadj
+
+rct.cace
+
 # Save workspace
 save.image(paste0(repo.directory,"data/analysis.RData")) 

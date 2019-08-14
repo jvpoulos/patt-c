@@ -34,16 +34,6 @@ t.cace.boot <- replicate(B,{
 })
 t.cace.ci <- lapply(y.col, function(i) quantile(unlist(t.cace.boot[i,]),probs = c(0.025, 0.975)))
 
-# print results for Table A4
-t.patt
-t.patt.ci
-
-t.patt.unadj
-t.patt.unadj.ci
-
-rct.cace
-t.cace.ci
-
 ### Function to get heterogeneous treatment effect estimates, using true data and bootstrapped data (set boot = TRUE)
 
 het.effects <- function(covs, boot = FALSE){
