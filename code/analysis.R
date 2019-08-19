@@ -61,12 +61,13 @@ Y.nhis <- na.omit(data.frame("num.visit"=nhis.num.visit,# need to omit rows cont
                      "num.out"=nhis.num.out))
 
 ## Train compliance model on RCT treated. Use model to predict P(insurance == 1|covariates) on controls. 
-run.model <- FALSE
+run.model <- TRUE
 if(run.model){
   # Source SuperLearner
   source(paste0(repo.directory,"code/SuperLearner.R"))
   save.image(paste0(repo.directory,"data/analysis.RData"))
-  source(paste0(repo.directory, "code/complier-mod.R")) # run this script on server
+  source(paste0(repo.directory, "code/complier-mod.R")) # run these scripts on server
+  source(paste0(repo.directory, "code/complier-mod-cv.R"))
 }
 
 # Load Super Learner predictions for compliance model (complier-mod.R)
