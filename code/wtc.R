@@ -1,4 +1,4 @@
-WtC <- function (x, y = 0, weight = NULL, weighty = NULL, cluster = NULL, clustery = NULL, samedata = TRUE, 
+WtC <- function (x, y = 0, c=NULL, weight = NULL, weighty = NULL, weightc = NULL, cluster = NULL, clustery = NULL, clusterc = NULL, samedata = TRUE, 
           alternative = "two.tailed", mean1 = TRUE, bootse = TRUE, 
           bootp = FALSE, bootn = 1000, drops = "pairwise") {
   ## from wtd.t.test package weights version 1.0
@@ -88,7 +88,16 @@ WtC <- function (x, y = 0, weight = NULL, weighty = NULL, cluster = NULL, cluste
     vy <- (sum(tapply(weighty, clustery, FUN=sum, na.rm = TRUE)*y.bar**2)/m.bar2 - n2*wtd.mean(y, weighty, na.rm = TRUE)**2)/(n2-1)
       
     dif <- mx - my
-    sxy <- sqrt((vx/n) + (vy/n2))
+    #sxy <- sqrt((vx/n) + (vy/n2))
+    
+    if(!is.null(c)){
+      n3 <- length(unique(clusterc))
+      m.bar3 <- sum(tapply(weightc, clusterc, FUN=sum, na.rm = TRUE))/n3
+      c.bar <- tapply(c, clusterc, FUN=mean, na.rm = TRUE)
+      mc <- sum(c.bar*tapply(weightc, clusterc, FUN=sum, na.rm = TRUE))/sum(tapply(weightc, clusterc, FUN=sum, na.rm = TRUE))
+      
+      dif <- (mx - my)/mc
+    }
     if (bootse == TRUE) {
 
       samps1 <- lapply(1:bootn, function(g) sample(unique(cluster), 
@@ -103,6 +112,17 @@ WtC <- function (x, y = 0, weight = NULL, weighty = NULL, cluster = NULL, cluste
       sepests2 <- sapply(1:length(samps2), function(q) y.bar[names(y.bar)%in%samps2[[q]]])
       
       sxy <- sqrt(var(sepests1 - sepests2, na.rm = TRUE))
+      
+      if(!is.null(c)){
+        samps3 <- lapply(1:bootn, function(g) sample(unique(clusterc), 
+                                                     size=length(unique(clusterc)), replace = TRUE, 
+                                                     prob = tapply(weightc, clusterc, FUN=sum, na.rm = TRUE)))
+        
+        sepests3 <- sapply(1:length(samps3), function(q) c.bar[names(c.bar)%in%samps3[[q]]])
+        
+        sxy <- sqrt(var((sepests1 - sepests2)/sepests3, na.rm = TRUE))
+        
+      }
     }
     df <- (((vx/n) + (vy/n2))^2)/((((vx/n)^2)/(n - 1)) + 
                                     ((vy/n2)^2/(n2 - 1)))

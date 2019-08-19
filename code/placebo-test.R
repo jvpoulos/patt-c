@@ -4,7 +4,6 @@ Y.hat.1.placebo <- lapply(y.col, function (i) predict(response.mod[[i]], nrt.tr.
 
 lapply(y.col, function (i) WtC(Y.ohie[which(insurance.ohie==1),][[i]], 
                                       Y.hat.1.placebo[[i]],
-                                      alternative="two.tailed",
                                       bootse=TRUE,
                                       bootp = FALSE,
                                       bootn = 1000,
@@ -12,5 +11,4 @@ lapply(y.col, function (i) WtC(Y.ohie[which(insurance.ohie==1),][[i]],
                                       weighty=nhis.weights[which(insurance.nhis==1)], 
                                       cluster = ohie.hhid[which(insurance.ohie == 1)],
                                       clustery=nhis.hhid[which(insurance.nhis==1)], 
-                                      samedata=FALSE,
-                                      mean1=TRUE)) 
+                                      samedata=FALSE)) 
