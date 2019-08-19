@@ -1,6 +1,8 @@
 ## Run this script on server
+library(parallel)
 
-options(mc.cores = 28)
+#detectCores()
+options(mc.cores = 8)
 
 # We need to set a different type of seed that works across cores.
 # Otherwise the other cores will go rogue and we won't get repeatable results.
