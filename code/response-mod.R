@@ -14,8 +14,8 @@ response.mod <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response[,i],
                                                                       X=X.ohie.response, 
                                                                    SL.library=SL.library.reg,
                                                                    family="gaussian",
-                                                                id=ohie.hhid,
-                                                                obsWeights = ohie.weights))
+                                                                id=ohie.hhid[which(rct.compliers$complier==1)],
+                                                                obsWeights = ohie.weights[which(rct.compliers$complier==1)]))
 
 names(response.mod) <- colnames(Y.ohie.response)[y.col] # name each element of list
 
@@ -29,8 +29,8 @@ response.mod.patt <- lapply(y.col, function (i) SuperLearner(Y=Y.ohie.response.u
                                                                        X=X.ohie.response.unadj, 
                                                                        SL.library=SL.library.reg,
                                                                        family="gaussian",
-                                                                 id=ohie.hhid,
-                                                                 obsWeights = ohie.weights)) 
+                                                                 id=ohie.hhid[which(rct.compliers$complier==1 | rct.compliers$complier==0)],
+                                                                 obsWeights = ohie.weights[which(rct.compliers$complier==1 | rct.compliers$complier==0)])) 
 
 names(response.mod.patt) <- colnames(Y.ohie)[y.col] # name each element of list
 

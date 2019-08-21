@@ -1,3 +1,5 @@
+library(ROCR)
+
 load(paste0(repo.directory,"data/prepare-analysis.RData")) # result of prepare-analysis.R
 
 # Create dfs containing common features for RCT and observational study
@@ -61,7 +63,7 @@ Y.nhis <- na.omit(data.frame("num.visit"=nhis.num.visit,# need to omit rows cont
                      "num.out"=nhis.num.out))
 
 ## Train compliance model on RCT treated. Use model to predict P(insurance == 1|covariates) on controls. 
-run.model <- TRUE
+run.model <- FALSE
 if(run.model){
   # Source SuperLearner
   source(paste0(repo.directory,"code/SuperLearner.R"))
@@ -70,19 +72,37 @@ if(run.model){
   source(paste0(repo.directory, "code/complier-mod-cv.R"))
 }
 
+load(paste0(repo.directory, "results/complier-mod.rda")) # load complier mod
+
+# find most important predictors in RF
+varImpPlot(complier.mod$fitLibrary$SL.randomForest.1_All$object,
+           type=2) # total decrease in node impurities from splitting on the variable, averaged over all trees. node impurity is measured by the Gini index.
+
+
 # Load Super Learner predictions for compliance model (complier-mod.R)
 C.pscore <- read.table(paste0(repo.directory,"results/C.pscore.txt"), quote="\"", header=TRUE)
 
 rct.compliers <- data.frame("treatment"=treatment.ohie,
                             "insurance"=insurance.ohie,
-                            "C.pscore"=as.numeric(C.pscore$pred), # SL predictions in first column
-                            "C.hat"=ifelse(as.numeric(C.pscore[[1]])>0.5,1,0),
-                            "complier"=0,
-                            "weights"=ohie.weights,
-                            "cluster"=ohie.hhid)
+                            "C.pscore"=C.pscore$pred,
+                            "complier"=rep(0,length(as.numeric(treatment.ohie))),
+                            "weights"=ohie.weights[as.numeric(rownames(X.ohie))],
+                            "cluster"=ohie.hhid[as.numeric(rownames(X.ohie))])
 
 rct.compliers$complier[rct.compliers$treatment==1 & rct.compliers$insurance==1] <- 1 # true compliers in the treatment group
-rct.compliers$complier[rct.compliers$treatment==0 & rct.compliers$C.hat==1] <- 1 # predicted compliers from the control group
+
+pred.compliers <- prediction(rct.compliers$C.pscore[rct.compliers$treatment==1], rct.compliers$complier[rct.compliers$treatment==1]) # put in ROCR object # predicted vs. actual compliers
+
+roc.perf <- performance(pred.compliers, measure = "tpr", x.measure = "fpr") # plot ROC curve
+plot(roc.perf)
+abline(a=0, b= 1)
+
+# Get optimal cut-point
+cost.perf <- performance(pred.compliers, "cost")
+opt.cut <- pred.compliers@cutoffs[[1]][which.min(cost.perf@y.values[[1]])]
+opt.cut
+
+rct.compliers$complier[rct.compliers$treatment==0 & rct.compliers$C.pscore>opt.cut] <- 1 # predicted compliers from the control group
  
 # Fit a regression to the compliers in the RCT
 y.col <- seq_along(Y.ohie)
