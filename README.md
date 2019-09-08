@@ -1,5 +1,6 @@
 # patt-noncompliance
-"Estimating population average treatment effects from experiments with noncompliance" 
+
+This repository provides data and code for reproducing ["Estimating population average treatment effects from experiments with noncompliance"](https://arxiv.org/abs/1901.02991).
 
 Please cite the paper if you use this code for academic research:
 
@@ -20,9 +21,3 @@ archivePrefix = {arXiv},
       adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 ```
-
-
-
-
-
-
