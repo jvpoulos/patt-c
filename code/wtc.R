@@ -1,4 +1,4 @@
-WtC <- function (x, y = 0, c=NULL, weight = NULL, weighty = NULL, weightc = NULL, cluster = NULL, clustery = NULL, clusterc = NULL, samedata = TRUE, 
+WtC <- function (x, y, c=NULL, weight = NULL, weighty = NULL, weightc = NULL, cluster = NULL, clustery = NULL, clusterc = NULL, samedata = TRUE, 
           alternative = "two.tailed", mean1 = TRUE, bootse = TRUE, 
           bootp = FALSE, bootn = 1000, drops = "pairwise") {
   ## from wtd.t.test package weights version 1.0
@@ -45,40 +45,7 @@ WtC <- function (x, y = 0, c=NULL, weight = NULL, weighty = NULL, weightc = NULL
   x.bar <- tapply(x, cluster, FUN=mean, na.rm = TRUE)
   mx <- sum(x.bar*tapply(weight, cluster, FUN=sum, na.rm = TRUE))/sum(tapply(weight, cluster, FUN=sum, na.rm = TRUE))
   vx <- (sum(tapply(weight, cluster, FUN=sum, na.rm = TRUE)*x.bar**2)/m.bar - n*wtd.mean(x, weight, na.rm = TRUE)**2)/(n-1)
-  if (length(y) == 1) {
-    dif <- mx - y
-    sx <- sqrt(vx)
-    se <- sx/sqrt(n)
-    if (bootse == TRUE) {
-      samps <- lapply(1:bootn, function(g) sample(1:length(x), 
-                                                  round(sum(weight, na.rm = TRUE), 0), replace = TRUE, 
-                                                  prob = weight))
-      sepests <- sapply(samps, function(q) mean(x[q], na.rm = TRUE)) - 
-        y
-      se <- sqrt(var(sepests))
-    }
-    t <- (mx - y)/se
-    df <- n - 1
-    p.value <- (1 - pt(abs(t), df)) * 2
-    if (alternative == "greater") 
-      p.value <- pt(t, df, lower.tail = FALSE)
-    if (alternative == "less") 
-      p.value <- pt(t, df, lower.tail = TRUE)
-    if (bootp == TRUE & bootse == TRUE) 
-      p.value <- 2 * min(c(sum(sepests > y & !is.na(sepests))/sum(!is.na(sepests)), 
-                           sum(sepests < y & !is.na(sepests))/sum(!is.na(sepests))))
-    if (bootp == TRUE & bootse == TRUE & alternative == "greater") 
-      p.value <- sum(sepests > y & !is.na(sepests))/sum(!is.na(sepests))
-    if (bootp == TRUE & bootse == TRUE & alternative == "less") 
-      p.value <- sum(sepests < y & !is.na(sepests))/sum(!is.na(sepests))
-    coef <- c(t, df, p.value)
-    out2 <- c(dif, mx, y, se)
-    names(coef) <- c("t.value", "df", "p.value")
-    names(out2) <- c("Difference", "Mean", "Alternative", 
-                     "Std. Err")
-    out <- list("One Sample Weighted T-Test", coef, out2)
-    names(out) <- c("test", "coefficients", "additional")
-  }
+ 
   if (length(y) > 1) {
 
     n2 <- length(unique(clustery))
@@ -88,37 +55,36 @@ WtC <- function (x, y = 0, c=NULL, weight = NULL, weighty = NULL, weightc = NULL
     vy <- (sum(tapply(weighty, clustery, FUN=sum, na.rm = TRUE)*y.bar**2)/m.bar2 - n2*wtd.mean(y, weighty, na.rm = TRUE)**2)/(n2-1)
       
     dif <- mx - my
-    #sxy <- sqrt((vx/n) + (vy/n2))
+    sxy <- sqrt((vx/n) + (vy/n2))
     
     if(!is.null(c)){
       n3 <- length(unique(clusterc))
       m.bar3 <- sum(tapply(weightc, clusterc, FUN=sum, na.rm = TRUE))/n3
       c.bar <- tapply(c, clusterc, FUN=mean, na.rm = TRUE)
       mc <- sum(c.bar*tapply(weightc, clusterc, FUN=sum, na.rm = TRUE))/sum(tapply(weightc, clusterc, FUN=sum, na.rm = TRUE))
+      vc <- (sum(tapply(weightc, clusterc, FUN=sum, na.rm = TRUE)*c.bar**2)/m.bar3 - n3*wtd.mean(c, weightc, na.rm = TRUE)**2)/(n3-1)
       
       dif <- (mx - my)/mc
+      sxy <- sqrt((vx/n) + (vy/n2) + (vc/n3))
     }
     if (bootse == TRUE) {
 
-      samps1 <- lapply(1:bootn, function(g) sample(unique(cluster), 
-                                                   size=length(unique(cluster)), replace = TRUE, 
+      samps1 <- lapply(1:bootn, function(g) sample.int(length(unique(cluster)), replace = TRUE, 
                                                    prob = tapply(weight, cluster, FUN=sum, na.rm = TRUE)))
       
-      samps2 <- lapply(1:bootn, function(g) sample(unique(clustery), 
-                                                   size=length(unique(clustery)), replace = TRUE, 
+      samps2 <- lapply(1:bootn, function(g) sample.int(length(unique(clustery)), replace = TRUE, 
                                                    prob = tapply(weighty, clustery, FUN=sum, na.rm = TRUE)))
       
-      sepests1 <- sapply(1:length(samps1), function(q) x.bar[names(x.bar)%in%samps1[[q]]])
-      sepests2 <- sapply(1:length(samps2), function(q) y.bar[names(y.bar)%in%samps2[[q]]])
+      sepests1 <- sapply(samps1, function(q) mean(x.bar[q], na.rm=TRUE))
+      sepests2 <- sapply(samps2, function(q) mean(y.bar[q], na.rm=TRUE))
       
       sxy <- sqrt(var(sepests1 - sepests2, na.rm = TRUE))
       
       if(!is.null(c)){
-        samps3 <- lapply(1:bootn, function(g) sample(unique(clusterc), 
-                                                     size=length(unique(clusterc)), replace = TRUE, 
+        samps3 <- lapply(1:bootn, function(g) sample.int(length(unique(clusterc)), replace = TRUE, 
                                                      prob = tapply(weightc, clusterc, FUN=sum, na.rm = TRUE)))
         
-        sepests3 <- sapply(1:length(samps3), function(q) c.bar[names(c.bar)%in%samps3[[q]]])
+        sepests3 <- sapply(samps3, function(q) mean(c.bar[q], na.rm=TRUE))
         
         sxy <- sqrt(var((sepests1 - sepests2)/sepests3, na.rm = TRUE))
         
@@ -128,6 +94,14 @@ WtC <- function (x, y = 0, c=NULL, weight = NULL, weighty = NULL, weightc = NULL
                                     ((vy/n2)^2/(n2 - 1)))
     t <- (mx - my)/sxy
     p.value <- (1 - pt(abs(t), df)) * 2
+    
+    if(!is.null(c)){
+      df <- (((vx/n) + (vy/n2) + (vc/n3))^2)/((((vx/n)^2)/(n - 1)) + 
+                                      ((vy/n2)^2/(n2 - 1)) +
+                                        ((vc/n3)^2/(n3 - 1)))
+      t <- ((mx - my)/mc)/sxy
+      p.value <- (1 - pt(abs(t), df)) * 2
+    }
     if (alternative == "greater") 
       p.value <- pt(t, df, lower.tail = FALSE)
     if (alternative == "less") 

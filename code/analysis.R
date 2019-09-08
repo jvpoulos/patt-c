@@ -49,6 +49,8 @@ X.nhis <-   na.omit(data.frame(n.hh.nhis, # need to omit rows containing any NA
                              wave.nhis,
                              wave.nhis.interact))
 
+colnames(X.nhis) <- colnames(X.ohie) # make sure names are consistent
+
 # Create vectors for treatment and compliance 
 treatment.ohie <- treatment[as.numeric(rownames(X.ohie))]
 
@@ -74,7 +76,7 @@ if(run.model){
 
 load(paste0(repo.directory, "results/complier-mod.rda")) # load complier mod
 
-# find most important predictors in RF
+# Find most important predictors in RF
 varImpPlot(complier.mod$fitLibrary$SL.randomForest.1_All$object,
            type=2) # total decrease in node impurities from splitting on the variable, averaged over all trees. node impurity is measured by the Gini index.
 
@@ -124,6 +126,19 @@ if(run.model){
 load(paste0(repo.directory,"results/response-mod.rda")) 
 load(paste0(repo.directory,"results/response-mod-patt.rda")) 
 
+# Print coefficients for Appendix Tables
+response.mod$num.visit$cvRisk #A6
+response.mod$num.visit$coef 
+
+response.mod$num.out$coef
+response.mod$num.out$cvRisk
+
+response.mod$num.visit$coef #A7
+response.mod$num.visit$cvRisk
+
+response.mod$num.out$coef
+response.mod$num.out$cvRisk
+
 # Use response model to estimate potential outcomes for population "compliers" on medicaid 
 nrt.tr.counterfactual <- cbind("insurance" = rep(1, length(which(insurance.nhis==1))),
                                X.nhis[which(insurance.nhis==1),])
@@ -135,32 +150,33 @@ Y.hat.0 <- lapply(colnames(Y.ohie), function (i) predict(response.mod[[i]], nrt.
 
 # Compute PATT-C estimator
 
-# t.patt <- lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
-#                     weighted.mean(Y.hat.0[[i]], w=nhis.weights[which(insurance.nhis==1)])) # weight by NHIS survey weights
+source(paste0(repo.directory,"code/wtc.R")) # weighted t-test with cluster-bootstrapped SEs
 
-t.patt <- lapply(y.col, function (i) WtC(Y.hat.1[[i]], 
-                                         Y.hat.0[[i]],
+t.patt <- lapply(y.col, function (i) WtC(x=Y.hat.1[[i]], 
+                                         y=Y.hat.0[[i]],
                                          bootse=TRUE,
-                                         bootp = FALSE,
+                                         bootp = TRUE,
                                          bootn = 1000,
                                          weight = nhis.weights[which(insurance.nhis == 1)],
                                          weighty=nhis.weights[which(insurance.nhis==1)], 
                                          cluster = nhis.hhid[which(insurance.nhis == 1)],
                                          clustery=nhis.hhid[which(insurance.nhis==1)], 
                                          samedata=FALSE)) 
+sanity.check <- TRUE # weighted diff-in-means for sanity check
+if(sanity.check){
+  lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
+           weighted.mean(Y.hat.0[[i]], w=nhis.weights[which(insurance.nhis==1)])) # weight by NHIS survey weights
+}
 
 # Compute unadjusted PATT
 
 Y.hat.1.unadj <- lapply(colnames(Y.ohie), function (i) predict(response.mod.patt[[i]], nrt.tr.counterfactual, onlySL = T)$pred)
 Y.hat.0.unadj <- lapply(colnames(Y.ohie), function (i) predict(response.mod.patt[[i]], nrt.ctrl.counterfactual, onlySL = T)$pred)
 
-# t.patt.unadj <- lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
-#                          weighted.mean(Y.hat.0.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]))
-
-t.patt.unadj <- lapply(y.col, function (i) WtC(Y.hat.1.unadj[[i]], 
-                                         Y.hat.0.unadj[[i]],
+t.patt.unadj <- lapply(y.col, function (i) WtC(x=Y.hat.1.unadj[[i]], 
+                                         y=Y.hat.0.unadj[[i]],
                                          bootse=TRUE,
-                                         bootp = FALSE,
+                                         bootp = TRUE,
                                          bootn = 1000,
                                          weight = nhis.weights[which(insurance.nhis == 1)],
                                          weighty=nhis.weights[which(insurance.nhis==1)], 
@@ -168,24 +184,32 @@ t.patt.unadj <- lapply(y.col, function (i) WtC(Y.hat.1.unadj[[i]],
                                          clustery=nhis.hhid[which(insurance.nhis==1)], 
                                          samedata=FALSE)) 
 
-# Compute CACE
-# rct.cace <- lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)], w=ohie.weights[which(treatment.ohie == 1)]) - # Num. is ITT effect
-#                                              weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)], w=ohie.weights[which(treatment.ohie == 0)])) 
-#                    /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)], w=rct.compliers$weights[which(treatment.ohie == 1)])) # Denom. is true RCT compliance rate
+if(sanity.check){
+  lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
+                            weighted.mean(Y.hat.0.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]))
+}
 
-rct.cace <- lapply(y.col, function (i) WtC(Y.ohie[[i]][which(treatment.ohie==1)], 
-                                               Y.ohie[[i]][which(treatment.ohie==0)],
-                                               c=rct.compliers$complier[which(treatment.ohie==1)],
+# Compute CACE
+
+rct.cace <- lapply(y.col, function (i) WtC(x=as.matrix(Y.ohie[[i]][which(treatment.ohie==1)]), 
+                                               y=as.matrix(Y.ohie[[i]][which(treatment.ohie==0)]), 
+                                               c=as.matrix(rct.compliers$complier[which(treatment.ohie==1)]), 
                                                bootse=TRUE,
-                                               bootp = FALSE,
+                                               bootp = TRUE,
                                                bootn = 1000,
-                                               weight = ohie.weights[which(treatment.ohie == 1)],
-                                               weighty= ohie.weights[which(treatment.ohie == 0)],
-                                               weightc=rct.compliers$weights[which(treatment.ohie == 1)],
-                                               cluster = ohie.hhid[which(treatment.ohie == 1)],
+                                               weight = ohie.weights[which(treatment.ohie == 1)], 
+                                               weighty= ohie.weights[which(treatment.ohie == 0)], 
+                                               weightc=rct.compliers$weights[which(treatment.ohie == 1)], 
+                                               cluster = ohie.hhid[which(treatment.ohie == 1)], 
                                                clustery=ohie.hhid[which(treatment.ohie==0)], 
-                                               clusterc=rct.compliers$cluster[which(treatment.ohie == 1)],
+                                               clusterc=rct.compliers$cluster[which(treatment.ohie == 1)], 
                                                samedata=FALSE)) 
+
+if(sanity.check){
+  lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)], w=ohie.weights[which(treatment.ohie == 1)]) - # Num. is ITT effect
+                                weighted.mean(Y.ohie[[i]][which(treatment.ohie==0)], w=ohie.weights[which(treatment.ohie == 0)]))
+         /weighted.mean(rct.compliers$complier[which(treatment.ohie==1)], w=rct.compliers$weights[which(treatment.ohie == 1)])) # Denom. is true RCT compliance rate
+}
 
 # Print results for Table A4
 t.patt
