@@ -37,7 +37,7 @@ Description of scripts in code/
   * `complier-mod-cv.R` Cross-validate accuracy of complier model if `run.model` is TRUE
   * `response-mod.R` Fit response models if `run.model` is TRUE
  * `rct-nrt-compare.R` produce estimates for Tables A1 and A2
- * `estimator-compare-plots.R` plot heterogeneous treatment effect estimates and saves to `plots/`    
+ * `estimator-compare-plots.R` saves heterogeneous treatment effect estimates to `plots/`    
  * `placebo-test.R` produce estimates for Table A3
 
 Instructions
