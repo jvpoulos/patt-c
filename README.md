@@ -1,4 +1,4 @@
-# patt-noncompliance
+# patt-c
 
 This repository provides data and code for reproducing ["Estimating population average treatment effects from experiments with noncompliance"](https://arxiv.org/abs/1901.02991).
 
@@ -45,7 +45,7 @@ Instructions
 ------
 * Clone a copy of the repository to your working directory with the command
 ```
-$ git clone https://github.com/jvpoulos/patt-noncompliance
+$ git clone https://github.com/jvpoulos/patt-c
 ```
 * The code uses **R** version 3.5.2 (2018-12-20). To install this **R** version on Ubuntu, use the command 
 ```
