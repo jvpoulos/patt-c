@@ -36,6 +36,7 @@ Description of scripts in code/
   * `complier-mod.R` Fit complier model if `run.model` is TRUE
   * `complier-mod-cv.R` Cross-validate accuracy of complier model if `run.model` is TRUE
   * `response-mod.R` Fit response models if `run.model` is TRUE
+  * `wtc.R` function for weighted t-test with cluster-bootstrapped SEs
  * `rct-nrt-compare.R` produce estimates for Tables A1 and A2
  * `estimator-compare-plots.R` saves heterogeneous treatment effect estimates to `plots/`    
  * `placebo-test.R` produce estimates for Table A3
