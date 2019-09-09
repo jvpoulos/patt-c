@@ -1,4 +1,4 @@
-# Create plots for each outcome variable comparing PATT-C, PATT, and CACE, overall and by covariate 
+# Create plots for each outcome variable comparing PATT-C, PATT, and CACE by covariate 
 
 # Load R workspace
 load(paste0(repo.directory,"data/analysis.RData"))

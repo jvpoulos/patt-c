@@ -66,20 +66,12 @@ Y.nhis <- na.omit(data.frame("num.visit"=nhis.num.visit,# need to omit rows cont
 
 ## Train compliance model on RCT treated. Use model to predict P(insurance == 1|covariates) on controls. 
 run.model <- FALSE
-if(run.model){
-  # Source SuperLearner
+if(run.model){ # run these scripts on server
   source(paste0(repo.directory,"code/SuperLearner.R"))
   save.image(paste0(repo.directory,"data/analysis.RData"))
-  source(paste0(repo.directory, "code/complier-mod.R")) # run these scripts on server
+  source(paste0(repo.directory, "code/complier-mod.R")) 
   source(paste0(repo.directory, "code/complier-mod-cv.R"))
 }
-
-load(paste0(repo.directory, "results/complier-mod.rda")) # load complier mod
-
-# Find most important predictors in RF
-varImpPlot(complier.mod$fitLibrary$SL.randomForest.1_All$object,
-           type=2) # total decrease in node impurities from splitting on the variable, averaged over all trees. node impurity is measured by the Gini index.
-
 
 # Load Super Learner predictions for compliance model (complier-mod.R)
 C.pscore <- read.table(paste0(repo.directory,"results/C.pscore.txt"), quote="\"", header=TRUE)

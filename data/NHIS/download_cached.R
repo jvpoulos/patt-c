@@ -9,8 +9,6 @@
 # install.packages( "digest" )
 stopifnot(require(digest))
 
-
-
 downloadCache <- 
   function (
     url ,

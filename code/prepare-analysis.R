@@ -1,7 +1,8 @@
 ## Imports NHIS and OHIE datasets and creates outcome vectors and common covariates for the analysis 
 
-# Libraries # need plyr
-library(weights) # install cluster -> HMisc -> weights
+# Libraries
+library(plyr)
+library(weights) 
 library(foreach)
 
 years <- c(2008:2017)

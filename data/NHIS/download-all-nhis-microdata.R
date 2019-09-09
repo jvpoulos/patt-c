@@ -9,7 +9,7 @@ options( encoding = "windows-1252" )  	# # only macintosh and *nix users need th
 library(downloader)
 library(SAScii)
 library(RCurl)
-setwd("~/patt-noncompliance/data/NHIS")
+setwd("~/data/NHIS")
 nhis.years.to.download <- 2017:2008
 
 # load the downloadCache and related functions
