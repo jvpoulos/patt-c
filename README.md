@@ -50,7 +50,7 @@ $ git clone https://github.com/jvpoulos/patt-noncompliance
 ```
 $ sudo apt-get install r-base-core=3.5.2-1xenial
 ```
-* Download and extract pretrained response models in `results/` directory:
+* Download and extract pretrained response models to `results/` directory:
   * [response-mod.tar.xz](https://www.dropbox.com/s/d53jcpj9vbo0tex/response-mod.tar.xz?dl=1)
   * [response-mod-patt.tar.xz](https://www.dropbox.com/s/srgvn4oa2ugmf8p/response-mod-patt.tar.xz?dl=1)
 * Open `package-list.R` in a script editor
