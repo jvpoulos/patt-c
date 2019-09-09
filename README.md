@@ -25,17 +25,17 @@ Description of scripts in code/
 ------
 * `package-list.R` install required packages 
 * `main.R` main run list 
-       * `main.sh` shell script for main.R
- * `simulation.R` runs simulations and produces `results/simulation_res.Rdata`
- * `simulation-plots.R` loads `results/simulation_res.Rdata` and saves to `plots/`
- * `prepare-ohie.R` merges OHIE data and saves to `data/prepare-ohie.Rdata`
- * `prepare-NHIS.R` merges NHIS data and saves to `data/prepare-NHIS.Rdata`
- * `prepare-analysis.R` imports NHIS and OHIE datasets and creates outcome vectors and common covariates for the analysis; saves to `data/prepare-analysis.Rdata`
- * `analysis.R` produces empirical estimates; change `run.model` to TRUE to train complier and response models; saves to `data/analysis.Rdata`
-       * `SuperLearner.R` Super learner helper functions
-       * `complier-mod.R` Fit complier model if `run.model` is TRUE
-       * `complier-mod-cv.R` Cross-validate accuracy of complier model if `run.model` is TRUE
-       * `response-mod.R` Fit response models if `run.model` is TRUE
+  * `main.sh` shell script for main.R
+* `simulation.R` runs simulations and produces `results/simulation_res.Rdata`
+* `simulation-plots.R` loads `results/simulation_res.Rdata` and saves to `plots/`
+* `prepare-ohie.R` merges OHIE data and saves to `data/prepare-ohie.Rdata`
+ `prepare-NHIS.R` merges NHIS data and saves to `data/prepare-NHIS.Rdata`
+* `prepare-analysis.R` imports NHIS and OHIE datasets and creates outcome vectors and common covariates for the analysis; saves to `data/prepare-analysis.Rdata`
+* `analysis.R` produces empirical estimates; change `run.model` to TRUE to train complier and response models; saves to `data/analysis.Rdata`
+  * `SuperLearner.R` Super learner helper functions
+  * `complier-mod.R` Fit complier model if `run.model` is TRUE
+  * `complier-mod-cv.R` Cross-validate accuracy of complier model if `run.model` is TRUE
+  * `response-mod.R` Fit response models if `run.model` is TRUE
  * `rct-nrt-compare.R` produce estimates for Tables A1 and A2
  * `estimator-compare-plots.R` plot heterogeneous treatment effect estimates and saves to `plots/`    
  * `placebo-test.R` produce estimates for Table A3
@@ -51,8 +51,8 @@ $ git clone https://github.com/jvpoulos/patt-noncompliance
 $ sudo apt-get install r-base-core=3.5.2-1xenial
 ```
 * Download and extract pretrained response models in `results/` directory:
-       *[response-mod.tar.xz](https://www.dropbox.com/s/d53jcpj9vbo0tex/response-mod.tar.xz?dl=1)
-       *[response-mod-patt.tar.xz](https://www.dropbox.com/s/srgvn4oa2ugmf8p/response-mod-patt.tar.xz?dl=1)
+  * [response-mod.tar.xz](https://www.dropbox.com/s/d53jcpj9vbo0tex/response-mod.tar.xz?dl=1)
+  * [response-mod-patt.tar.xz](https://www.dropbox.com/s/srgvn4oa2ugmf8p/response-mod-patt.tar.xz?dl=1)
 * Open `package-list.R` in a script editor
   * Verify that all required packages in `package-list.R`are installed in your **R** library
 * Open `main.R` in a script editor
