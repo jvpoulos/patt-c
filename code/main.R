@@ -1,4 +1,4 @@
-repo.directory <- "~/patt-noncompliance/"
+repo.directory <- "~/patt-c/"
 
 # Simulation 
 
