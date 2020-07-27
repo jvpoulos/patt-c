@@ -7,30 +7,30 @@ load(paste0(repo.directory,"data/analysis.RData"))
 library(ggplot2)
 
 ### Confidence intervals for the estimates
-B <- 1000
+B <- 1999
 
 # PATT-C
 t.patt.boot <- replicate(B, {
   samp <- sample(1:length(Y.hat.1[[1]]), length(Y.hat.1[[1]]), replace=T)  
-  lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]][samp], w=nhis.weights[which(insurance.nhis[samp]==1)]) -
-           weighted.mean(Y.hat.0[[i]][samp], w=nhis.weights[which(insurance.nhis[samp]==1)]))
+  lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]][samp], w=nhis.weights[samp]) -
+           weighted.mean(Y.hat.0[[i]][samp], w=nhis.weights[samp]))
 })
 t.patt.ci <- lapply(y.col, function(i) quantile(unlist(t.patt.boot[i,]),probs = c(0.025, 0.975)))
 
 # PATT
 t.patt.unadj.boot <- replicate(B, {
   samp <- sample(1:length(Y.hat.1.unadj[[1]]), length(Y.hat.1.unadj[[1]]), replace=T)  
-  lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]][samp], w=nhis.weights[which(insurance.nhis[samp]==1)]) - 
-           weighted.mean(Y.hat.0.unadj[[i]][samp]), w=nhis.weights[which(insurance.nhis[samp]==1)])
+  lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]][samp], w=nhis.weights[samp]) - 
+           weighted.mean(Y.hat.0.unadj[[i]][samp], w=nhis.weights[samp]))
 })
 t.patt.unadj.ci <- lapply(y.col, function(i) quantile(unlist(t.patt.unadj.boot[i,]),probs = c(0.025, 0.975)))
 
 # CACE
 t.cace.boot <- replicate(B,{
   samp <- sample(1:length(treatment.ohie), length(treatment.ohie), replace=T)  
-  lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==1)], w=ohie.weights[which(treatment.ohie[samp] == 1)]) - # Num. is ITT effect
-                                weighted.mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==0)], w=ohie.weights[which(treatment.ohie[samp] == 0)])) 
-         /weighted.mean(rct.compliers$complier[samp][which(treatment.ohie[samp]==1)], w=rct.compliers$weights[samp][which(treatment.ohie == 1)]))
+  lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==1)], w=ohie.weights[samp][which(treatment.ohie[samp] == 1)]) - # Num. is ITT effect
+                                weighted.mean(Y.ohie[[i]][samp][which(treatment.ohie[samp]==0)], w=ohie.weights[samp][which(treatment.ohie[samp] == 0)])) 
+         /weighted.mean(rct.compliers$complier[samp][which(treatment.ohie[samp]==1)], w=rct.compliers$weights[samp][which(treatment.ohie[samp] == 1)]))
 })
 t.cace.ci <- lapply(y.col, function(i) quantile(unlist(t.cace.boot[i,]),probs = c(0.025, 0.975)))
 
@@ -58,7 +58,7 @@ het.effects <- function(covs, boot = FALSE){
                                   X.ohie[which(rct.compliers$complier==1),])
   }else{
     X.nhis_boot      <- X.nhis[which(insurance.nhis==1),]
-    X.nhis_unadjboot <- X.nhis[which(insurance.nhis==1 | insurance.nhis==0),]
+    X.nhis_unadjboot <- X.nhis[which(insurance.nhis==1),]
   }
   
   # Calculate differences in potential outcomes for population treated compliers
@@ -67,16 +67,16 @@ het.effects <- function(covs, boot = FALSE){
   
   # Estimate PATT for each covariate group
   
-  patt.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==1],  w=nhis.weights[which(insurance.nhis[x]==1)]) - 
-                                                  weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==0], w=nhis.weights[which(insurance.nhis[x]==0)]))) # heterogenous treatment effect on population treated compliers
+  patt.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==1],  w=nhis.weights[which(insurance.nhis==1)][nrt.pred[[i]][x]==1]) - 
+                                                  weighted.mean(nrt.pred[[i]]$tau[nrt.pred[[i]][x]==0], w=nhis.weights[which(insurance.nhis==1)][nrt.pred[[i]][x]==0]))) # heterogenous treatment effect on population treated compliers
   
   # For comparison, calculate differences in potential outcomes for population treated 
   nrt.pred.unadj <- lapply(y.col, function (i) data.frame("tau"=Y.hat.1.unadj[[i]]-Y.hat.0.unadj[[i]],
                                                           X.nhis_unadjboot))
   
   # Estimate unadjusted PATT for each covariate group
-  patt.unadj.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==1], w=nhis.weights[which(insurance.nhis[x]==1)]) - 
-                                                        weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==0], w=nhis.weights[which(insurance.nhis[x]==0)])))  
+  patt.unadj.het <- lapply(y.col, function (i) lapply(covs, function(x) weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==1], w=nhis.weights[which(insurance.nhis==1)][nrt.pred.unadj[[i]][x]==1]) - 
+                                                        weighted.mean(nrt.pred.unadj[[i]]$tau[nrt.pred.unadj[[i]][x]==0], w=nhis.weights[which(insurance.nhis==1)][nrt.pred.unadj[[i]][x]==0])))
   
   # Estimate CACE for each covariate group
   cace.het <- lapply(y.col, function (i) lapply(covs, function(x) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)][X.ohie.response[x]==1], w=ohie.weights[which(treatment.ohie == 1)][X.ohie.response[x]==1]) - 
@@ -87,14 +87,18 @@ het.effects <- function(covs, boot = FALSE){
 }
 
 ### Estimate the heterogeneous effects
-covs <- colnames(X.nhis)[5:21] # choose features to est. het effects
+covs <- c("Female",
+          "age.19to49","age.50to64",
+          "white","black","hisp",
+          "diabetes","asthma","bp","heart",
+          "less.than.hs","hs.diploma.or.GED","vocational.or.2.year.degree","X4.year.degree",
+          "X.0..10000","X.10001..25000","X..25000") # choose features to est. het effects
 
 true_effect <- het.effects(covs) # a list where true_effect[[1]] is patt.het, true_effect[[2]] is patt.unadj.het, etc
 patt.het <- true_effect[[1]]
 patt.unadj.het <- true_effect[[2]]
 cace.het <- true_effect[[3]]
 
-B <- 1000
 boot_effect <- replicate(B, het.effects(covs,boot=TRUE))
 
 ### Compute the 95% confidence intervals based on the quantiles of the bootstrap distribution
@@ -112,10 +116,6 @@ conf.int <- lapply(y.col, function(i){
   cbind(ci.lower, ci.upper)
 })
 
-# Find middle of bootstrap CIs for cace
-
-cace.het.m <- lapply(y.col, function (i) (sapply(cace.het.boot.ci, "[[", i)[1,]+sapply(cace.het.boot.ci, "[[", i)[2,])/2)
-
 # Create data for plot
 Overall  <- c("Overall")
 Sex <- c("Female")
@@ -129,9 +129,9 @@ cov.groups <- c("Overall","Sex","Age","Race","Health status","Education","Income
 cov.names <- c(Overall,Sex,Age,Race.ethn,Health.stat,Education,Income)
 
 het.plot <- lapply(y.col, function (i) data.frame(x=factor(c(rep(cov.names,3)), levels=rev(cov.names)), 
-                                                  y = c(t.patt[[i]],unlist(patt.het[[i]]),
-                                                        t.patt.unadj[[i]],unlist(patt.unadj.het[[i]]),
-                                                        rct.cace[[i]],unlist(cace.het.m[i])), 
+                                                  y = c(t.patt[[i]]$additional['Difference'],unlist(patt.het[[i]]),
+                                                        t.patt.unadj[[i]]$additional['Difference'],unlist(patt.unadj.het[[i]]),
+                                                        rct.cace[[i]]$additional['Difference'],unlist(cace.het[i])), 
                                                   Group = factor(rep(c(cov.groups[1],rep(cov.groups[2],length(Sex)),rep(cov.groups[3],length(Age)),
                                                                        rep(cov.groups[4],length(Race.ethn)),rep(cov.groups[5],length(Health.stat)),
                                                                        rep(cov.groups[6],length(Education)),rep(cov.groups[7],length(Income))),3), levels=cov.groups),
@@ -141,8 +141,8 @@ het.plot <- lapply(y.col, function (i) data.frame(x=factor(c(rep(cov.names,3)), 
                                                   ci.lower = conf.int[[i]][,1],
                                                   ci.upper = conf.int[[i]][,2]))
 for(i in y.col){
-  het.plot[[i]] <- subset( het.plot[[i]], Estimator!="CACE") #rm cace
-  het.plot[[i]]$Estimator <- factor(het.plot[[i]]$Estimator, levels = c("PATT-C","PATT"))
+  het.plot[[i]] <- subset( het.plot[[i]], Estimator=="PATT-C") 
+  het.plot[[i]]$Estimator <- factor(het.plot[[i]]$Estimator, levels = c("PATT-C"))
   offset <- c("   ") 
   het.plot[[i]]$x <- paste(offset,het.plot[[i]]$x) # make offset in x var name
   
@@ -190,9 +190,9 @@ ThemeBw1 <- function(base_size = 11, base_family = "") {
 }
 
 het.plot.all <- lapply(y.col, function (i) 
-  ggplot(het.plot[[i]][], aes(x=x, y=y, ymin = ci.lower, ymax = ci.upper, colour=Estimator)) +
-    geom_pointrange(size=1, alpha=0.8) +
-    scale_colour_manual(values=c("red","blue"), breaks=levels(het.plot[[i]]$Estimator)) + # change colors for estimators
+  ggplot(het.plot[[i]], aes(x=x, y=y, ymin = ci.lower, ymax = ci.upper, colour=Estimator)) +
+    geom_pointrange(size=0.5, alpha=0.7) +
+    scale_colour_manual(values=c("red"), breaks=levels(het.plot[[i]]$Estimator)) + # change colors for estimators
     coord_flip() +
     geom_line() +
    geom_hline(aes(x=0,yintercept=0), lty=2) +
@@ -201,8 +201,8 @@ het.plot.all <- lapply(y.col, function (i)
     ylab("Treatment effect") +
     xlab("")) #switch because of the coord_flip() above 
 
-num.visit.plot <- het.plot.all[[2]] + ggtitle("# ER visits")
-num.out.plot <- het.plot.all[[4]] + ggtitle("# outpatient visits") 
+num.visit.plot <- het.plot.all[[1]] + ggtitle("# ER visits") + theme(legend.position = "none") 
+num.out.plot <- het.plot.all[[2]] + ggtitle("# outpatient visits") + theme(legend.position = "none") 
                                               
 ggsave(paste0(repo.directory, "plots/num-visit-plot.png"), num.visit.plot)
 ggsave(paste0(repo.directory, "plots/num-out-plot.png"), num.out.plot) 

@@ -27,9 +27,9 @@ source(paste0(repo.directory,"code/prepare-analysis.R")) # loads data/prepare-oh
 
 source(paste0(repo.directory,"code/analysis.R"))
 
+source(paste0(repo.directory,"code/estimator-compare-plots.R")) # plot treatment effect estimates
+
 ## Appendix figures and tables
 source(paste0(repo.directory,"code/rct-nrt-compare.R")) # Tables A1 and A2
-
-source(paste0(repo.directory,"code/estimator-compare-plots.R")) # plot treatment effect estimates
 
 source(paste0(repo.directory,"code/placebo-test.R")) # Table A3

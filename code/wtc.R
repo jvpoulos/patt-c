@@ -2,6 +2,7 @@ WtC <- function (x, y, c=NULL, weight = NULL, weighty = NULL, weightc = NULL, cl
           alternative = "two.tailed", mean1 = TRUE, bootse = TRUE, 
           bootp = FALSE, bootn = 1000, drops = "pairwise") {
   ## from wtd.t.test package weights version 1.0
+  library(weights)
   if (is.null(weight)) {
     weight <- rep(1, length(x))
   }
