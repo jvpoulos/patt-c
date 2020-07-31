@@ -1,6 +1,6 @@
 WtC <- function (x, y, c=NULL, weight = NULL, weighty = NULL, weightc = NULL, cluster = NULL, clustery = NULL, clusterc = NULL, samedata = TRUE, 
           alternative = "two.tailed", mean1 = TRUE, bootse = TRUE, 
-          bootp = FALSE, bootn = 1000, drops = "pairwise") {
+          bootp = FALSE, bootn = 1000, drops = "pairwise", equivalence=FALSE) {
   ## from wtd.t.test package weights version 1.0
   library(weights)
   if (is.null(weight)) {
@@ -93,15 +93,22 @@ WtC <- function (x, y, c=NULL, weight = NULL, weighty = NULL, weightc = NULL, cl
     }
     df <- (((vx/n) + (vy/n2))^2)/((((vx/n)^2)/(n - 1)) + 
                                     ((vy/n2)^2/(n2 - 1)))
+    
     t <- (mx - my)/sxy
     p.value <- (1 - pt(abs(t), df)) * 2
-    
     if(!is.null(c)){
       df <- (((vx/n) + (vy/n2) + (vc/n3))^2)/((((vx/n)^2)/(n - 1)) + 
                                       ((vy/n2)^2/(n2 - 1)) +
                                         ((vc/n3)^2/(n3 - 1)))
       t <- ((mx - my)/mc)/sxy
       p.value <- (1 - pt(abs(t), df)) * 2
+    }
+    cint <- NULL
+    if (equivalence){
+      epsilon <-1
+      conf.level <- 0.95
+
+      p.value <- as.numeric(pt((epsilon - abs(mx-my))/sxy, df, lower.tail = FALSE))
     }
     if (alternative == "greater") 
       p.value <- pt(t, df, lower.tail = FALSE)

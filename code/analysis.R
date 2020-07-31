@@ -148,12 +148,13 @@ t.patt <- lapply(y.col, function (i) WtC(x=Y.hat.1[[i]],
                                          y=Y.hat.0[[i]],
                                          bootse=TRUE,
                                          bootp = TRUE,
-                                         bootn = 1000,
+                                         bootn = 999,
                                          weight = nhis.weights[which(insurance.nhis == 1)],
                                          weighty=nhis.weights[which(insurance.nhis==1)], 
                                          cluster = nhis.hhid[which(insurance.nhis == 1)],
                                          clustery=nhis.hhid[which(insurance.nhis==1)], 
-                                         samedata=FALSE)) 
+                                         samedata=FALSE,
+                                         equivalence = FALSE)) 
 sanity.check <- TRUE # weighted diff-in-means for sanity check
 if(sanity.check){
   lapply(y.col, function (i) weighted.mean(Y.hat.1[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
@@ -169,12 +170,13 @@ t.patt.unadj <- lapply(y.col, function (i) WtC(x=Y.hat.1.unadj[[i]],
                                          y=Y.hat.0.unadj[[i]],
                                          bootse=TRUE,
                                          bootp = TRUE,
-                                         bootn = 1000,
+                                         bootn = 999,
                                          weight = nhis.weights[which(insurance.nhis == 1)],
                                          weighty=nhis.weights[which(insurance.nhis==1)], 
                                          cluster = nhis.hhid[which(insurance.nhis == 1)],
                                          clustery=nhis.hhid[which(insurance.nhis==1)], 
-                                         samedata=FALSE)) 
+                                         samedata=FALSE,
+                                         equivalence = FALSE)) 
 
 if(sanity.check){
   lapply(y.col, function (i) weighted.mean(Y.hat.1.unadj[[i]], w=nhis.weights[which(insurance.nhis==1)]) - 
@@ -188,14 +190,15 @@ rct.cace <- lapply(y.col, function (i) WtC(x=as.matrix(Y.ohie[[i]][which(treatme
                                                c=as.matrix(rct.compliers$complier[which(treatment.ohie==1)]), 
                                                bootse=TRUE,
                                                bootp = TRUE,
-                                               bootn = 1000,
+                                               bootn = 999,
                                                weight = ohie.weights[which(treatment.ohie == 1)], 
                                                weighty= ohie.weights[which(treatment.ohie == 0)], 
                                                weightc=rct.compliers$weights[which(treatment.ohie == 1)], 
                                                cluster = ohie.hhid[which(treatment.ohie == 1)], 
                                                clustery=ohie.hhid[which(treatment.ohie==0)], 
                                                clusterc=rct.compliers$cluster[which(treatment.ohie == 1)], 
-                                               samedata=FALSE)) 
+                                               samedata=FALSE,
+                                               equivalence = FALSE)) 
 
 if(sanity.check){
   lapply(y.col, function (i) (weighted.mean(Y.ohie[[i]][which(treatment.ohie==1)], w=ohie.weights[which(treatment.ohie == 1)]) - # Num. is ITT effect
